@@ -48,5 +48,5 @@ Le système prend en charge la réservation de salles, la gestion des invités, 
 
 ## ▶️ Installation et exécution
 1. Cloner le dépôt :
-   ```bash
-  git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
+   ```bash git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
+  
