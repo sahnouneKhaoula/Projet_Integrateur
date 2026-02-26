@@ -7,7 +7,10 @@ import Espaces from './components/Espaces'
 import Services from './components/Services'
 import Parametres from './components/Parametres'
 
+import { RouterProvider } from 'react-router-dom'
+import { routeur } from './routes'
 
+// Point d'entrée : on affiche le routeur avec toutes les pages
 function App() {
 
   const [apiStatus, setApiStatus] = useState("");
@@ -93,6 +96,7 @@ function App() {
 
   )
 
+  return <RouterProvider router={routeur} />
 }
 
 export default App

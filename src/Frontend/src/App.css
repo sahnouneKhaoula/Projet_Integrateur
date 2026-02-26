@@ -95,6 +95,18 @@
   cursor: pointer;
   font-size: 0.85rem;
   transition: background 0.15s;
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenu {
+  flex: 1;
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .profile-logout:hover { background: #f3f4f6; }
