@@ -51,5 +51,15 @@ Le système prend en charge la réservation de salles, la gestion des invités, 
    ```bash
    git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
    ```
+
+    ```bash
+   cd src/frontend
+   ```
+    ```bash
+   npm i
+   ```
+    ```bash
+   npm run dev
+   ```
    
   
