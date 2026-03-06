@@ -569,7 +569,7 @@ blockquote {
 .page-accueil {
   min-height: 100vh;
 }
-
+ 
 .hero {
   position: relative;
   min-height: 100vh;
@@ -578,18 +578,18 @@ blockquote {
   justify-content: center;
   overflow: hidden;
 }
-
+ 
 .hero-image-wrap {
   position: absolute;
   inset: 0;
 }
-
+ 
 .hero-image-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-
+ 
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -597,7 +597,7 @@ blockquote {
     linear-gradient(to bottom, rgba(15, 17, 21, 0.55) 0%, rgba(15, 17, 21, 0.45) 35%, rgba(15, 17, 21, 0.65) 60%, var(--fond) 100%);
   pointer-events: none;
 }
-
+ 
 .hero-contenu {
   position: relative;
   z-index: 10;
@@ -605,7 +605,7 @@ blockquote {
   max-width: 56rem;
   padding: 2rem 1rem;
 }
-
+ 
 .hero-badge {
   display: inline-flex;
   align-items: center;
@@ -622,7 +622,7 @@ blockquote {
   color: var(--primaire);
   margin-bottom: 1.5rem;
 }
-
+ 
 .hero-titre {
   font-family: var(--police-serif);
   font-size: clamp(2.75rem, 6vw, 4.25rem);
@@ -633,13 +633,13 @@ blockquote {
   color: var(--texte);
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 4px 32px rgba(0, 0, 0, 0.7);
 }
-
+ 
 .hero-titre-accent {
   color: var(--primaire);
   font-weight: 700;
   letter-spacing: 0.01em;
 }
-
+ 
 .hero-sous-titre {
   font-family: var(--police-sans);
   font-size: 1.25rem;
@@ -651,7 +651,7 @@ blockquote {
   letter-spacing: 0.01em;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 2px 20px rgba(0, 0, 0, 0.8);
 }
-
+ 
 .hero-boutons {
   display: flex;
   flex-wrap: wrap;
@@ -659,11 +659,11 @@ blockquote {
   justify-content: center;
   margin-bottom: 2rem;
 }
-
+ 
 .hero-boutons a {
   text-decoration: none;
 }
-
+ 
 .hero-usb {
   display: flex;
   flex-wrap: wrap;
@@ -1135,6 +1135,8 @@ blockquote {
   font-size: 0.9rem;
   color: var(--mute-texte);
 }
+
+
 
 .equipements {
   display: grid;
