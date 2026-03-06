@@ -19,8 +19,9 @@ export const routeur = createBrowserRouter([
       { path: 'reservation', element: <PageReservation /> }
     ]
   },
-  { path: '/connexion', element: <PageConnexion /> },
-  { path: '/dashboard', element: <Dashboard /> },
+      { path: '/connexion', element: <PageConnexion /> },
+      { path: '/dashboard', element: <Dashboard /> },
+      
   
   
 ])
