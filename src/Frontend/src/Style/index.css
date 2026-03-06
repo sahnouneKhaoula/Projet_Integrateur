@@ -64,7 +64,11 @@ body {
 /* ============================================
    Typographie - Titres et textes
    ============================================ */
-h1, h2, h3, h4, .titre-principal {
+h1,
+h2,
+h3,
+h4,
+.titre-principal {
   font-family: var(--police-serif);
   font-weight: 600;
   line-height: var(--ligne-hauteur-titre);
@@ -72,17 +76,20 @@ h1, h2, h3, h4, .titre-principal {
   color: var(--texte);
 }
 
-h1, .titre-1 {
+h1,
+.titre-1 {
   font-size: var(--titre-taille-1);
   font-weight: 700;
   letter-spacing: 0.01em;
 }
 
-h2, .titre-2 {
+h2,
+.titre-2 {
   font-size: var(--titre-taille-2);
 }
 
-h3, .titre-3 {
+h3,
+.titre-3 {
   font-size: var(--titre-taille-3);
 }
 
@@ -102,7 +109,8 @@ p:last-child {
   margin-bottom: 0;
 }
 
-.label, label {
+.label,
+label {
   font-size: var(--texte-taille-petit);
   font-weight: 500;
   letter-spacing: var(--lettre-espace-label);
@@ -110,20 +118,25 @@ p:last-child {
   color: var(--mute-texte);
 }
 
-.badge-texte, .hero-badge, .badge-type {
+.badge-texte,
+.hero-badge,
+.badge-type {
   font-size: var(--texte-taille-petit);
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-.prix, .tarif, .prix-nuit {
+.prix,
+.tarif,
+.prix-nuit {
   font-family: var(--police-serif);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
 
-.citation, blockquote {
+.citation,
+blockquote {
   font-family: var(--police-serif);
   font-style: italic;
   font-size: var(--texte-taille-grand);
@@ -187,6 +200,7 @@ p:last-child {
   color: var(--texte);
   transition: opacity var(--transition-rapide);
 }
+
 .navbar-logo:hover {
   opacity: 0.9;
 }
@@ -237,10 +251,12 @@ p:last-child {
   letter-spacing: 0.02em;
   transition: color var(--transition-rapide);
 }
+
 .navbar-liens .lien:hover,
 .navbar-liens .lien.actif {
   color: var(--primaire);
 }
+
 .navbar-liens .lien:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
@@ -263,9 +279,11 @@ p:last-child {
   padding: 0.5rem;
   transition: color var(--transition-rapide), transform var(--transition-rapide);
 }
+
 .bouton-menu-mobile:hover {
   color: var(--primaire);
 }
+
 .bouton-menu-mobile:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
@@ -298,9 +316,11 @@ p:last-child {
   .desktop-only {
     display: none !important;
   }
+
   .bouton-menu-mobile {
     display: block;
   }
+
   .navbar-mobile {
     display: flex;
   }
@@ -326,6 +346,7 @@ p:last-child {
     box-shadow var(--transition-rapide), transform var(--transition-rapide);
   text-decoration: none;
 }
+
 .bouton:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
@@ -336,10 +357,12 @@ p:last-child {
   color: var(--primaire-texte);
   box-shadow: var(--ombre-bouton-primaire);
 }
+
 .bouton--primaire:hover {
   background: var(--primaire-hover);
   box-shadow: 0 4px 14px rgba(201, 168, 106, 0.45);
 }
+
 .bouton--primaire:active {
   transform: scale(0.98);
 }
@@ -349,6 +372,7 @@ p:last-child {
   color: var(--texte);
   border: 1px solid var(--bordure);
 }
+
 .bouton--secondaire:hover {
   background: var(--mute);
   border-color: var(--primaire);
@@ -359,6 +383,7 @@ p:last-child {
   background: transparent;
   color: var(--texte);
 }
+
 .bouton--fantome:hover {
   background: var(--mute);
   color: var(--primaire);
@@ -473,9 +498,11 @@ p:last-child {
   font-size: 0.9rem;
   transition: color var(--transition-rapide);
 }
+
 .pied-colonne a:hover {
   color: var(--primaire);
 }
+
 .pied-colonne a:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
@@ -519,6 +546,7 @@ p:last-child {
   font-size: 0.85rem;
   transition: color var(--transition-rapide);
 }
+
 .pied-liens a:hover {
   color: var(--primaire);
 }
@@ -565,7 +593,8 @@ p:last-child {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, var(--fond) 0%, rgba(15, 17, 21, 0.6) 30%, transparent 60%, transparent 100%);
+  background:
+    linear-gradient(to bottom, rgba(15, 17, 21, 0.55) 0%, rgba(15, 17, 21, 0.45) 35%, rgba(15, 17, 21, 0.65) 60%, var(--fond) 100%);
   pointer-events: none;
 }
 
@@ -602,7 +631,7 @@ p:last-child {
   line-height: 1.15;
   letter-spacing: 0.02em;
   color: var(--texte);
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9), 0 4px 32px rgba(0, 0, 0, 0.7);
 }
 
 .hero-titre-accent {
@@ -615,12 +644,12 @@ p:last-child {
   font-family: var(--police-sans);
   font-size: 1.25rem;
   font-weight: 400;
-  color: var(--mute-texte);
+  color: rgba(245, 242, 234, 0.92);
   max-width: 36rem;
   margin: 0 auto 2rem;
   line-height: 1.7;
   letter-spacing: 0.01em;
-  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95), 0 2px 20px rgba(0, 0, 0, 0.8);
 }
 
 .hero-boutons {
@@ -643,8 +672,10 @@ p:last-child {
   font-size: var(--texte-taille-base);
   font-weight: 500;
   letter-spacing: 0.02em;
-  color: var(--mute-texte);
+  color: rgba(245, 242, 234, 0.85);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
 }
+
 
 /* ============================================
    Sections communes
@@ -1032,6 +1063,7 @@ p:last-child {
   cursor: pointer;
   transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
 }
+
 .champ-select select:focus {
   outline: none;
   border-color: var(--ring);
@@ -1183,11 +1215,12 @@ p:last-child {
   direction: rtl;
 }
 
-.bloc-service.inverse > * {
+.bloc-service.inverse>* {
   direction: ltr;
 }
 
 @media (max-width: 768px) {
+
   .bloc-service,
   .bloc-service.inverse {
     grid-template-columns: 1fr;
@@ -1431,6 +1464,7 @@ p:last-child {
   font-family: inherit;
   transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
 }
+
 .champ input:focus,
 .champ select:focus,
 .champ textarea:focus {
@@ -1744,8 +1778,8 @@ p:last-child {
   transition: color 0.2s;
 }
 
-.staff-button{
-  
+.staff-button {
+
   background: var(--primaire);
   color: var(--primaire-texte);
   box-shadow: var(--ombre-bouton-primaire);
@@ -1765,7 +1799,7 @@ p:last-child {
   border-radius: 15px;
   cursor: pointer;
   transition: background var(--transition-rapide), color var(--transition-rapide);
-  box-shadow : var(--transition-rapide), transform var(--transition-rapide);
+  box-shadow: var(--transition-rapide), transform var(--transition-rapide);
   text-decoration: none;
 }
 
@@ -1778,6 +1812,7 @@ p:last-child {
   background: var(--primaire-hover);
   box-shadow: 0 4px 14px rgba(201, 168, 106, 0.45);
 }
+
 .staff-button:active {
   transform: scale(0.98);
 }
@@ -1794,6 +1829,7 @@ p:last-child {
   box-shadow: var(--ombre-carte);
   transition: box-shadow var(--transition-normale);
 }
+
 .page-connexion-carte:hover {
   box-shadow: var(--ombre-carte-hover);
 }
@@ -1901,6 +1937,7 @@ p:last-child {
   box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.2);
   transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
 }
+
 .champ-input-wrap input::placeholder {
   color: var(--mute-texte);
   opacity: 0.8;
@@ -1981,9 +2018,11 @@ p:last-child {
   text-decoration: none;
   transition: opacity var(--transition-rapide), transform var(--transition-rapide);
 }
+
 .navbar-bouton-connexion:hover {
   opacity: 0.95;
 }
+
 .navbar-bouton-connexion:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;

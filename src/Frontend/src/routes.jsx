@@ -5,7 +5,7 @@ import { PageChambres } from './pages/Chambres'
 import { PageServices } from './pages/Services'
 import { PageReservation } from './pages/Reservation'
 import { PageConnexion } from './pages/Connexion'
-import Dashboard from './components/Dashboard'
+import App from './App'
 
 // Définition des routes de l'application
 export const routeur = createBrowserRouter([
@@ -20,7 +20,7 @@ export const routeur = createBrowserRouter([
     ]
   },
   { path: '/connexion', element: <PageConnexion /> },
-  { path: '/dashboard', element: <Dashboard /> },
-  
-  
+  { path: '/dashboard', element: <App /> },
+
+
 ])

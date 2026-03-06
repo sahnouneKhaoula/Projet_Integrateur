@@ -11,19 +11,33 @@ import Parametres from './components/Parametres'
 
 
 function App() {
-  const [activeTab, setActiveTab] = useState("")
-  
+  const [activeTab, setActiveTab] = useState("Tableau de bord")
+  const [utilisateur, setUtilisateur] = useState(null)
+
+  useEffect(() => {
+    const data = localStorage.getItem('utilisateur');
+    if (data) {
+      setUtilisateur(JSON.parse(data));
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('utilisateur');
+    localStorage.removeItem('token');
+    localStorage.removeItem('seSouvenir');
+    window.location.href = '/';
+  }
 
   const renderTab = (tab) => {
     switch (tab) {
-      
+
       case "Tableau de bord": return <Dashboard />
-      case "Events":          return <Evenements />
-      case "Espaces":         return <Espaces />
-      case "Services":        return <Services />
-      case "Comptabilité":    return <Comptabilite />
-      case "Parametres":      return <Parametres />
-      default:                return null
+      case "Events": return <Evenements />
+      case "Espaces": return <Espaces />
+      case "Services": return <Services />
+      case "Comptabilité": return <Comptabilite />
+      case "Parametres": return <Parametres />
+      default: return null
     }
   }
 
@@ -58,9 +72,13 @@ function App() {
 
         <div className="Profile">
           <div className="ProfilePicture"></div>
-          <div className="ProfileName">Gabriel</div>
-          <div className="ProfileDescription">Administrateur</div>
-          <button className="ProfileButton">Déconnexion</button>
+          <div className="ProfileName">
+            {utilisateur ? utilisateur.first_name || utilisateur.email.split('@')[0] : 'Invité'}
+          </div>
+          <div className="ProfileDescription">
+            {utilisateur ? utilisateur.role : ''}
+          </div>
+          <button className="ProfileButton" onClick={handleLogout}>Déconnexion</button>
         </div>
       </aside>
 

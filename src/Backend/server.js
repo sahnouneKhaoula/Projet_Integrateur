@@ -14,6 +14,16 @@ dotenv.config();
 import "./db/db.js";
 
 
+import rolesRoutes from './routes/rolesRoutes.js';
+import usersRoutes from './routes/usersRoutes.js';
+import sallesRoutes from './routes/sallesRoutes.js';
+import eventsRoutes from './routes/eventsRoutes.js';
+import reservationsRoutes from './routes/reservationsRoutes.js';
+import guestsRoutes from './routes/guestsRoutes.js';
+import servicesRoutes from './routes/servicesRoutes.js';
+import invoicesRoutes from './routes/invoicesRoutes.js';
+import paymentsRoutes from './routes/paymentsRoutes.js';
+
 // Création du serveur
 const app = express();
 
@@ -24,9 +34,16 @@ app.use(compression());
 app.use(json());
 app.use(express.static('public'));
 
-
-
 // Programmation des routes
+app.use('/api/roles', rolesRoutes);
+app.use('/api/users', usersRoutes);
+app.use('/api/salles', sallesRoutes);
+app.use('/api/events', eventsRoutes);
+app.use('/api/reservations', reservationsRoutes);
+app.use('/api/guests', guestsRoutes);
+app.use('/api/services', servicesRoutes);
+app.use('/api/invoices', invoicesRoutes);
+app.use('/api/payments', paymentsRoutes);
 
 // Démarrage du serveur
 app.listen(process.env.PORT);
