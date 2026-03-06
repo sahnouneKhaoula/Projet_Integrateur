@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { Bouton } from '../composants/Bouton'
+import { Bouton } from '../components/Bouton'
 
 // Page de connexion interne (admin, compta, organisateur, coordonnateur)
-export function PageConnexion() {
+export  function PageConnexion() {
   const [email, setEmail] = useState('')
   const [motDePasse, setMotDePasse] = useState('')
   const [afficherMotDePasse, setAfficherMotDePasse] = useState(false)
@@ -17,6 +17,8 @@ export function PageConnexion() {
     e.preventDefault()
     setErreur('')
     setChargement(true)
+
+
 
     // Simuler une authentification
     setTimeout(() => {
@@ -70,7 +72,11 @@ export function PageConnexion() {
           <div className="page-connexion-carte">
             <div className="page-connexion-entete">
               <span className="page-connexion-logo">Hôtel La Promenade</span>
-              <span className="page-connexion-sous-titre">Connexion Interne</span>
+               {/* Staff login*/}
+               <Link to = "/dashboard" className='staff-button'> 
+             Staff Login
+            </Link>
+
             </div>
             <h1 className="page-connexion-titre">Bienvenue</h1>
             <p className="page-connexion-description">Connectez-vous pour accéder à votre espace</p>
@@ -142,10 +148,12 @@ export function PageConnexion() {
                 className="bouton-connexion-plein"
                 disabled={chargement}
               >
+
                 {chargement ? 'Connexion...' : 'Se connecter'}
+                
               </Bouton>
             </form>
-
+            
             <div className="page-connexion-footer">
         
             </div>

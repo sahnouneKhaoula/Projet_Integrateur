@@ -1,10 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { Layout } from './composants/Layout'
+import { Layout } from './components/Layout'
 import { PageAccueil } from './pages/Accueil'
 import { PageChambres } from './pages/Chambres'
 import { PageServices } from './pages/Services'
 import { PageReservation } from './pages/Reservation'
 import { PageConnexion } from './pages/Connexion'
+import Dashboard from './components/Dashboard'
 
 // Définition des routes de l'application
 export const routeur = createBrowserRouter([
@@ -18,5 +19,8 @@ export const routeur = createBrowserRouter([
       { path: 'reservation', element: <PageReservation /> }
     ]
   },
-  { path: '/connexion', element: <PageConnexion /> }
+  { path: '/connexion', element: <PageConnexion /> },
+  { path: '/dashboard', element: <Dashboard /> },
+  
+  
 ])

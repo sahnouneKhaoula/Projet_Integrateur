@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Bouton } from '../composants/Bouton'
+import { Bouton } from '../components/Bouton'
 
 // Page Réservation : formulaire dates, type de chambre, contact
 export function PageReservation() {

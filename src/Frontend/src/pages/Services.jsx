@@ -1,5 +1,5 @@
-import { Bouton } from '../composants/Bouton'
-import { CarteContenu } from '../composants/Carte'
+import { Bouton } from '../components/Bouton'
+import { CarteContenu } from '../components/Carte'
 
 // Page Services : Spa, Restaurant, Conciergerie, Limousine, Événements, Décoration
 export function PageServices() {

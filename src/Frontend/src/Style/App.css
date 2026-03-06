@@ -1,0 +1,155 @@
+#root {
+  max-width: 100%;
+}
+
+.App {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--fond);
+  color: var(--texte);
+}
+
+/* --- SIDEBAR --- */
+.Sidebar {
+  width: 240px;
+  min-width: 240px;
+  height: 100vh;
+  background: var(--secondaire);
+  border-right: 1px solid var(--bordure);
+  display: flex;
+  flex-direction: column;
+}
+
+.Branding {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1.5rem 1.25rem 1.25rem;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.Branding h1 {
+  font-family: var(--police-serif);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin: 0 0 0.25rem 0;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.Branding p {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primaire);
+  margin: 0;
+}
+
+.Tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 1rem 0.75rem;
+  flex: 1;
+}
+
+.Tabs button {
+  width: 100%;
+  text-align: left;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: var(--rayon);
+  background: transparent;
+  color: var(--mute-texte);
+  font-size: 0.875rem;
+  font-family: var(--police-sans);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-rapide), color var(--transition-rapide);
+}
+
+.Tabs button:hover {
+  background: rgba(201, 168, 106, 0.08);
+  color: var(--texte);
+}
+
+.Tabs button.active {
+  background: rgba(201, 168, 106, 0.12);
+  color: var(--primaire);
+  font-weight: 600;
+  border-left: 2px solid var(--primaire);
+  padding-left: calc(1rem - 2px);
+}
+
+.Profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--bordure);
+}
+
+.ProfilePicture {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--primaire);
+  margin-bottom: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--police-serif);
+  font-weight: 700;
+  color: var(--primaire-texte);
+  font-size: 0.9rem;
+}
+
+.ProfilePicture::after {
+  content: 'G';
+}
+
+.ProfileName {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.ProfileDescription {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primaire);
+  margin-bottom: 0.5rem;
+}
+
+.ProfileButton {
+  width: 100%;
+  padding: 0.45rem 0.75rem;
+  background: transparent;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  color: var(--mute-texte);
+  font-size: 0.8rem;
+  font-family: var(--police-sans);
+  cursor: pointer;
+  transition: background var(--transition-rapide), color var(--transition-rapide), border-color var(--transition-rapide);
+  text-align: left;
+}
+
+.ProfileButton:hover {
+  background: rgba(217, 107, 107, 0.1);
+  border-color: rgba(217, 107, 107, 0.4);
+  color: #D96B6B;
+}
+
+/* --- CONTENU PRINCIPAL --- */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--fond);
+}

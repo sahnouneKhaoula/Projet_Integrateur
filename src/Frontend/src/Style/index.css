@@ -1744,6 +1744,44 @@ p:last-child {
   transition: color 0.2s;
 }
 
+.staff-button{
+  
+  background: var(--primaire);
+  color: var(--primaire-texte);
+  box-shadow: var(--ombre-bouton-primaire);
+  margin-top: 0.5rem;
+  width: 35%;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.3rem 0.3rem;
+  font-family: var(--police-sans);
+  font-size: var(--texte-taille-base);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 2px solid var(--primaire);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background var(--transition-rapide), color var(--transition-rapide);
+  box-shadow : var(--transition-rapide), transform var(--transition-rapide);
+  text-decoration: none;
+}
+
+.staff-button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.staff-button:hover {
+  background: var(--primaire-hover);
+  box-shadow: 0 4px 14px rgba(201, 168, 106, 0.45);
+}
+.staff-button:active {
+  transform: scale(0.98);
+}
+
 .page-connexion-retour:hover {
   color: var(--primaire);
 }
@@ -1761,7 +1799,10 @@ p:last-child {
 }
 
 .page-connexion-entete {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .page-connexion-logo {

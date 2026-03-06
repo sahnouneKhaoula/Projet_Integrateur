@@ -15,6 +15,8 @@ export function Navbar() {
     { path: '/services', label: 'Services' }
   ]
 
+
+  
   return (
     <nav className="navbar">
       <div className="navbar-conteneur">
