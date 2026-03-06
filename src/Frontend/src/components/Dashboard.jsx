@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../Style/Dashboard.css'
 
 const statsData = [
@@ -27,13 +27,21 @@ const barLabels = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim']
 const maxBar = Math.max(...barData)
 
 const statutConfig = {
-  confirmee:  { label: 'Confirmée',  cls: 'statut--confirmee' },
-  en_cours:   { label: 'En cours',   cls: 'statut--en-cours' },
+  confirmee: { label: 'Confirmée', cls: 'statut--confirmee' },
+  en_cours: { label: 'En cours', cls: 'statut--en-cours' },
   en_attente: { label: 'En attente', cls: 'statut--en-attente' },
 }
 
 export default function Dashboard() {
   const [activeFilter, setActiveFilter] = useState('tous')
+  const [utilisateur, setUtilisateur] = useState(null)
+
+  useEffect(() => {
+    const data = localStorage.getItem('utilisateur');
+    if (data) {
+      setUtilisateur(JSON.parse(data));
+    }
+  }, []);
 
   const reservationsFiltrees = activeFilter === 'tous'
     ? reservationsRecentes
@@ -45,7 +53,9 @@ export default function Dashboard() {
       {/* En-tête */}
       <div className="dashboard-header">
         <div className="dashboard-header-texte">
-          <span className="dashboard-salutation">Bonjour, Gabriel 👋</span>
+          <span className="dashboard-salutation">
+            Bonjour, {utilisateur ? utilisateur.first_name || utilisateur.email.split('@')[0] : 'Invité'} 👋
+          </span>
           <h1 className="dashboard-titre">Tableau de bord</h1>
           <p className="dashboard-date">Jeudi 27 février 2026 · Hôtel de la Promenade</p>
         </div>

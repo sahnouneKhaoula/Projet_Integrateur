@@ -1,11 +1,27 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Bouton } from './Bouton'
 
 // Barre de navigation avec menu mobile
 export function Navbar() {
   const [menuOuvert, setMenuOuvert] = useState(false)
+  const [utilisateur, setUtilisateur] = useState(null)
   const emplacement = useLocation()
+
+  useEffect(() => {
+    const data = localStorage.getItem('utilisateur');
+    if (data) {
+      setUtilisateur(JSON.parse(data));
+    }
+  }, []);
+
+  const boutonDeconnexion = () => {
+    localStorage.removeItem('utilisateur');
+    localStorage.removeItem('token');
+    localStorage.removeItem('seSouvenir');
+    // Rafraîchir la page après déconnexion
+    window.location.reload();
+  };
 
   const estActif = (chemin) => emplacement.pathname === chemin
 
@@ -16,7 +32,7 @@ export function Navbar() {
   ]
 
 
-  
+
   return (
     <nav className="navbar">
       <div className="navbar-conteneur">
@@ -41,11 +57,24 @@ export function Navbar() {
             ))}
           </div>
 
-          <Link to="/connexion" className="navbar-bouton-connexion desktop-only">
-            <Bouton variant="primaire" taille="petit">
-              Se connecter
-            </Bouton>
-          </Link>
+          <div className="navbar-bouton-connexion desktop-only">
+            {utilisateur ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                <span style={{ fontWeight: 500 }}>
+                  Bonjour, {utilisateur.first_name || utilisateur.email.split('@')[0]}
+                </span>
+                <Bouton variant="secondaire" taille="petit" onClick={boutonDeconnexion}>
+                  Se déconnecter
+                </Bouton>
+              </div>
+            ) : (
+              <Link to="/connexion">
+                <Bouton variant="primaire" taille="petit">
+                  Se connecter
+                </Bouton>
+              </Link>
+            )}
+          </div>
 
           <button
             type="button"
@@ -69,9 +98,19 @@ export function Navbar() {
                 {lien.label}
               </Link>
             ))}
-            <Link to="/connexion" onClick={() => setMenuOuvert(false)}>
-              <Bouton variant="primaire" className="bouton-plein">Se connecter</Bouton>
-            </Link>
+            {utilisateur ? (
+              <Bouton
+                variant="secondaire"
+                className="bouton-plein"
+                onClick={() => { boutonDeconnexion(); setMenuOuvert(false); }}
+              >
+                Se déconnecter
+              </Bouton>
+            ) : (
+              <Link to="/connexion" onClick={() => setMenuOuvert(false)}>
+                <Bouton variant="primaire" className="bouton-plein">Se connecter</Bouton>
+              </Link>
+            )}
           </div>
         )}
       </div>

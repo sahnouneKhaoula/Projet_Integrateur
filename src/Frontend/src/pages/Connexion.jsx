@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { Bouton } from '../components/Bouton'
 
 // Page de connexion interne (admin, compta, organisateur, coordonnateur)
-export  function PageConnexion() {
+export function PageConnexion() {
   const [email, setEmail] = useState('')
   const [motDePasse, setMotDePasse] = useState('')
   const [afficherMotDePasse, setAfficherMotDePasse] = useState(false)
@@ -13,34 +13,50 @@ export  function PageConnexion() {
 
   const navigate = useNavigate()
 
-  const soumettre = (e) => {
+  const soumettre = async (e) => {
     e.preventDefault()
     setErreur('')
     setChargement(true)
 
+    try {
+      const response = await fetch('http://localhost:3001/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password: motDePasse })
+      });
 
+      const data = await response.json();
 
-    // Simuler une authentification
-    setTimeout(() => {
-      let role = 'admin'
-      if (email.includes('compta')) role = 'comptabilite'
-      else if (email.includes('organisateur')) role = 'organisateur'
-      else if (email.includes('coordonnateur')) role = 'coordonnateur'
-
-      if (email && motDePasse) {
-        // Enregistrer la connexion (localStorage pour persister)
-        const utilisateur = { email, role }
-        localStorage.setItem('utilisateur', JSON.stringify(utilisateur))
-        if (seSouvenir) {
-          localStorage.setItem('seSouvenir', 'true')
-        }
-        setChargement(false)
-        navigate('/')
-      } else {
-        setErreur('Identifiants invalides')
-        setChargement(false)
+      if (!response.ok) {
+        throw new Error(data.message || 'Identifiants invalides');
       }
-    }, 1000)
+
+      // Enregistrer la session (localStorage pour persister)
+      const utilisateur = data.user;
+      localStorage.setItem('utilisateur', JSON.stringify(utilisateur));
+      localStorage.setItem('token', data.token); // Si besoin d'autorisations futures
+
+      if (seSouvenir) {
+        localStorage.setItem('seSouvenir', 'true')
+      }
+
+      setChargement(false)
+
+      // Redirection dynamique selon le rôle
+      if (['admin', 'comptabilite', 'organisateur', 'coordonnateur'].includes(utilisateur.role)) {
+        // C'est un employé -> Dashboard métier
+        navigate('/dashboard')
+      } else {
+        // C'est un client -> Accueil
+        navigate('/')
+      }
+
+    } catch (err) {
+      setErreur(err.message);
+      setChargement(false)
+    }
   }
 
   return (
@@ -57,7 +73,7 @@ export  function PageConnexion() {
           <h2>Espace de Gestion</h2>
           <p>Accédez à votre tableau de bord et gérez les opérations de l'hôtel en toute sécurité.</p>
           <div className="page-connexion-securite">
-        
+
           </div>
         </div>
       </div>
@@ -72,11 +88,6 @@ export  function PageConnexion() {
           <div className="page-connexion-carte">
             <div className="page-connexion-entete">
               <span className="page-connexion-logo">Hôtel La Promenade</span>
-               {/* Staff login*/}
-               <Link to = "/dashboard" className='staff-button'> 
-             Staff Login
-            </Link>
-
             </div>
             <h1 className="page-connexion-titre">Bienvenue</h1>
             <p className="page-connexion-description">Connectez-vous pour accéder à votre espace</p>
@@ -101,7 +112,7 @@ export  function PageConnexion() {
                   />
                 </div>
                 <p className="champ-aide">
-                
+
                 </p>
               </div>
 
@@ -150,12 +161,12 @@ export  function PageConnexion() {
               >
 
                 {chargement ? 'Connexion...' : 'Se connecter'}
-                
+
               </Bouton>
             </form>
-            
+
             <div className="page-connexion-footer">
-        
+
             </div>
           </div>
         </div>
