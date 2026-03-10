@@ -154,3 +154,27 @@
   overflow-y: auto;
   background: var(--fond);
 }
+
+/* --- FOOTER DES PAGES DE CONNEXION / INSCRIPTION --- */
+.page-connexion-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.page-connexion-footer-texte {
+  color: var(--mute-texte);
+}
+
+.page-connexion-footer-lien {
+  color: var(--primaire);
+  margin-left: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.page-connexion-footer-lien:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}

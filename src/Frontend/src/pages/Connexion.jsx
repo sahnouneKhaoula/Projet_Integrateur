@@ -166,7 +166,10 @@ export function PageConnexion() {
             </form>
 
             <div className="page-connexion-footer">
-
+              <span className="page-connexion-footer-texte">Pas encore de compte ?</span>
+              <Link to="/inscription" className="page-connexion-footer-lien">
+                Créer un compte client
+              </Link>
             </div>
           </div>
         </div>
