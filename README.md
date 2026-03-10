@@ -39,8 +39,8 @@ Le système prend en charge la réservation de salles, la gestion des invités, 
 ## 🛠️ Technologies utilisées
 > À adapter selon ton projet
 
-- Frontend : (ex. React / Angular / HTML-CSS-JS)
-- Backend : (ex. Javascript / C# / Node.js )
+- Frontend : ( React  / HTML-CSS-JS)
+- Backend : (ex. Javascript / Node.js )
 - Base de données :  MySQLServer
 - Architecture : Application web client–serveur
 
