@@ -95,7 +95,7 @@ async function seedDatabase() {
                     .input('username', 'client_jdoe')
                     .input('email', clientEmail)
                     .input('password_hash', clientPasswordHash)
-                    .input('first_name', 'Hocine')
+                    .input('first_name', 'SmartProjet')
                     .input('last_name', 'Doe')
                     .input('phone', '555-0202')
                     .input('role_id', clientRoleId)
