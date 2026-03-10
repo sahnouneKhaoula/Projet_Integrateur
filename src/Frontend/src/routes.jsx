@@ -22,5 +22,6 @@ export const routeur = createBrowserRouter([
   { path: '/connexion', element: <PageConnexion /> },
   { path: '/dashboard', element: <App /> },
 
+  
 
 ])
