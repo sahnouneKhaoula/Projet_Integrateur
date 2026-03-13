@@ -1,0 +1,54 @@
+/* ============================================
+   BASE / VARIABLES
+   Tokens de design — Hôtel La Promenade
+   ============================================ */
+
+:root {
+  /* --- Couleurs --- */
+  --fond:             #0F1115;
+  --texte:            #F5F2EA;
+  --carte:            #1E2430;
+  --primaire:         #C9A86A;
+  --primaire-texte:   #0F1115;
+  --primaire-hover:   #D4B87A;
+  --secondaire:       #161A22;
+  --mute:             #2C3444;
+  --mute-texte:       #C9CED8;
+  --succes:           #3FAF7A;
+  --bordure:          #2C3444;
+  --entree-fond:      #161A22;
+  --ring:             #C9A86A;
+
+  /* --- Rayon de bordure --- */
+  --rayon:    0.5rem;
+  --rayon-sm: 0.25rem;
+  --rayon-lg: 0.75rem;
+  --rayon-xl: 1rem;
+
+  /* --- Typographie --- */
+  --police-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --police-sans:  'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --texte-taille-base:  1rem;
+  --texte-taille-petit: 0.875rem;
+  --texte-taille-grand: 1.125rem;
+
+  --titre-taille-1: clamp(2.25rem, 5vw, 3.75rem);
+  --titre-taille-2: clamp(1.75rem, 3.5vw, 2.5rem);
+  --titre-taille-3: clamp(1.25rem, 2vw, 1.5rem);
+
+  --lettre-espace-titre: -0.01em;
+  --lettre-espace-label:  0.04em;
+
+  --ligne-hauteur-texte: 1.65;
+  --ligne-hauteur-titre: 1.2;
+
+  /* --- Transitions --- */
+  --transition-rapide:  0.2s ease;
+  --transition-normale: 0.3s ease;
+
+  /* --- Ombres --- */
+  --ombre-carte:              0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.15);
+  --ombre-carte-hover:        0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 4px 10px -5px rgba(201, 168, 106, 0.15);
+  --ombre-bouton-primaire:    0 2px 8px rgba(201, 168, 106, 0.35);
+}

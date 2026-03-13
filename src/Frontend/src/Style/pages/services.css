@@ -1,0 +1,107 @@
+/* ============================================
+   PAGES / SERVICES
+   Page des services de l'hôtel
+   ============================================ */
+
+.page-en-tete-services { text-align: center; }
+.page-en-tete-services p { margin: 0 auto; }
+
+.liste-services {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* --- Blocs service --- */
+.bloc-service {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.bloc-service.inverse { direction: rtl; }
+
+.bloc-service.inverse > * { direction: ltr; }
+
+@media (max-width: 768px) {
+  .bloc-service,
+  .bloc-service.inverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+}
+
+.bloc-service-image {
+  border-radius: var(--rayon);
+  overflow: hidden;
+  height: 20rem;
+}
+
+.bloc-service-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bloc-service-contenu h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-3);
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.bloc-service-contenu .description {
+  color: var(--mute-texte);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.bloc-service-contenu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.bloc-service-contenu ul li {
+  padding: 0.25rem 0 0.25rem 1.25rem;
+  position: relative;
+  color: var(--texte);
+  font-size: 0.95rem;
+}
+
+.bloc-service-contenu ul li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primaire);
+}
+
+.bloc-service-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.label-tarif {
+  display: block;
+  font-size: var(--texte-taille-petit);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mute-texte);
+  margin-bottom: 0.25rem;
+}
+
+.tarif {
+  font-family: var(--police-serif);
+  font-size: var(--texte-taille-grand);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--primaire);
+}

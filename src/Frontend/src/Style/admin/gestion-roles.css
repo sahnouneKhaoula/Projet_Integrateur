@@ -1,6 +1,6 @@
-/* ================================
-   GESTION DES RÔLES - CSS
-   ================================ */
+/* ============================================
+   ADMIN / GESTION DES RÔLES
+   ============================================ */
 
 .gestion-roles {
   padding: 2rem;
@@ -8,9 +8,8 @@
   margin: 0 auto;
 }
 
-.gr-header {
-  margin-bottom: 1.75rem;
-}
+/* --- En-tête --- */
+.gr-header { margin-bottom: 1.75rem; }
 
 .gr-titre {
   font-family: var(--police-serif);
@@ -26,7 +25,7 @@
   margin: 0;
 }
 
-/* Messages */
+/* --- Messages --- */
 .gr-message {
   padding: 0.9rem 1.25rem;
   border-radius: var(--rayon);
@@ -47,7 +46,7 @@
   border: 1px solid rgba(239, 83, 80, 0.3);
 }
 
-/* Layout 2 colonnes */
+/* --- Layout 2 colonnes --- */
 .gr-layout {
   display: grid;
   grid-template-columns: 1fr 1.6fr;
@@ -55,7 +54,7 @@
   align-items: start;
 }
 
-/* Formulaire */
+/* --- Formulaire --- */
 .gr-formulaire-carte {
   background: var(--secondaire);
   border: 1px solid var(--bordure);
@@ -111,6 +110,7 @@
 
 .gr-champ input:focus { border-color: var(--primaire); }
 
+/* --- Bouton principal --- */
 .gr-btn-principal {
   padding: 0.65rem 1.25rem;
   background: var(--primaire);
@@ -125,10 +125,10 @@
   width: 100%;
 }
 
-.gr-btn-principal:hover { opacity: 0.88; }
+.gr-btn-principal:hover    { opacity: 0.88; }
 .gr-btn-principal:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* Liste des rôles */
+/* --- Liste des rôles --- */
 .gr-liste-carte {
   background: var(--secondaire);
   border: 1px solid var(--bordure);
@@ -145,10 +145,7 @@
   border-bottom: 1px solid var(--bordure);
 }
 
-.gr-liste {
-  display: flex;
-  flex-direction: column;
-}
+.gr-liste { display: flex; flex-direction: column; }
 
 .gr-role-item {
   display: flex;
@@ -175,10 +172,7 @@
   text-transform: capitalize;
 }
 
-.gr-role-count {
-  font-size: 0.78rem;
-  color: var(--mute-texte);
-}
+.gr-role-count { font-size: 0.78rem; color: var(--mute-texte); }
 
 .gr-role-actions {
   display: flex;
@@ -210,7 +204,4 @@
   opacity: 1;
 }
 
-.gr-btn-supprimer:disabled {
-  cursor: not-allowed;
-  opacity: 0.3;
-}
+.gr-btn-supprimer:disabled { cursor: not-allowed; opacity: 0.3; }

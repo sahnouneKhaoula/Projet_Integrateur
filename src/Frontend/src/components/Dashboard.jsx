@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import '../Style/Dashboard.css'
+
 
 const statsData = [
   { label: 'Revenus ce mois', valeur: '48 320 $', delta: '+12%', positif: true, icone: '💰' },

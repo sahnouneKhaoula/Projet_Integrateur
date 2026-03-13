@@ -1,0 +1,187 @@
+/* ============================================
+   COMPONENTS / FORMS
+   Champs, inputs, selects, checkboxes
+   ============================================ */
+
+/* --- Champ générique --- */
+.champ { margin-bottom: 1rem; }
+
+.champ label {
+  display: block;
+  font-size: var(--texte-taille-petit);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.4rem;
+  color: var(--texte);
+}
+
+.champ input,
+.champ select,
+.champ textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: var(--entree-fond);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  color: var(--texte);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
+}
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.2);
+}
+
+.champ textarea {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+/* --- Champ avec icône --- */
+.champ-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.champ-input-wrap .champ-icone {
+  position: absolute;
+  left: 1rem;
+  font-size: 1rem;
+  color: var(--mute-texte);
+  pointer-events: none;
+}
+
+.champ-input-wrap input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  background: var(--entree-fond);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  color: var(--texte);
+  font-size: var(--texte-taille-base);
+  font-family: inherit;
+  transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
+}
+
+.champ-input-wrap input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.2);
+}
+
+.champ-input-wrap input::placeholder {
+  color: var(--mute-texte);
+  opacity: 0.8;
+}
+
+.champ-toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.25rem;
+  color: var(--mute-texte);
+}
+
+.champ-toggle-password:hover { color: var(--texte); }
+
+.champ-aide {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+  margin: 0.35rem 0 0 0;
+}
+
+/* --- Select --- */
+.champ-select label {
+  display: block;
+  font-size: var(--texte-taille-petit);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  color: var(--mute-texte);
+}
+
+.champ-select select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: var(--entree-fond);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  color: var(--texte);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
+}
+
+.champ-select select:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 2px rgba(201, 168, 106, 0.2);
+}
+
+/* --- Grilles de champs --- */
+.champs-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* --- Checkbox --- */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: var(--texte-taille-petit);
+  color: var(--mute-texte);
+}
+
+.checkbox-label input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--primaire);
+}
+
+/* --- Mot de passe oublié --- */
+.lien-mot-de-passe-oublie {
+  background: none;
+  border: none;
+  font-size: var(--texte-taille-petit);
+  color: var(--primaire);
+  cursor: pointer;
+  padding: 0;
+}
+
+.lien-mot-de-passe-oublie:hover { text-decoration: underline; }
+
+/* --- Messages de feedback --- */
+.message-succes,
+.message-erreur {
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--rayon);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.message-succes {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.message-erreur {
+  background: rgba(239, 83, 80, 0.1);
+  color: #ef5350;
+  border: 1px solid rgba(239, 83, 80, 0.3);
+}

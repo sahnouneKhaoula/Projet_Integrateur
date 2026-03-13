@@ -1,5 +1,6 @@
 /* ============================================
-   Dashboard — Hôtel La Promenade
+   ADMIN / DASHBOARD
+   Tableau de bord — Hôtel La Promenade
    ============================================ */
 
 .dashboard {
@@ -10,7 +11,9 @@
   font-family: var(--police-sans);
 }
 
-/* ----- En-tête ----- */
+/* ============================================
+   En-tête
+   ============================================ */
 .dashboard-header {
   display: flex;
   align-items: flex-end;
@@ -53,7 +56,9 @@
   align-items: center;
 }
 
-/* ----- Stats ----- */
+/* ============================================
+   Cartes statistiques
+   ============================================ */
 .dashboard-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -94,10 +99,7 @@
   justify-content: center;
 }
 
-.stat-corps {
-  flex: 1;
-  min-width: 0;
-}
+.stat-corps { flex: 1; min-width: 0; }
 
 .stat-label {
   display: block;
@@ -138,7 +140,9 @@
   color: #D96B6B;
 }
 
-/* ----- Corps ----- */
+/* ============================================
+   Corps principal (2 colonnes)
+   ============================================ */
 .dashboard-corps {
   display: grid;
   grid-template-columns: 1fr 320px;
@@ -150,7 +154,7 @@
   .dashboard-corps { grid-template-columns: 1fr; }
 }
 
-/* ----- Section header ----- */
+/* --- Section header --- */
 .dashboard-section-header {
   display: flex;
   align-items: center;
@@ -169,6 +173,7 @@
   letter-spacing: 0.01em;
 }
 
+/* --- Filtres --- */
 .dashboard-filtres {
   display: flex;
   gap: 0.4rem;
@@ -200,11 +205,11 @@
   font-weight: 600;
 }
 
-.filtre-btn--actif:hover {
-  color: var(--primaire-texte);
-}
+.filtre-btn--actif:hover { color: var(--primaire-texte); }
 
-/* ----- Table des réservations ----- */
+/* ============================================
+   Tableau des réservations
+   ============================================ */
 .reservations-table {
   background: var(--carte);
   border: 1px solid var(--bordure);
@@ -238,13 +243,9 @@
   transition: background var(--transition-rapide);
 }
 
-.table-ligne:last-child {
-  border-bottom: none;
-}
+.table-ligne:last-child { border-bottom: none; }
 
-.table-ligne:hover {
-  background: rgba(201, 168, 106, 0.04);
-}
+.table-ligne:hover { background: rgba(201, 168, 106, 0.04); }
 
 .table-id {
   font-family: monospace;
@@ -252,14 +253,9 @@
   color: var(--mute-texte);
 }
 
-.table-client {
-  font-weight: 600;
-  color: var(--texte);
-}
+.table-client { font-weight: 600; color: var(--texte); }
 
-.table-chambre {
-  color: var(--mute-texte);
-}
+.table-chambre { color: var(--mute-texte); }
 
 .table-periode {
   font-size: 0.8rem;
@@ -274,7 +270,7 @@
   white-space: nowrap;
 }
 
-/* ----- Badges de statut ----- */
+/* --- Badges de statut --- */
 .statut-badge {
   display: inline-flex;
   align-items: center;
@@ -287,23 +283,17 @@
   white-space: nowrap;
 }
 
-.statut--confirmee {
-  background: rgba(63, 175, 122, 0.15);
-  color: #3FAF7A;
-}
-
-.statut--en-cours {
-  background: rgba(201, 168, 106, 0.15);
-  color: var(--primaire);
-}
-
+.statut--confirmee  { background: rgba(63, 175, 122, 0.15);  color: #3FAF7A; }
+.statut--en-cours   { background: rgba(201, 168, 106, 0.15); color: var(--primaire); }
 .statut--en-attente {
   background: rgba(201, 168, 106, 0.08);
   color: var(--mute-texte);
   border: 1px solid var(--bordure);
 }
 
-/* ----- Widgets (colonne droite) ----- */
+/* ============================================
+   Widgets (colonne droite)
+   ============================================ */
 .dashboard-widget {
   background: var(--carte);
   border: 1px solid var(--bordure);
@@ -313,9 +303,7 @@
   box-shadow: var(--ombre-carte);
 }
 
-.dashboard-widget:last-child {
-  margin-bottom: 0;
-}
+.dashboard-widget:last-child { margin-bottom: 0; }
 
 .widget-titre {
   font-family: var(--police-serif);
@@ -328,7 +316,7 @@
   letter-spacing: 0.01em;
 }
 
-/* ----- Bar Chart ----- */
+/* --- Bar Chart --- */
 .barchart {
   display: flex;
   align-items: flex-end;
@@ -361,9 +349,7 @@
   transition: opacity var(--transition-rapide);
 }
 
-.bar:hover {
-  opacity: 0.8;
-}
+.bar:hover { opacity: 0.8; }
 
 .bar-label {
   font-size: 0.68rem;
@@ -373,7 +359,7 @@
   text-transform: uppercase;
 }
 
-/* ----- Événements ----- */
+/* --- Événements --- */
 .evenements-liste {
   display: flex;
   flex-direction: column;
@@ -391,9 +377,7 @@
   transition: border-color var(--transition-rapide);
 }
 
-.evenement-item:hover {
-  border-color: rgba(201, 168, 106, 0.35);
-}
+.evenement-item:hover { border-color: rgba(201, 168, 106, 0.35); }
 
 .evenement-date-badge {
   flex-shrink: 0;
