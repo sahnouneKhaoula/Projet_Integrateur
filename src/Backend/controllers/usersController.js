@@ -63,11 +63,28 @@ export const loginUser = async (req, res) => {
     }
 };
 
-// Récupérer tous les utilisateurs
+// Récupérer tous les utilisateurs (avec nom du rôle)
 export const getAllUsers = async (req, res) => {
     try {
         const pool = await poolPromise;
-        const result = await pool.request().query('SELECT id, username, email, first_name, last_name, phone, role_id, is_active, created_at FROM Users');
+        const result = await pool.request().query(`
+            SELECT u.id, u.username, u.email, u.first_name, u.last_name, u.phone, u.is_active, u.created_at, r.name as role_name
+            FROM Users u
+            JOIN Roles r ON u.role_id = r.id
+            ORDER BY u.created_at DESC
+        `);
+        res.status(200).json(result.recordset);
+    } catch (error) {
+        res.status(500).json({ message: "Erreur serveur", error: error.message });
+    }
+};
+
+// Récupérer les rôles Staff (tous sauf 'client') pour le formulaire de création d'employé
+export const getRolesStaff = async (req, res) => {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .query(`SELECT id, name FROM Roles WHERE name != 'client' ORDER BY name`);
         res.status(200).json(result.recordset);
     } catch (error) {
         res.status(500).json({ message: "Erreur serveur", error: error.message });
