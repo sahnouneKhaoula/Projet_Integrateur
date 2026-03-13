@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import '../Style/GestionRoles.css';
+
 
 export default function GestionRoles() {
   const [roles, setRoles] = useState([]);

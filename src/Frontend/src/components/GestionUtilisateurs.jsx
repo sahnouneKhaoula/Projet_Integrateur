@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import '../Style/GestionUtilisateurs.css';
+
 
 export default function GestionUtilisateurs() {
   const [utilisateurs, setUtilisateurs] = useState([]);

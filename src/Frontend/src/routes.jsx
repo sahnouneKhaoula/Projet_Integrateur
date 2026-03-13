@@ -23,5 +23,6 @@ export const routeur = createBrowserRouter([
   { path: '/inscription', element: <PageInscription /> },
   { path: '/dashboard', element: <App /> },
 
+  
 
 ])

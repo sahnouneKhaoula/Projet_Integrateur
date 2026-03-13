@@ -1,0 +1,291 @@
+/* ============================================
+   PAGES / BOOKING (Réservation)
+   Formulaire de réservation multi-étapes
+   ============================================ */
+
+.page-reservation {
+  padding: 2rem 1rem 3rem;
+  min-height: 100vh;
+}
+
+.reservation-conteneur {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* --- Stepper --- */
+.stepper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.stepper-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: 3rem;
+}
+
+.stepper-bulle {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background: var(--secondaire);
+  color: var(--mute-texte);
+  border: 1px solid var(--bordure);
+  transition: all 0.2s;
+}
+
+.stepper-bulle.actif {
+  background: var(--primaire);
+  color: var(--primaire-texte);
+  border-color: var(--primaire);
+}
+
+.stepper-label {
+  font-size: var(--texte-taille-petit);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+  color: var(--mute-texte);
+}
+
+.stepper-label.actif { color: var(--texte); }
+
+.stepper-trait {
+  flex: 1;
+  min-width: 1.5rem;
+  height: 2px;
+  background: var(--bordure);
+  align-self: center;
+  margin: 0 0.25rem;
+}
+
+.stepper-trait.actif { background: var(--primaire); }
+
+/* --- Corps réservation --- */
+.reservation-corps {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .reservation-corps { grid-template-columns: 1fr; }
+}
+
+.reservation-formulaire .carte { margin-bottom: 0; }
+
+.contenu-etape { padding: 2rem !important; }
+
+.etape-contenu h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-3);
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.sous-titre {
+  color: var(--mute-texte);
+  margin-bottom: 1.5rem;
+  font-size: var(--texte-taille-base);
+  line-height: 1.6;
+}
+
+/* --- Sélection chambre / service --- */
+.liste-chambres-resa,
+.liste-services-resa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.carte-chambre-resa,
+.carte-service-resa {
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.carte-chambre-resa.selectionnee,
+.carte-service-resa.selectionnee {
+  border-color: var(--primaire);
+  box-shadow: 0 0 0 2px rgba(201, 168, 106, 0.2);
+}
+
+.chambre-resa-ligne {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.chambre-resa-ligne h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1rem;
+  color: var(--texte);
+}
+
+.chambre-resa-ligne span {
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+}
+
+.prix-chambre { text-align: right; }
+
+.prix-chambre span:first-child {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primaire);
+  display: block;
+}
+
+.check {
+  color: var(--primaire);
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.ligne-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.ligne-checkbox input { flex-shrink: 0; }
+
+.prix-service {
+  font-weight: 600;
+  color: var(--primaire);
+}
+
+/* --- Navigation entre étapes --- */
+.navigation-etapes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--bordure);
+}
+
+/* --- Récapitulatif --- */
+.reservation-recap {
+  position: sticky;
+  top: 7rem;
+  align-self: start;
+}
+
+.reservation-recap .carte-titre {
+  font-family: var(--police-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin-bottom: 1rem;
+}
+
+.ligne-recap-mini {
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--bordure);
+  font-size: 0.9rem;
+}
+
+.ligne-recap-mini span:first-child {
+  display: block;
+  color: var(--mute-texte);
+  font-size: 0.8rem;
+  margin-bottom: 0.25rem;
+}
+
+.ligne-recap-mini.total {
+  border-bottom: none;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.ligne-recap-mini.total strong {
+  color: var(--primaire);
+  font-size: 1.5rem;
+}
+
+.taxes-note {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+  margin: 0.5rem 0 0 0;
+}
+
+/* --- Confirmation --- */
+.etape-contenu.confirmation { text-align: center; }
+
+.etape-contenu.confirmation h2 {
+  font-size: var(--titre-taille-2);
+  margin-bottom: 0.5rem;
+}
+
+.icone-success {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: rgba(63, 175, 122, 0.2);
+  color: var(--succes);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0 auto 1rem;
+}
+
+.ligne-recap {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--bordure);
+  font-size: var(--texte-taille-base);
+  line-height: 1.5;
+}
+
+.ligne-recap span {
+  color: var(--mute-texte);
+  font-weight: 500;
+}
+
+.ligne-recap.total {
+  border-bottom: none;
+  font-size: 1.25rem;
+}
+
+.ligne-recap.total strong { color: var(--primaire); }
+
+.boutons-confirmation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.info-securise {
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--secondaire);
+  border-radius: var(--rayon);
+  border: 1px solid var(--bordure);
+}

@@ -1,0 +1,114 @@
+/* ============================================
+   LAYOUT / FOOTER
+   Pied de page du site public
+   ============================================ */
+
+.pied-de-page {
+  background: var(--secondaire);
+  border-top: 1px solid var(--bordure);
+  margin-top: auto;
+  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.pied-de-page-conteneur {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 1rem 1.5rem;
+}
+
+.pied-de-page-grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* --- Colonnes --- */
+.pied-colonne h3,
+.pied-colonne h4 {
+  margin: 0 0 1rem 0;
+  font-family: var(--police-serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.pied-colonne p {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+}
+
+.pied-colonne ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pied-colonne ul li { margin-bottom: 0.5rem; }
+
+.pied-colonne a {
+  color: var(--mute-texte);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color var(--transition-rapide);
+}
+
+.pied-colonne a:hover { color: var(--primaire); }
+
+.pied-colonne a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--rayon-sm);
+}
+
+.liste-texte li {
+  color: var(--mute-texte);
+  font-size: 0.9rem;
+}
+
+.contact-ligne {
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+}
+
+/* --- Bas du footer --- */
+.pied-bas {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--bordure);
+}
+
+.pied-bas p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--mute-texte);
+}
+
+.pied-liens {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.pied-liens a {
+  color: var(--mute-texte);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color var(--transition-rapide);
+}
+
+.pied-liens a:hover { color: var(--primaire); }
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .pied-de-page-grille { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 480px) {
+  .pied-de-page-grille { grid-template-columns: 1fr; }
+}

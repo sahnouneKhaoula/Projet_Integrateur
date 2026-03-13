@@ -1,0 +1,98 @@
+/* ============================================
+   BASE / RESET
+   Reset global + typographie de base
+   ============================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--police-sans);
+  font-size: var(--texte-taille-base);
+  font-weight: 400;
+  background: var(--fond);
+  color: var(--texte);
+  line-height: var(--ligne-hauteur-texte);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Titres --- */
+h1, h2, h3, h4,
+.titre-principal {
+  font-family: var(--police-serif);
+  font-weight: 600;
+  line-height: var(--ligne-hauteur-titre);
+  letter-spacing: var(--lettre-espace-titre);
+  color: var(--texte);
+}
+
+h1, .titre-1 {
+  font-size: var(--titre-taille-1);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+h2, .titre-2 { font-size: var(--titre-taille-2); }
+h3, .titre-3 { font-size: var(--titre-taille-3); }
+
+h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+/* --- Paragraphes --- */
+p {
+  margin: 0 0 0.75em 0;
+  color: var(--mute-texte);
+  font-size: var(--texte-taille-base);
+  line-height: var(--ligne-hauteur-texte);
+}
+
+p:last-child { margin-bottom: 0; }
+
+/* --- Labels --- */
+.label, label {
+  font-size: var(--texte-taille-petit);
+  font-weight: 500;
+  letter-spacing: var(--lettre-espace-label);
+  text-transform: uppercase;
+  color: var(--mute-texte);
+}
+
+/* --- Badges texte --- */
+.badge-texte, .hero-badge, .badge-type {
+  font-size: var(--texte-taille-petit);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* --- Prix --- */
+.prix, .tarif, .prix-nuit {
+  font-family: var(--police-serif);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* --- Citations --- */
+.citation, blockquote {
+  font-family: var(--police-serif);
+  font-style: italic;
+  font-size: var(--texte-taille-grand);
+  line-height: 1.7;
+  color: var(--texte);
+}
+
+/* --- Racine --- */
+#racine {
+  min-height: 100vh;
+}

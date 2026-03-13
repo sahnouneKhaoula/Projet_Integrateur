@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Bouton } from '../components/Bouton'
-import '../Style/index.css' // Réutilise les styles globaux incluant .page-connexion
+
 
 export function PageInscription() {
     const navigate = useNavigate();

@@ -1,3 +1,8 @@
+/* ============================================
+   LAYOUT / APP
+   Structure principale : shell, sidebar, contenu
+   ============================================ */
+
 #root {
   max-width: 100%;
 }
@@ -11,24 +16,26 @@
   overflow: hidden;
 }
 
-/* === SIDEBAR === */
+/* ============================================
+   Sidebar
+   ============================================ */
 .Sidebar {
   width: 220px;
   min-width: 220px;
   height: 100vh;
-  background: #0f1623; /* fond sombre identique à la maquette */
-  border-right: 1px solid rgba(255,255,255,0.06);
+  background: #0f1623;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
 }
 
-/* Branding */
+/* --- Branding --- */
 .Branding {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 1.5rem 1.25rem 1.25rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .Branding h1 {
@@ -50,7 +57,7 @@
   margin: 0;
 }
 
-/* Navigation principale */
+/* --- Navigation principale --- */
 .Tabs {
   display: flex;
   flex-direction: column;
@@ -68,7 +75,7 @@
   border: none;
   border-radius: 8px;
   background: transparent;
-  color: rgba(255,255,255,0.55);
+  color: rgba(255, 255, 255, 0.55);
   font-size: 0.875rem;
   font-family: var(--police-sans);
   font-weight: 500;
@@ -81,8 +88,8 @@
 
 .Tabs button:hover,
 .tab-settings:hover {
-  background: rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .Tabs button.active,
@@ -101,16 +108,15 @@
 
 .tab-label { flex: 1; }
 
-/* Séparateur entre nav normale et admin */
 .tab-separator {
   height: 1px;
-  background: rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.07);
   margin: 0.5rem 0;
 }
 
-/* Bas de la sidebar (Settings + Profile) */
+/* --- Bas de la sidebar --- */
 .SidebarBottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding: 0.75rem;
 }
 
@@ -118,14 +124,14 @@
   margin-bottom: 0.5rem;
 }
 
-/* Profil utilisateur */
+/* --- Profil utilisateur --- */
 .Profile {
   display: flex;
   align-items: center;
   gap: 0.65rem;
   padding: 0.65rem 0.75rem;
   border-radius: 8px;
-  background: rgba(255,255,255,0.04);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .ProfilePicture {
@@ -169,7 +175,7 @@
   background: transparent;
   border: none;
   cursor: pointer;
-  color: rgba(255,255,255,0.35);
+  color: rgba(255, 255, 255, 0.35);
   display: flex;
   align-items: center;
   padding: 0.3rem;
@@ -183,34 +189,25 @@
   background: rgba(239, 83, 80, 0.1);
 }
 
-/* === CONTENU PRINCIPAL === */
+/* ============================================
+   Contenu principal
+   ============================================ */
 .main-content {
   flex: 1;
   overflow-y: auto;
   background: var(--fond);
 }
 
-
-/* --- FOOTER DES PAGES DE CONNEXION / INSCRIPTION --- */
-.page-connexion-footer {
-  margin-top: 1.5rem;
-  text-align: center;
-  font-size: 0.9rem;
+/* ============================================
+   Layout pages publiques
+   ============================================ */
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-.page-connexion-footer-texte {
-  color: var(--mute-texte);
-}
-
-.page-connexion-footer-lien {
-  color: var(--primaire);
-  margin-left: 0.5rem;
-  text-decoration: none;
-  font-weight: 600;
-  transition: opacity 0.2s ease;
-}
-
-.page-connexion-footer-lien:hover {
-  opacity: 0.8;
-  text-decoration: underline;
+.contenu-principal {
+  flex: 1;
+  padding-top: 5rem;
 }

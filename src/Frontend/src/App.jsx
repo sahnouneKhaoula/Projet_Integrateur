@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './Style/App.css'
+import './Style/index.css'
 import Comptabilite from './components/Comptabilite'
 import Dashboard from './components/Dashboard'
 import Evenements from './components/Evenements'

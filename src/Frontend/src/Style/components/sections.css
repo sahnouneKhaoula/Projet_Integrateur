@@ -1,0 +1,166 @@
+/* ============================================
+   COMPONENTS / SECTIONS
+   Patterns de sections réutilisables (grilles, CTA, events…)
+   ============================================ */
+
+/* --- Section générique --- */
+.section {
+  padding: 4rem 1rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.section-titre {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-titre h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-2);
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.section-titre p {
+  font-size: var(--texte-taille-grand);
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--mute-texte);
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+/* --- Grilles --- */
+.grille-suites {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.grille-experiences {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.grille-temoignages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* --- Sections thématiques --- */
+.section-suites       { padding-top: 4rem; }
+.section-experiences  { background: var(--secondaire); }
+.section-temoignages  { background: var(--secondaire); }
+
+/* --- Section Événements --- */
+.section-evenements { padding: 4rem 1rem; }
+
+.section-evenements-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .section-evenements-inner { grid-template-columns: 1fr; }
+}
+
+.section-evenements-image {
+  border-radius: var(--rayon);
+  overflow: hidden;
+  height: 22rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.section-evenements-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.section-evenements-texte h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-2);
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.section-evenements-texte p {
+  font-size: var(--texte-taille-grand);
+  line-height: 1.65;
+  color: var(--mute-texte);
+  margin-bottom: 1.5rem;
+}
+
+.section-evenements-texte a { text-decoration: none; }
+
+/* --- Liste avantages --- */
+.liste-avantages {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+}
+
+.liste-avantages li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: var(--texte-taille-base);
+  color: var(--texte);
+}
+
+.liste-avantages .puce {
+  color: var(--primaire);
+  font-size: 0.9rem;
+}
+
+/* --- Section CTA --- */
+.section-cta {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.section-cta h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-2);
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.section-cta p {
+  color: var(--mute-texte);
+  font-size: var(--texte-taille-grand);
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+}
+
+.section-cta-chambres,
+.section-cta-services {
+  background: var(--secondaire);
+  margin: 2rem 1rem;
+  border-radius: var(--rayon);
+}
+
+.section-cta-chambres .bouton { margin-top: 0.5rem; }
+
+.boutons-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.boutons-cta a { text-decoration: none; }

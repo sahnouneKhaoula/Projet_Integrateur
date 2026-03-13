@@ -1,0 +1,120 @@
+/* ============================================
+   COMPONENTS / BUTTONS
+   Tous les styles de boutons réutilisables
+   ============================================ */
+
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-family: var(--police-sans);
+  font-size: var(--texte-taille-base);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: var(--rayon);
+  cursor: pointer;
+  transition: background var(--transition-rapide), color var(--transition-rapide),
+    box-shadow var(--transition-rapide), transform var(--transition-rapide);
+  text-decoration: none;
+}
+
+.bouton:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.bouton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- Variantes --- */
+.bouton--primaire {
+  background: var(--primaire);
+  color: var(--primaire-texte);
+  box-shadow: var(--ombre-bouton-primaire);
+}
+
+.bouton--primaire:hover {
+  background: var(--primaire-hover);
+  box-shadow: 0 4px 14px rgba(201, 168, 106, 0.45);
+}
+
+.bouton--primaire:active { transform: scale(0.98); }
+
+.bouton--secondaire {
+  background: var(--secondaire);
+  color: var(--texte);
+  border: 1px solid var(--bordure);
+}
+
+.bouton--secondaire:hover {
+  background: var(--mute);
+  border-color: var(--primaire);
+  color: var(--texte);
+}
+
+.bouton--fantome {
+  background: transparent;
+  color: var(--texte);
+}
+
+.bouton--fantome:hover {
+  background: var(--mute);
+  color: var(--primaire);
+}
+
+/* --- Tailles --- */
+.bouton--petit {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.bouton--grand {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: var(--rayon-lg);
+}
+
+/* --- Utilitaires --- */
+.bouton-connexion-plein { width: 100%; }
+
+/* --- Bouton staff (style spécifique) --- */
+.staff-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem;
+  margin-top: 0.5rem;
+  width: 35%;
+  height: 3rem;
+  padding: 0.3rem;
+  background: var(--primaire);
+  color: var(--primaire-texte);
+  box-shadow: var(--ombre-bouton-primaire);
+  font-family: var(--police-sans);
+  font-size: var(--texte-taille-base);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 2px solid var(--primaire);
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background var(--transition-rapide), color var(--transition-rapide);
+  text-decoration: none;
+}
+
+.staff-button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.staff-button:hover {
+  background: var(--primaire-hover);
+  box-shadow: 0 4px 14px rgba(201, 168, 106, 0.45);
+}
+
+.staff-button:active { transform: scale(0.98); }
