@@ -1,0 +1,126 @@
+#root {
+  max-width: 100%;
+}
+
+.App {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: #ffffff;
+  color: black;
+}
+
+/* --- SIDEBAR --- */
+
+.Branding {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  
+}
+.Branding h1 { font-size: 2rem; font-weight: 600; }
+.Branding p { font-size: 0.85rem; font-weight: 400; color: gray; }
+
+.Sidebar {
+  width: 260px;
+  min-width: 260px;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
+.Tabs {
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  gap: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+  flex: 1;
+  color: darkgray;
+
+}
+
+.Tabs button{
+  width: 100%;
+  text-align: left;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #374151;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.Tabs button:hover {
+  background-color: rgb(0, 0, 0);
+  color: #ffffff;
+}
+
+.Tabs button.active {
+  background-color: rgb(0, 0, 0);
+  color: #ffffff;
+}
+
+.Profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+.profile-name  { font-weight: 600; font-size: 0.9rem; }
+
+.profile-logout {
+  margin-top: 0.5rem;
+  
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.15s;
+}
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenu {
+  flex: 1;
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.profile-logout:hover { background: #f3f4f6; }
+
+/* --- CONTENU PRINCIPAL --- */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background: #f9fafb;
+  padding: 2rem;
+}
+
+
+
+
+
