@@ -1,0 +1,21 @@
+# Tests unitaires
+
+## Installation
+```bash
+npm install -D vitest @testing-library/react @testing-library/user-event @testing-library/jest-dom jsdom
+```
+
+# Utilisation
+
+# Mode watch (relance automatiquement à chaque sauvegarde)
+```bash
+npm test
+```
+# Une seule exécution
+```bash
+npm test -- --run
+```
+# Interface graphique dans le navigateur (optionnel)
+```bash
+npm run test:ui
+```
