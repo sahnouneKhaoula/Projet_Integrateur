@@ -184,5 +184,10 @@ Projet_Integrateur/
    ```bash
    git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
    ```
-   
+    ```bash
+   npm install
+   ```
+     ```bash
+   npm run dev
+   ```
   
