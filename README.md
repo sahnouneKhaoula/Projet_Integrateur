@@ -48,7 +48,7 @@ Le système prend en charge la réservation de salles, la gestion des invités, 
 
 ## Structure du Projet 
 1. Strucutre Principale :
-
+```bash
 Projet_Integrateur/
 ├── src/
 │   ├── Backend/
@@ -149,10 +149,10 @@ Projet_Integrateur/
 │       ├── vite.config.js
 │       └── package.json
 └── README.md        
-  
+  ```
 
 2. Strucutre du CSS : 
-   
+   ```bash
    Style/
    ├── base/
    │   ├── variables.css       — Design tokens (couleurs, rayons, typo, ombres)
