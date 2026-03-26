@@ -14,6 +14,9 @@ dotenv.config();
 import "./db/db.js";
 
 
+import statsRoutes from './routes/statsRoutes.js';
+import importExportRoutes from './routes/importExportRoutes.js';
+import notificationsRoutes from './routes/notificationsRoutes.js';
 import rolesRoutes from './routes/rolesRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
 import sallesRoutes from './routes/sallesRoutes.js';
@@ -35,6 +38,10 @@ app.use(json());
 app.use(express.static('public'));
 
 // Programmation des routes
+app.use('/api/stats',         statsRoutes);
+app.use('/api/import',        importExportRoutes);
+app.use('/api/export',        importExportRoutes);
+app.use('/api/notifications', notificationsRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/salles', sallesRoutes);
