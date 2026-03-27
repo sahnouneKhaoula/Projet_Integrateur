@@ -1,7 +1,11 @@
+/**
+ * Import / export de données (CSV ou Excel via xlsx) : événements, salles, invités, utilisateurs.
+ * Les imports sensibles sont réservés aux admins (voir routes).
+ */
 import { poolPromise } from '../db/db.js';
 import * as XLSX from 'xlsx';
 
-// ─── UTILITAIRES ────────────────────────────────────────────────
+// ─── UTILITAIRES — lecture et normalisation des fichiers uploadés ───
 
 // Lit un fichier Excel (base64) ou CSV (texte) et retourne les lignes
 const parseInput = (fileContent, csvContent) => {

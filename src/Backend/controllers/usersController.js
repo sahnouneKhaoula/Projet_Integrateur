@@ -1,3 +1,10 @@
+/**
+ * Contrôleur Utilisateurs — authentification et gestion des comptes.
+ *
+ * - login / register : création de token JWT (payload : id, email, rôle)
+ * - getAllUsers, createUser : réservés au staff selon les routes
+ * - Les mots de passe sont hashés (bcrypt) et ne sont jamais renvoyés en JSON
+ */
 import { poolPromise } from '../db/db.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';

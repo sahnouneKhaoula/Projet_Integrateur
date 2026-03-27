@@ -1,3 +1,4 @@
+/** Invités associés à un événement (liste, ajout). */
 import { poolPromise } from '../db/db.js';
 
 // Récupérer tous les invités

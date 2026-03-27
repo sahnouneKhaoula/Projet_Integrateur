@@ -1,3 +1,7 @@
+/**
+ * Routes /api/import et /api/export (même routeur monté deux fois dans server.js).
+ * Import CSV/Excel (admin), export de données, téléchargement de modèles CSV.
+ */
 import express from 'express';
 import {
     importEvents, importSalles, importGuests,

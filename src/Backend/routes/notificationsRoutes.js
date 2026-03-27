@@ -1,3 +1,6 @@
+/**
+ * Routes /api/notifications — liste, compteur non lues, marquer lu (utilisateur connecté).
+ */
 import express from 'express';
 import {
     getMesNotifications, getNbNonLues,

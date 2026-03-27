@@ -1,3 +1,7 @@
+/**
+ * Routes REST sous /api/users
+ * Connexion (login), inscription publique (register), liste / création de comptes, rôles staff.
+ */
 import express from 'express';
 import { getAllUsers, createUser, loginUser, registerUser, getRolesStaff } from '../controllers/usersController.js';
 import { verifierToken, verifierAdmin } from '../middleware/authMiddleware.js';

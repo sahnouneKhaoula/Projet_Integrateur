@@ -1,3 +1,4 @@
+/** Salles de réception / espaces pour les événements. */
 import { poolPromise } from '../db/db.js';
 
 // Récupérer toutes les salles

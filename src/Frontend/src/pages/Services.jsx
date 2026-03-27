@@ -1,7 +1,7 @@
 import { Bouton } from '../components/Bouton'
 import { CarteContenu } from '../components/Carte'
 
-// Page Services : Spa, Restaurant, Conciergerie, Limousine, Événements, Décoration
+// Page « Services sur mesure » : liste de prestations (données statiques), mise en page par blocs alternés
 export function PageServices() {
   const services = [
     { titre: 'Spa & Bien-être', description: 'Sanctuaire de 2000m² dédié à votre relaxation', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800&q=80', tarif: 'À partir de 180$/soin', points: ['Massages signature', 'Piscine 25m', 'Hammam & sauna', 'Cabines privées'] },

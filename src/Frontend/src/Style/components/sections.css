@@ -149,9 +149,31 @@
 
 .section-cta-chambres,
 .section-cta-services {
-  background: var(--secondaire);
-  margin: 2rem 1rem;
-  border-radius: var(--rayon);
+  background: linear-gradient(165deg, var(--secondaire) 0%, rgba(22, 26, 34, 0.98) 50%, var(--fond) 100%);
+  margin: 2.5rem 1.25rem 3rem;
+  border-radius: var(--rayon-xl);
+  border: 1px solid rgba(201, 168, 106, 0.12);
+  box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.45);
+}
+
+.section-cta-chambres {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-cta-chambres-inner {
+  max-width: 36rem;
+  margin: 0 auto;
+}
+
+.section-cta-chambres-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--primaire);
 }
 
 .section-cta-chambres .bouton { margin-top: 0.5rem; }

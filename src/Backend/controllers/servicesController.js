@@ -1,3 +1,4 @@
+/** Services optionnels liés à un événement (traiteur, etc.). */
 import { poolPromise } from '../db/db.js';
 
 // Récupérer tous les services

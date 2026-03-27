@@ -1,3 +1,4 @@
+/** Réservations (places, dates) pour les événements. */
 import { poolPromise } from '../db/db.js';
 
 // Récupérer toutes les réservations

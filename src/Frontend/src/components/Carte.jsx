@@ -1,4 +1,4 @@
-// Carte pour afficher un bloc de contenu (suite, témoignage, etc.)
+// Carte visuelle générique : enveloppe .carte + sous-composants titre / description / contenu
 export function Carte({ children, className = '', hover = false, ...props }) {
   const classes = ['carte'].concat(hover ? ['carte--hover'] : []).filter(Boolean)
   if (className) classes.push(className)

@@ -1,3 +1,6 @@
+/**
+ * Routes /api/reservations — réservations liées aux événements.
+ */
 import express from 'express';
 import { getAllReservations, createReservation } from '../controllers/reservationsController.js';
 

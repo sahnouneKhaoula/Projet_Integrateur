@@ -1,3 +1,7 @@
+/**
+ * Contrôleur Événements — cœur métier : événements, organisateurs, salle, invités/services liés.
+ * Les notifications peuvent être déclenchées à la création / changement de statut.
+ */
 import { poolPromise } from '../db/db.js';
 import { creerNotification } from './notificationsController.js';
 

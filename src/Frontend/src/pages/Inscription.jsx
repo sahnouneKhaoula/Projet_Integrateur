@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Bouton } from '../components/Bouton'
 
+// Inscription client public — appelle POST /api/users/register puis redirige vers la connexion ou l'accueil
 
 export function PageInscription() {
     const navigate = useNavigate();

@@ -1,3 +1,6 @@
+/**
+ * Routes /api/invoices — facturation.
+ */
 import express from 'express';
 import { getAllInvoices, createInvoice } from '../controllers/invoicesController.js';
 

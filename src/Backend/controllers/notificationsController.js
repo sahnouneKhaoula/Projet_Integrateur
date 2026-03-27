@@ -1,6 +1,9 @@
+/**
+ * Notifications in-app (cloche côté frontend) : création interne + lecture / marquer lu pour l'utilisateur courant.
+ */
 import { poolPromise } from '../db/db.js';
 
-// ─── Créer une notification (usage interne) ──────────────────────
+// ─── Créer une notification (usage interne, ex. depuis eventsController) ───
 export const creerNotification = async (user_id, type, title, message, event_id = null) => {
     try {
         const pool = await poolPromise;

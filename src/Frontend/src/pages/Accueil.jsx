@@ -1,3 +1,6 @@
+/**
+ * Page d'accueil du site vitrine : hero, suites, expériences, témoignages (contenu statique + images Unsplash).
+ */
 import { Link } from 'react-router-dom'
 import { Bouton } from '../components/Bouton'
 import { Carte, CarteTitre, CarteDescription, CarteContenu } from '../components/Carte'

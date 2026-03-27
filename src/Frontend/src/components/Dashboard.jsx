@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react'
 
+// Tableau de bord staff : récupère GET /api/stats (avec Bearer token) et affiche cartes + listes récentes
+
 const statutConfig = {
   planned:   { label: 'Planifié',   cls: 'statut--en-attente' },
   ongoing:   { label: 'En cours',   cls: 'statut--en-cours'   },

@@ -1,3 +1,4 @@
+/** Factures (montants, statuts) liées au flux métier événement / réservation. */
 import { poolPromise } from '../db/db.js';
 
 // Récupérer toutes les factures

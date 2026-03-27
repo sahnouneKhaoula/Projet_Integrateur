@@ -1,3 +1,6 @@
+/**
+ * Routes /api/salles — liste et création des salles (lieux d'événements).
+ */
 import express from 'express';
 import { getAllSalles, createSalle } from '../controllers/sallesController.js';
 

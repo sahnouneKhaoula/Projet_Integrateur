@@ -1,3 +1,11 @@
+/**
+ * Connexion à Microsoft SQL Server via le driver `mssql`.
+ *
+ * `poolPromise` : promesse qui résout vers un pool de connexions réutilisable.
+ * Tous les contrôleurs font `const pool = await poolPromise` puis `pool.request()`.
+ *
+ * Les paramètres viennent du fichier .env (DB_SERVER, DB_DATABASE, DB_USER, etc.).
+ */
 import sql from "mssql";
 
 const config = {

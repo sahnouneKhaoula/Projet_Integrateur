@@ -1,3 +1,6 @@
+/**
+ * Statistiques agrégées (comptages SQL) pour alimenter le dashboard React.
+ */
 import { poolPromise } from '../db/db.js';
 
 // Statistiques globales pour le tableau de bord

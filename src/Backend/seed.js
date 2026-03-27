@@ -1,4 +1,8 @@
-// node seed.js 
+/**
+ * Script d'initialisation de la base (rôles, utilisateur admin de test, données de base).
+ * Lancer depuis le dossier Backend : `node seed.js`
+ * Nécessite un .env valide et une base SQL déjà créée selon le schéma du projet.
+ */
 import 'dotenv/config';
 import { poolPromise } from './db/db.js';
 import bcrypt from 'bcrypt';

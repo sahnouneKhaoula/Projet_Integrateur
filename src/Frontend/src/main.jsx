@@ -1,3 +1,9 @@
+/**
+ * Point d'entrée React (Vite).
+ * - Monte l'arbre de composants dans la div #racine (voir Index.html)
+ * - Applique le routeur défini dans routes.jsx (pages publiques + dashboard)
+ * - Charge les styles globaux (Style/index.css)
+ */
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { routeur } from './routes.jsx'

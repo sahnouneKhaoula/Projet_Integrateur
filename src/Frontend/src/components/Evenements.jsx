@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import '../Style/Evenements.css';
 
+// Module événements du dashboard : CRUD via API /api/events (token JWT). BASE doit correspondre au port du backend (.env).
+
 const BASE = 'http://localhost:3001';
 const token = () => localStorage.getItem('token');
 const utilisateurLocal = () => {

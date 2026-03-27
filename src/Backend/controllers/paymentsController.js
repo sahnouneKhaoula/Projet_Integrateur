@@ -1,3 +1,4 @@
+/** Enregistrement des paiements (liés aux factures). */
 import { poolPromise } from '../db/db.js';
 
 // Récupérer tous les paiements

@@ -1,3 +1,10 @@
+/**
+ * Middlewares d'authentification pour les routes protégées.
+ *
+ * `verifierToken` : lit le header `Authorization: Bearer <jwt>`, vérifie la signature,
+ *                   et attache `req.utilisateur` { id, email, role } pour les handlers suivants.
+ * `verifierAdmin` : à placer APRÈS verifierToken ; refuse si le rôle n'est pas "admin".
+ */
 import jwt from 'jsonwebtoken';
 
 // Middleware : vérifie que l'utilisateur est connecté (JWT valide)

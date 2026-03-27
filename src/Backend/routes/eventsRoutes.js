@@ -1,3 +1,6 @@
+/**
+ * Routes /api/events — CRUD événements + changement de statut / confirmation (actions admin).
+ */
 import express from 'express';
 import {
     getAllEvents, getEventById,

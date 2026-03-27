@@ -1,3 +1,6 @@
+/**
+ * Gestion des rôles (admin, organisateur, client, etc.) — table Roles liée à Users.
+ */
 import { poolPromise } from '../db/db.js';
 
 // Récupérer tous les rôles avec le compte d'utilisateurs associés

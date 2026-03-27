@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Bouton } from '../components/Bouton'
 
-// Page de connexion interne (admin, compta, organisateur, coordonnateur)
+// Connexion staff : envoie email/mot de passe à POST /api/users/login, stocke le JWT (localStorage) et redirige vers /dashboard
 export function PageConnexion() {
   const [email, setEmail] = useState('')
   const [motDePasse, setMotDePasse] = useState('')

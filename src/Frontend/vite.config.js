@@ -1,3 +1,7 @@
+/**
+ * Configuration Vite : build du frontend React, port de dev, proxy /api vers le backend.
+ * Adapter `target` si votre API tourne sur un autre port (ex. 3001).
+ */
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 

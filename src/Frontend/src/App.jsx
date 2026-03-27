@@ -1,3 +1,7 @@
+/**
+ * Application « back-office » (route /dashboard) : sidebar, onglets métier (événements, utilisateurs, etc.).
+ * Ce n'est pas le site vitrine : les pages publiques sont dans pages/ + routes.jsx sous Layout.
+ */
 import { useState, useEffect } from 'react'
 import './Style/index.css'
 import Comptabilite from './components/Comptabilite'

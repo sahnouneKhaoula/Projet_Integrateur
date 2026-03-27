@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Bouton } from './Bouton'
 
-// Barre de navigation avec menu mobile
+// Navigation du site public : liens vers pages, affichage conditionnel si un token JWT est présent (localStorage)
 export function Navbar() {
   const [menuOuvert, setMenuOuvert] = useState(false)
   const [utilisateur, setUtilisateur] = useState(null)

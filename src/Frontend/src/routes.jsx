@@ -1,3 +1,10 @@
+/**
+ * Configuration des URLs (React Router v6).
+ *
+ * - `/` : site vitrine avec Layout (navbar, pages Accueil / Chambres / Services)
+ * - `/connexion`, `/inscription` : hors layout (pages plein écran auth)
+ * - `/dashboard` : application staff (composant App.jsx — sidebar, modules métier)
+ */
 import { createBrowserRouter } from 'react-router-dom'
 import { Layout } from './components/Layout'
 import { PageAccueil } from './pages/Accueil'

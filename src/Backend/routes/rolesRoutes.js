@@ -1,3 +1,6 @@
+/**
+ * Routes /api/roles — lecture pour tout utilisateur connecté ; création / suppression réservées admin.
+ */
 import express from 'express';
 import { getAllRoles, createRole, deleteRole } from '../controllers/rolesController.js';
 import { verifierToken, verifierAdmin } from '../middleware/authMiddleware.js';
