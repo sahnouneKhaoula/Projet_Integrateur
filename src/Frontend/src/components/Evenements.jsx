@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import '../Style/Evenements.css';
 
-const BASE = 'http://localhost:3001';
+const BASE = 'http://localhost:3002';
 const token = () => localStorage.getItem('token');
 const utilisateurLocal = () => {
     try { return JSON.parse(localStorage.getItem('utilisateur') || '{}'); } catch { return {}; }
@@ -14,6 +14,7 @@ const STATUTS = {
     ongoing:   { label: 'En cours',  cls: 'ev-badge--ongoing',   emoji: '▶️' },
     completed: { label: 'Terminé',   cls: 'ev-badge--completed', emoji: '✅' },
     cancelled: { label: 'Annulé',    cls: 'ev-badge--cancelled', emoji: '❌' },
+    archived:  { label: 'Archivé',   cls: 'ev-badge--archived',  emoji: '📦' },
 };
 
 const fmt = (d) => d ? new Date(d).toLocaleDateString('fr-CA', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
@@ -32,7 +33,7 @@ function BadgeStatut({ status }) {
 }
 
 // ─── Carte événement ───────────────────────────────────────────────
-function CarteEvenement({ ev, onVoir, onEditer, onSupprimer, onStatut, isAdmin }) {
+function CarteEvenement({ ev, onVoir, onEditer, onSupprimer, onStatut, onConfirmer, isAdmin }) {
     return (
         <div className="ev-carte" onClick={() => onVoir(ev.id)}>
             <div className="ev-carte-haut">
@@ -75,6 +76,24 @@ function CarteEvenement({ ev, onVoir, onEditer, onSupprimer, onStatut, isAdmin }
                     )}
                     {ev.status === 'ongoing' && (
                         <button className="ev-btn-action ev-btn-action--done" onClick={() => onStatut(ev.id, 'completed')} title="Terminer">✓</button>
+                    )}
+                    {ev.status === 'completed' && (
+                        <button
+                            className="ev-btn-action ev-btn-action--archive"
+                            onClick={() => onStatut(ev.id, 'archived')}
+                            title="Archiver l'événement"
+                        >
+                            📦
+                        </button>
+                    )}
+                    {ev.status !== 'cancelled' && (
+                        <button
+                            className="ev-btn-action ev-btn-action--cancel"
+                            onClick={() => onStatut(ev.id, 'cancelled')}
+                            title="Annuler l'événement"
+                        >
+                            ❌
+                        </button>
                     )}
                     <button className="ev-btn-action ev-btn-action--edit" onClick={() => onEditer(ev)} title="Modifier">✏️</button>
                     <button className="ev-btn-action ev-btn-action--del" onClick={() => onSupprimer(ev.id, ev.title)} title="Supprimer">🗑️</button>
@@ -201,6 +220,7 @@ function ModalFormulaire({ evenement, onFermer, onSauvegarde }) {
         start_date:   toInput(evenement?.start_date),
         end_date:     toInput(evenement?.end_date),
         room_id:      evenement?.room_id      || '',
+        expected_guests: evenement?.expected_guests || '',
         status:       evenement?.status       || 'planned',
     });
 
@@ -232,9 +252,30 @@ function ModalFormulaire({ evenement, onFermer, onSauvegarde }) {
         if (!form.title || !form.start_date || !form.end_date || !form.organizer_id) {
             setErreur('Titre, organisateur et dates sont obligatoires.'); return;
         }
-        if (new Date(form.end_date) <= new Date(form.start_date)) {
+
+        const debut = new Date(form.start_date);
+        const fin   = new Date(form.end_date);
+        const maintenant = new Date();
+
+        if (debut < new Date(maintenant.toDateString())) {
+            setErreur('La date de début ne peut pas être dans le passé.'); return;
+        }
+        if (fin <= debut) {
             setErreur('La date de fin doit être après la date de début.'); return;
         }
+        if (form.expected_guests) {
+            const guests = parseInt(form.expected_guests, 10);
+            if (Number.isNaN(guests) || guests <= 0) {
+                setErreur('Le nombre d\'invités doit être un nombre positif.'); return;
+            }
+            if (form.room_id) {
+                const salle = salles.find(s => String(s.id) === String(form.room_id));
+                if (salle && guests > salle.capacity) {
+                    setErreur(`Le nombre d'invités (${guests}) dépasse la capacité de la salle (${salle.capacity}).`); return;
+                }
+            }
+        }
+
         setChargement(true);
         try {
             const method = isEdit ? 'PUT' : 'POST';
@@ -282,6 +323,19 @@ function ModalFormulaire({ evenement, onFermer, onSauvegarde }) {
                             <label>Date & heure de fin *</label>
                             <input type="datetime-local" name="end_date" value={form.end_date} onChange={handleChange} required />
                         </div>
+                    </div>
+
+                    <div className="ev-form-champ">
+                        <label>Nombre estimé d'invités</label>
+                        <input
+                            type="number"
+                            min="1"
+                            name="expected_guests"
+                            value={form.expected_guests}
+                            onChange={handleChange}
+                            placeholder="Ex: 120"
+                        />
+                        <small className="ev-form-aide">Ne peut pas dépasser la capacité de la salle sélectionnée.</small>
                     </div>
 
                     <div className="ev-form-grille-2">
@@ -341,7 +395,9 @@ export default function Evenements() {
     const [message, setMessage] = useState('');
 
     const user = utilisateurLocal();
-    const isAdmin = user?.role === 'admin';
+    const role = user?.role;
+    const isAdmin = role === 'admin';
+    const canCreateEvent = ['admin', 'organisateur', 'coordonnateur'].includes(role);
 
     const charger = useCallback(async () => {
         setChargement(true);
@@ -437,7 +493,7 @@ export default function Evenements() {
                     <h1 className="ev-titre">Événements</h1>
                     <p className="ev-sous-titre">{evenements.length} événement{evenements.length !== 1 ? 's' : ''} au total</p>
                 </div>
-                {isAdmin && (
+                {canCreateEvent && (
                     <button className="ev-btn-primaire" onClick={() => setModalForm({})}>
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                         Nouvel événement

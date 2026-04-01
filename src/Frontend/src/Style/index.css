@@ -43,6 +43,7 @@
 @import './components/cards.css';
 @import './components/forms.css';
 @import './components/sections.css';
+@import './components/notifications.css';
  
 /* 4. Pages */
 @import './pages/home.css';

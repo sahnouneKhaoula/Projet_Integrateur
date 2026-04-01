@@ -52,7 +52,9 @@ app.use('/api/services', servicesRoutes);
 app.use('/api/invoices', invoicesRoutes);
 app.use('/api/payments', paymentsRoutes);
 
-// Démarrage du serveur
-app.listen(process.env.PORT);
-console.log('Serveur démarré:');
-console.log('http://localhost:' + process.env.PORT);
+// Démarrage du serveur sur un port fixe pour le dev
+const PORT = 3002;
+app.listen(PORT, () => {
+  console.log('Serveur démarré:');
+  console.log('http://localhost:' + PORT);
+});

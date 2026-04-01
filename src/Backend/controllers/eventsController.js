@@ -74,12 +74,59 @@ export const getEventById = async (req, res) => {
 
 // ─── CREATE (brouillon par défaut, notif admins) ──────────────────
 export const createEvent = async (req, res) => {
-    const { title, description, organizer_id, start_date, end_date, room_id } = req.body;
+    const { title, description, organizer_id, start_date, end_date, room_id, expected_guests } = req.body;
     if (!title || !start_date || !end_date || !organizer_id)
         return res.status(400).json({ message: 'Champs obligatoires : title, start_date, end_date, organizer_id.' });
     try {
         const pool = await poolPromise;
 
+        const debut = new Date(start_date);
+        const fin   = new Date(end_date);
+        const maintenant = new Date();
+        if (debut < new Date(maintenant.toDateString())) {
+            return res.status(400).json({ message: 'La date de début ne peut pas être dans le passé.' });
+        }
+        if (fin <= debut) {
+            return res.status(400).json({ message: 'La date de fin doit être après la date de début.' });
+        }
+
+        
+
+        // Si une salle et un nombre d'invités sont fournis, vérifier la capacité
+        if (room_id && expected_guests) {
+            const salleRes = await pool.request()
+                .input('room_id', parseInt(room_id))
+                .query('SELECT capacity FROM Salles WHERE id = @room_id');
+            if (salleRes.recordset.length === 0) {
+                return res.status(400).json({ message: 'Salle sélectionnée introuvable.' });
+            }
+            const capacity = salleRes.recordset[0].capacity;
+            if (parseInt(expected_guests, 10) > capacity) {
+                return res.status(400).json({
+                    message: `Le nombre d'invités (${expected_guests}) dépasse la capacité de la salle (${capacity}).`
+                });
+            }
+        }
+// Conflit de réservation de salle
+if (room_id) {
+    const conflit = await pool.request()
+      .input('room_id', parseInt(room_id))
+      .input('start_date', new Date(start_date))
+      .input('end_date', new Date(end_date))
+      .query(`
+        SELECT 1
+        FROM Events
+        WHERE room_id = @room_id
+          AND status <> 'cancelled'
+          AND (@start_date < end_date AND @end_date > start_date)
+      `);
+  
+    if (conflit.recordset.length > 0) {
+      return res.status(400).json({
+        message: 'La salle est déjà réservée sur ce créneau. Veuillez choisir une autre plage horaire ou une autre salle.'
+      });
+    }
+  }
         // Créer en brouillon
         const result = await pool.request()
             .input('title',        title)
@@ -119,18 +166,61 @@ export const createEvent = async (req, res) => {
 // ─── UPDATE ───────────────────────────────────────────────────────
 export const updateEvent = async (req, res) => {
     const { id } = req.params;
-    const { title, description, organizer_id, start_date, end_date, room_id, status } = req.body;
+    const { title, description, organizer_id, start_date, end_date, room_id } = req.body;
     try {
         const pool = await poolPromise;
+
+        // Récupérer l'état actuel de l'événement
+        const currentRes = await pool.request()
+            .input('id', parseInt(id))
+            .query('SELECT title, description, organizer_id, start_date, end_date, room_id, status FROM Events WHERE id = @id');
+        if (currentRes.recordset.length === 0) {
+            return res.status(404).json({ message: 'Événement introuvable.' });
+        }
+        const current = currentRes.recordset[0];
+
+        // Règle 1: un événement annulé ou archivé ne peut plus être modifié
+        if (current.status === 'cancelled' || current.status === 'archived') {
+            return res.status(400).json({ message: 'Les événements annulés ou archivés ne peuvent plus être modifiés.' });
+        }
+
+        // Règle 2: un événement terminé ne permet de modifier que la description
+        if (current.status === 'termine') {
+            await pool.request()
+                .input('id',           parseInt(id))
+                .input('description',  description || null)
+                .query(`UPDATE Events SET
+                            description  = @description,
+                            updated_at   = SYSUTCDATETIME()
+                        WHERE id = @id`);
+            return res.status(200).json({ message: 'Description de l\'événement mise à jour.' });
+        }
+
+        // Règle 3: pour un événement validé / en cours, on ne peut pas changer dates ni salle
+        const newStart = new Date(start_date);
+        const newEnd   = new Date(end_date);
+        const newRoomId = room_id ? parseInt(room_id) : null;
+
+        if ((current.status === 'valide' || current.status === 'ongoing')) {
+            const sameStart = new Date(current.start_date).getTime() === newStart.getTime();
+            const sameEnd   = new Date(current.end_date).getTime() === newEnd.getTime();
+            const sameRoom  = (current.room_id || null) === newRoomId;
+            if (!sameStart || !sameEnd || !sameRoom) {
+                return res.status(400).json({
+                    message: 'Les dates et la salle ne peuvent pas être modifiées une fois l\'événement confirmé ou en cours.'
+                });
+            }
+        }
+
+        // Mise à jour générale (titre, description, organisateur, et éventuellement dates/salle si brouillon)
         await pool.request()
             .input('id',           parseInt(id))
             .input('title',        title)
             .input('description',  description || null)
             .input('organizer_id', parseInt(organizer_id))
-            .input('start_date',   new Date(start_date))
-            .input('end_date',     new Date(end_date))
-            .input('room_id',      room_id ? parseInt(room_id) : null)
-            .input('status',       status)
+            .input('start_date',   newStart)
+            .input('end_date',     newEnd)
+            .input('room_id',      newRoomId)
             .query(`UPDATE Events SET
                         title        = @title,
                         description  = @description,
@@ -138,7 +228,6 @@ export const updateEvent = async (req, res) => {
                         start_date   = @start_date,
                         end_date     = @end_date,
                         room_id      = @room_id,
-                        status       = @status,
                         updated_at   = SYSUTCDATETIME()
                     WHERE id = @id`);
         res.status(200).json({ message: 'Événement mis à jour.' });
@@ -152,7 +241,18 @@ export const deleteEvent = async (req, res) => {
     const { id } = req.params;
     try {
         const pool = await poolPromise;
-        // Supprimer les dépendances d'abord
+        const evtRes = await pool.request().input('id', parseInt(id)).query('SELECT status FROM Events WHERE id = @id');
+        if (evtRes.recordset.length === 0) {
+            return res.status(404).json({ message: 'Événement introuvable.' });
+        }
+        const { status } = evtRes.recordset[0];
+
+        if (status !== 'brouillon') {
+            return res.status(400).json({
+                message: 'Seuls les événements en brouillon peuvent être supprimés. Veuillez l’annuler plutôt que le supprimer.'
+            });
+        }
+
         await pool.request().input('id', parseInt(id)).query('DELETE FROM Services WHERE event_id = @id');
         await pool.request().input('id', parseInt(id)).query('DELETE FROM Guests   WHERE event_id = @id');
         await pool.request().input('id', parseInt(id)).query('DELETE FROM Events   WHERE id       = @id');
@@ -166,7 +266,7 @@ export const deleteEvent = async (req, res) => {
 export const updateEventStatus = async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
-    const validStatuts = ['brouillon', 'planned', 'ongoing', 'completed', 'cancelled'];
+    const validStatuts = ['brouillon', 'planned', 'ongoing', 'completed', 'cancelled', 'archived'];
     if (!validStatuts.includes(status))
         return res.status(400).json({ message: 'Statut invalide.' });
     try {

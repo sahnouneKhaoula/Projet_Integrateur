@@ -11,7 +11,7 @@ export default function GestionRoles() {
 
   const chargerRoles = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/roles', {
+      const res = await fetch('http://localhost:3002/api/roles', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -32,7 +32,7 @@ export default function GestionRoles() {
     }
     setChargement(true);
     try {
-      const res = await fetch('http://localhost:3001/api/roles', {
+      const res = await fetch('http://localhost:3002/api/roles', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ export default function GestionRoles() {
     if (!window.confirm(`Supprimer le rôle "${nom}" ?`)) return;
     setMessage({ texte: '', type: '' });
     try {
-      const res = await fetch(`http://localhost:3001/api/roles/${id}`, {
+      const res = await fetch(`http://localhost:3002/api/roles/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

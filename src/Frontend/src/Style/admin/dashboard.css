@@ -11,6 +11,13 @@
   font-family: var(--police-sans);
 }
 
+/* Branding au-dessus du tableau de bord */
+.dashboard-branding-inline {
+  padding: 0;
+  border-bottom: none;
+  margin: 0 0 0.75rem 0;
+}
+
 /* ============================================
    En-tête
    ============================================ */

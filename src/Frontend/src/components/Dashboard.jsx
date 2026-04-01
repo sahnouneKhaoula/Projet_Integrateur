@@ -33,7 +33,7 @@ export default function Dashboard() {
       setChargement(true)
       setErreur('')
       try {
-        const res = await fetch('http://localhost:3001/api/stats', {
+        const res = await fetch('http://localhost:3002/api/stats', {
           headers: { 'Authorization': `Bearer ${token}` }
         })
         if (!res.ok) throw new Error('Impossible de charger les statistiques.')
@@ -67,9 +67,9 @@ export default function Dashboard() {
       {/* En-tête */}
       <div className="dashboard-header">
         <div className="dashboard-header-texte">
+                   <h1 className="dashboard-titre">Tableau de bord</h1>
           <span className="dashboard-salutation">Bonjour, {nomAffiche} 👋</span>
-          <h1 className="dashboard-titre">Tableau de bord</h1>
-          <p className="dashboard-date">{aujourdhui} · Hôtel La Promenade</p>
+          <p className="dashboard-date">{aujourdhui}</p>
         </div>
         <div className="dashboard-header-actions">
           <button className="bouton bouton--secondaire bouton--petit">📄 Rapport</button>

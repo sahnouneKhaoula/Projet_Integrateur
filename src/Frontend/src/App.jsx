@@ -138,6 +138,11 @@ function App() {
           <h1>Hôtel La Promenade</h1>
           <p>Gestion d'événements</p>
         </div>
+        <div className="SidebarNotifications">
+            <NotificationsBell />
+          </div>
+       
+       
 
         {/* Navigation principale */}
         <nav className="Tabs">
@@ -172,9 +177,7 @@ function App() {
 
         {/* Paramètres + Profil en bas */}
         <div className="SidebarBottom">
-          <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '0 0.5rem 0.5rem' }}>
-            <NotificationsBell />
-          </div>
+         
           <button
             className={`tab-settings ${activeTab === 'Parametres' ? 'active' : ''}`}
             onClick={() => setActiveTab('Parametres')}

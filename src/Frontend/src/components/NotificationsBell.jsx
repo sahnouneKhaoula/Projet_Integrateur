@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import './NotificationsBell.css';
 
-const BASE = 'http://localhost:3001';
+const BASE = 'http://localhost:3002';
 const token = () => localStorage.getItem('token');
 
 const TYPE_CONFIG = {

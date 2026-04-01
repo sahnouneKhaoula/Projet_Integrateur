@@ -1,0 +1,3 @@
+prenom,nom,email,telephone,role_id
+Marie,Tremblay,marie.tremblay@example.com,514-555-0100,2
+Jean,Dupont,jean.dupont@example.com,,3
