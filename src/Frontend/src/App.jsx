@@ -8,6 +8,8 @@ import Services from './components/Services'
 import Parametres from './components/Parametres'
 import GestionUtilisateurs from './components/GestionUtilisateurs'
 import GestionRoles from './components/GestionRoles'
+import Rapports from './components/Rapports'
+import NotificationsBell from './components/NotificationsBell'
 
 // --- Icônes SVG inline (style outline, similaire à la maquette) ---
 const icons = {
@@ -79,19 +81,19 @@ const icons = {
 
 // Structure du menu principal
 const menuItems = [
-  { id: 'Tableau de bord', label: 'Dashboard', icon: 'dashboard' },
-  { id: 'Events', label: 'Events', icon: 'events' },
-  { id: 'Reservations', label: 'Reservations', icon: 'reservations' },
-  { id: 'Espaces', label: 'Rooms', icon: 'rooms' },
-  { id: 'Services', label: 'Services', icon: 'services' },
-  { id: 'Guests', label: 'Guests', icon: 'guests' },
-  { id: 'Comptabilité', label: 'Invoices', icon: 'invoices' },
-  { id: 'Reports', label: 'Reports', icon: 'reports' },
+  { id: 'Tableau de bord', label: 'Tableau de bord', icon: 'dashboard' },
+  { id: 'Events',         label: 'Événements',      icon: 'events' },
+  { id: 'Reservations',   label: 'Réservations',    icon: 'reservations' },
+  { id: 'Espaces',        label: 'Salles & Espaces',  icon: 'rooms' },
+  { id: 'Services',       label: 'Services',           icon: 'services' },
+  { id: 'Guests',         label: 'Invités',           icon: 'guests' },
+  { id: 'Comptabilité',   label: 'Comptabilité',     icon: 'invoices' },
+  { id: 'Reports',        label: 'Rapports',           icon: 'reports' },
 ]
 
 const adminItems = [
-  { id: 'Utilisateurs', label: 'Users / Staff', icon: 'users' },
-  { id: 'Roles', label: 'Roles', icon: 'roles' },
+  { id: 'Utilisateurs', label: 'Utilisateurs',  icon: 'users' },
+  { id: 'Roles',        label: 'Rôles',          icon: 'roles' },
 ]
 
 function App() {
@@ -120,6 +122,7 @@ function App() {
       case 'Parametres': return <Parametres />
       case 'Utilisateurs': return <GestionUtilisateurs />
       case 'Roles': return <GestionRoles />
+      case 'Reports': return <Rapports />
       default: return <Dashboard />
     }
   }
@@ -135,6 +138,11 @@ function App() {
           <h1>Hôtel La Promenade</h1>
           <p>Gestion d'événements</p>
         </div>
+        <div className="SidebarNotifications">
+            <NotificationsBell />
+          </div>
+       
+       
 
         {/* Navigation principale */}
         <nav className="Tabs">
@@ -169,12 +177,13 @@ function App() {
 
         {/* Paramètres + Profil en bas */}
         <div className="SidebarBottom">
+         
           <button
             className={`tab-settings ${activeTab === 'Parametres' ? 'active' : ''}`}
             onClick={() => setActiveTab('Parametres')}
           >
             <span className="tab-icon">{icons.settings}</span>
-            <span className="tab-label">Settings</span>
+            <span className="tab-label">Paramètres</span>
           </button>
 
           <div className="Profile">

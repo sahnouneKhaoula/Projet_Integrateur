@@ -46,7 +46,7 @@ export function PageInscription() {
         setLoading(true);
 
         try {
-            const reponse = await fetch('http://localhost:3001/api/users/register', {
+            const reponse = await fetch('http://localhost:3002/api/users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -22,7 +22,7 @@ export default function GestionUtilisateurs() {
   // Charger la liste des utilisateurs
   const chargerUtilisateurs = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/users', {
+      const res = await fetch('http://localhost:3002/api/users', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -35,7 +35,7 @@ export default function GestionUtilisateurs() {
   // Charger les rôles Staff disponibles
   const chargerRoles = async () => {
     try {
-      const res = await fetch('http://localhost:3001/api/users/roles-staff', {
+      const res = await fetch('http://localhost:3002/api/users/roles-staff', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
@@ -74,7 +74,7 @@ export default function GestionUtilisateurs() {
     setChargement(true);
     try {
       const username = `${formData.prenom.toLowerCase()}_${formData.nom.toLowerCase()}`.replace(/[^a-z0-9_]/g, '');
-      const res = await fetch('http://localhost:3001/api/users', {
+      const res = await fetch('http://localhost:3002/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

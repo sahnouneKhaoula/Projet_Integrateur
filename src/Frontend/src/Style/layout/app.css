@@ -120,6 +120,12 @@
   padding: 0.75rem;
 }
 
+.SidebarNotifications {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 0.5rem 0.5rem;
+}
+
 .tab-settings {
   margin-bottom: 0.5rem;
 }

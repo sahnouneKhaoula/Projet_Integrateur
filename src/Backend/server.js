@@ -14,6 +14,9 @@ dotenv.config();
 import "./db/db.js";
 
 
+import statsRoutes from './routes/statsRoutes.js';
+import importExportRoutes from './routes/importExportRoutes.js';
+import notificationsRoutes from './routes/notificationsRoutes.js';
 import rolesRoutes from './routes/rolesRoutes.js';
 import usersRoutes from './routes/usersRoutes.js';
 import sallesRoutes from './routes/sallesRoutes.js';
@@ -35,6 +38,10 @@ app.use(json());
 app.use(express.static('public'));
 
 // Programmation des routes
+app.use('/api/stats',         statsRoutes);
+app.use('/api/import',        importExportRoutes);
+app.use('/api/export',        importExportRoutes);
+app.use('/api/notifications', notificationsRoutes);
 app.use('/api/roles', rolesRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/salles', sallesRoutes);
@@ -45,7 +52,9 @@ app.use('/api/services', servicesRoutes);
 app.use('/api/invoices', invoicesRoutes);
 app.use('/api/payments', paymentsRoutes);
 
-// Démarrage du serveur
-app.listen(process.env.PORT);
-console.log('Serveur démarré:');
-console.log('http://localhost:' + process.env.PORT);
+// Démarrage du serveur sur un port fixe pour le dev
+const PORT = 3002;
+app.listen(PORT, () => {
+  console.log('Serveur démarré:');
+  console.log('http://localhost:' + PORT);
+});
