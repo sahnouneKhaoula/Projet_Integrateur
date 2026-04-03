@@ -16,4 +16,6 @@ router.delete('/:id',         verifierToken, verifierAdmin, deleteEvent);
 router.patch('/:id/statut',   verifierToken, verifierAdmin, updateEventStatus);
 router.patch('/:id/confirmer',verifierToken, verifierAdmin, confirmerEvent);
 
+
+
 export default router;
