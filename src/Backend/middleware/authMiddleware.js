@@ -25,3 +25,10 @@ export const verifierAdmin = (req, res, next) => {
     }
     next();
 };
+
+export const verifierCoord = (req, res, next) => {
+    if (!req.utilisateur || req.utilisateur.role !== 'coordonnateur') {
+        return res.status(403).json({ message: "Accès refusé. Réservé aux coordinateurs." });
+    }
+    next();
+};

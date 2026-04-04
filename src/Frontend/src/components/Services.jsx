@@ -9,52 +9,82 @@ const utilisateurLocal = () => {
 
 // ─── Config statuts ────────────────────────────────────────────────────────────
 const STATUTS_SVC = {
-    'DEMANDÉ':                 { label: 'Demandé',              cls: 'svc-badge--demande',    emoji: '📋' },
-    'EN_ATTENTE_D_AJUSTEMENT': { label: 'Attente ajustement',   cls: 'svc-badge--ajustement', emoji: '⏳' },
-    'VALIDÉ':                  { label: 'Validé',               cls: 'svc-badge--valide',     emoji: '✅' },
-    'PROGRAMMÉ':               { label: 'Programmé',            cls: 'svc-badge--programme',  emoji: '📅' },
+  pending:  { label: 'Demandé', cls: 'svc-badge--demande', emoji: '📋' },
+  approved: { label: 'Validé',  cls: 'svc-badge--valide',  emoji: '✅' },
+  rejected: { label: 'Rejeté',  cls: 'svc-badge--rejete',  emoji: '❌' },
 };
 
 const fmt = (d) => d ? new Date(d).toLocaleDateString('fr-CA', { day: '2-digit', month: 'short', year: 'numeric' }) : '—';
 
+// ─── Liste des services disponibles (Option A — statique) ──────────────────────
+// Pour ajouter un service : ajouter une entrée ici avec name et prix_defaut.
+const SERVICES_DISPONIBLES = [
+    { name: 'Traiteur',               prix_defaut: 500  },
+    { name: 'Décoration florale',     prix_defaut: 300  },
+    { name: 'Sonorisation',           prix_defaut: 400  },
+    { name: 'Éclairage scénique',     prix_defaut: 350  },
+    { name: 'Photographe',            prix_defaut: 800  },
+    { name: 'Vidéaste',               prix_defaut: 900  },
+    { name: 'Animateur / DJ',         prix_defaut: 600  },
+    { name: 'Service de bar',         prix_defaut: 250  },
+    { name: 'Location de mobilier',   prix_defaut: 200  },
+    { name: 'Transport / navette',    prix_defaut: 150  },
+    { name: 'Sécurité',               prix_defaut: 300  },
+    { name: 'Nettoyage post-événement', prix_defaut: 180 },
+];
+
 function BadgeStatut({ statut }) {
-    const s = STATUTS_SVC[statut] || { label: statut, cls: '', emoji: '?' };
-    return <span className={`svc-badge ${s.cls}`}>{s.emoji} {s.label}</span>;
+  const s = STATUTS_SVC[statut];
+
+  if (!s) {
+    console.error("Statut inconnu :", statut);
+    return <span className="svc-badge svc-badge--unknown">? {statut}</span>;
+  }
+
+  return (
+    <span className={`svc-badge ${s.cls}`}>
+      {s.emoji} {s.label}
+    </span>
+  );
 }
 
 // ─── Vue Organisateur : soumettre une demande de service ───────────────────────
-function FormulaireDemandeService({ eventId, eventTitre, onFermer, onSauvegarde }) {
+function FormulaireDemandeService({ evenements, onFermer, onSauvegarde }) {
+    const [eventChoisi, setEventChoisi] = useState(evenements[0]?.id || '');
+    // Chaque ligne : service choisi dans la liste + prix modifiable
     const [lignes, setLignes] = useState([
-        { name: '', description: '', quantite: 1, date_souhaitee: '', price: '' }
+        { name: SERVICES_DISPONIBLES[0].name, price: SERVICES_DISPONIBLES[0].prix_defaut }
     ]);
     const [chargement, setChargement] = useState(false);
     const [erreur, setErreur] = useState('');
 
     const ajouterLigne = () =>
-        setLignes(l => [...l, { name: '', description: '', quantite: 1, date_souhaitee: '', price: '' }]);
+        setLignes(l => [...l, { name: SERVICES_DISPONIBLES[0].name, price: SERVICES_DISPONIBLES[0].prix_defaut }]);
 
     const supprimerLigne = (i) =>
         setLignes(l => l.filter((_, idx) => idx !== i));
 
-    const changerLigne = (i, champ, val) =>
-        setLignes(l => l.map((ligne, idx) => idx === i ? { ...ligne, [champ]: val } : ligne));
+    const changerService = (i, name) => {
+        const svc = SERVICES_DISPONIBLES.find(s => s.name === name);
+        setLignes(l => l.map((ligne, idx) =>
+            idx === i ? { name, price: svc?.prix_defaut ?? 0 } : ligne
+        ));
+    };
+
+    const changerPrix = (i, price) =>
+        setLignes(l => l.map((ligne, idx) => idx === i ? { ...ligne, price } : ligne));
 
     const soumettre = async () => {
-        if (lignes.some(l => !l.name.trim())) {
-            setErreur('Le nom est obligatoire pour chaque service.'); return;
-        }
+        if (!eventChoisi) { setErreur('Veuillez sélectionner un événement.'); return; }
         setErreur('');
         setChargement(true);
         try {
             const payload = lignes.map(l => ({
-                name: l.name.trim(),
-                description: l.description.trim() || undefined,
-                quantite: parseInt(l.quantite) || 1,
-                date_souhaitee: l.date_souhaitee || undefined,
+                name:  l.name,
                 price: parseFloat(l.price) || 0,
             }));
 
-            const res = await fetch(`${BASE}/api/events/${eventId}/services`, {
+            const res = await fetch(`${BASE}/api/services/event/${eventChoisi}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token()}` },
                 body: JSON.stringify(payload),
@@ -74,7 +104,16 @@ function FormulaireDemandeService({ eventId, eventTitre, onFermer, onSauvegarde 
             <div className="svc-modal svc-modal--large" onClick={e => e.stopPropagation()}>
                 <button className="svc-modal-fermer" onClick={onFermer}>✕</button>
                 <h2 className="svc-modal-titre">📋 Soumettre des demandes de services</h2>
-                {eventTitre && <p className="svc-modal-sous-titre">Pour : <strong>{eventTitre}</strong></p>}
+
+                <div className="svc-form-champ" style={{ marginBottom: '1.25rem' }}>
+                    <label>Événement concerné *</label>
+                    <select value={eventChoisi} onChange={e => setEventChoisi(e.target.value)}>
+                        <option value="">— Sélectionner un événement —</option>
+                        {evenements.map(ev => (
+                            <option key={ev.id} value={ev.id}>{ev.title}</option>
+                        ))}
+                    </select>
+                </div>
 
                 {erreur && <div className="svc-alerte svc-alerte--erreur">⚠️ {erreur}</div>}
 
@@ -84,55 +123,25 @@ function FormulaireDemandeService({ eventId, eventTitre, onFermer, onSauvegarde 
                             <div className="svc-demande-ligne-entete">
                                 <span className="svc-demande-nb">Service #{i + 1}</span>
                                 {lignes.length > 1 && (
-                                    <button className="svc-btn-icon svc-btn-supprimer" onClick={() => supprimerLigne(i)} title="Supprimer">✕</button>
+                                    <button className="svc-btn-icon svc-btn-supprimer" onClick={() => supprimerLigne(i)}>✕</button>
                                 )}
                             </div>
 
                             <div className="svc-form-grille-2">
                                 <div className="svc-form-champ">
-                                    <label>Nom du service *</label>
-                                    <input
-                                        value={ligne.name}
-                                        onChange={e => changerLigne(i, 'name', e.target.value)}
-                                        placeholder="Ex: Traiteur, Décoration florale…"
-                                    />
+                                    <label>Type de service *</label>
+                                    <select value={ligne.name} onChange={e => changerService(i, e.target.value)}>
+                                        {SERVICES_DISPONIBLES.map(s => (
+                                            <option key={s.name} value={s.name}>{s.name}</option>
+                                        ))}
+                                    </select>
                                 </div>
                                 <div className="svc-form-champ">
-                                    <label>Quantité</label>
-                                    <input
-                                        type="number" min="1"
-                                        value={ligne.quantite}
-                                        onChange={e => changerLigne(i, 'quantite', e.target.value)}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="svc-form-champ">
-                                <label>Description / précisions</label>
-                                <textarea
-                                    rows={2}
-                                    value={ligne.description}
-                                    onChange={e => changerLigne(i, 'description', e.target.value)}
-                                    placeholder="Détails, allergies, style, couleurs…"
-                                />
-                            </div>
-
-                            <div className="svc-form-grille-2">
-                                <div className="svc-form-champ">
-                                    <label>Date souhaitée</label>
-                                    <input
-                                        type="datetime-local"
-                                        value={ligne.date_souhaitee}
-                                        onChange={e => changerLigne(i, 'date_souhaitee', e.target.value)}
-                                    />
-                                </div>
-                                <div className="svc-form-champ">
-                                    <label>Budget estimé ($)</label>
+                                    <label>Prix estimé ($)</label>
                                     <input
                                         type="number" min="0" step="0.01"
                                         value={ligne.price}
-                                        onChange={e => changerLigne(i, 'price', e.target.value)}
-                                        placeholder="0.00"
+                                        onChange={e => changerPrix(i, e.target.value)}
                                     />
                                 </div>
                             </div>
@@ -156,32 +165,38 @@ function FormulaireDemandeService({ eventId, eventTitre, onFermer, onSauvegarde 
     );
 }
 
+
 // ─── Vue Coordinateur : traiter une demande ────────────────────────────────────
 function ModalTraitement({ demande, onFermer, onTraitement }) {
-    const [action, setAction] = useState('');
-    const [notes, setNotes] = useState('');
     const [chargement, setChargement] = useState(false);
     const [erreur, setErreur] = useState('');
+    
 
-    const traiter = async () => {
-        if (!action) { setErreur('Choisissez une action.'); return; }
-        setErreur('');
-        setChargement(true);
-        try {
-            const res = await fetch(`${BASE}/api/services/${demande.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token()}` },
-                body: JSON.stringify({ action, notes }),
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.message);
-            onTraitement(`✅ ${data.message}`);
-        } catch (err) {
-            setErreur(err.message);
-        } finally {
-            setChargement(false);
-        }
-    };
+    const traiter = async (action) => {
+    setErreur('');
+    setChargement(true);
+
+    try {
+        const res = await fetch(`${BASE}/api/services/${demande.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token()}`
+            },
+            body: JSON.stringify({ action }),
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.message);
+
+        const emoji = action === 'rejeter' ? '❌' : '✅';
+        onTraitement(`${emoji} ${data.message}`);
+    } catch (err) {
+        setErreur(err.message || 'Erreur lors du traitement.');
+    } finally {
+        setChargement(false);
+    }
+};
 
     return (
         <div className="svc-overlay" onClick={onFermer}>
@@ -194,60 +209,21 @@ function ModalTraitement({ demande, onFermer, onTraitement }) {
                     <div className="svc-detail-ligne"><span>Événement</span><strong>{demande.event_title}</strong></div>
                     <div className="svc-detail-ligne"><span>Organisateur</span><strong>{demande.organizer_name}</strong></div>
                     {demande.description && <div className="svc-detail-ligne"><span>Précisions</span><strong>{demande.description}</strong></div>}
-                    <div className="svc-detail-ligne"><span>Quantité</span><strong>{demande.quantite}</strong></div>
-                    {demande.date_souhaitee && <div className="svc-detail-ligne"><span>Date souhaitée</span><strong>{fmt(demande.date_souhaitee)}</strong></div>}
                     <div className="svc-detail-ligne"><span>Budget</span><strong>{parseFloat(demande.price || 0).toFixed(2)} $</strong></div>
-                    <div className="svc-detail-ligne"><span>Statut actuel</span><BadgeStatut statut={demande.statut} /></div>
                 </div>
 
                 {erreur && <div className="svc-alerte svc-alerte--erreur">⚠️ {erreur}</div>}
 
-                <div className="svc-action-choix">
-                    <button
-                        className={`svc-action-btn svc-action-btn--valider ${action === 'valider' ? 'actif' : ''}`}
-                        onClick={() => setAction('valider')}
-                    >
-                        <span className="svc-action-icone">✅</span>
-                        <div>
-                            <strong>Valider & Programmer</strong>
-                            <small>Statut : VALIDÉ → PROGRAMMÉ. L'organisateur sera notifié.</small>
-                        </div>
-                    </button>
-
-                    <button
-                        className={`svc-action-btn svc-action-btn--ajuster ${action === 'ajuster' ? 'actif' : ''}`}
-                        onClick={() => setAction('ajuster')}
-                    >
-                        <span className="svc-action-icone">⏳</span>
-                        <div>
-                            <strong>Demander un ajustement</strong>
-                            <small>Statut : EN_ATTENTE_D_AJUSTEMENT. L'organisateur sera notifié.</small>
-                        </div>
-                    </button>
-                </div>
-
-                {action === 'ajuster' && (
-                    <div className="svc-form-champ" style={{ marginTop: '1rem' }}>
-                        <label>Notes pour l'organisateur</label>
-                        <textarea
-                            rows={3}
-                            value={notes}
-                            onChange={e => setNotes(e.target.value)}
-                            placeholder="Précisez ce qui manque ou doit être ajusté…"
-                        />
-                    </div>
-                )}
-
                 <div className="svc-form-actions">
                     <button className="svc-btn-secondaire" onClick={onFermer}>Annuler</button>
-                    <button className="svc-btn-primaire" onClick={traiter} disabled={!action || chargement}>
-                        {chargement ? '⏳ Traitement…' : 'Confirmer'}
-                    </button>
+                    <button className="svc-btn-rejeter" onClick={() => traiter('rejeter')} disabled={chargement}>❌ Rejeter</button>
+                    <button className="svc-btn-primaire" onClick={() => traiter('valider')} disabled={chargement}>✅ Valider</button>
                 </div>
             </div>
         </div>
     );
 }
+
 
 // ─── Composant principal ───────────────────────────────────────────────────────
 export default function Services() {
@@ -270,7 +246,12 @@ export default function Services() {
     const [modalDemande, setModalDemande] = useState(false);   // formulaire soumission
     const [modalTraitement, setModalTraitement] = useState(null); // traiter une demande
     const [evenements, setEvenements] = useState([]);
-    const [eventChoisi, setEventChoisi] = useState('');
+
+    const STATUTS_SVC = {
+    pending:  { label: 'Demandé', emoji: '📋', cls: '...' },
+    approved: { label: 'Validé',  emoji: '✅', cls: '...' },
+    rejected: { label: 'Rejeté',  emoji: '❌', cls: '...' },
+};
 
     const flash = (msg) => { setMessage(msg); setTimeout(() => setMessage(''), 5000); };
 
@@ -425,8 +406,6 @@ export default function Services() {
                         <span>Service</span>
                         <span>Événement</span>
                         <span>Organisateur</span>
-                        <span>Qté</span>
-                        <span>Date souhaitée</span>
                         <span>Prix</span>
                         <span>Statut</span>
                         {isCoord && onglet === 'a-traiter' && <span>Action</span>}
@@ -440,10 +419,8 @@ export default function Services() {
                             </span>
                             <span>{svc.event_title || '—'}</span>
                             <span>{svc.organizer_name || '—'}</span>
-                            <span>{svc.quantite || 1}</span>
-                            <span>{svc.date_souhaitee ? fmt(svc.date_souhaitee) : '—'}</span>
                             <span>{parseFloat(svc.price || 0).toFixed(2)} $</span>
-                            <span><BadgeStatut statut={svc.statut} /></span>
+                            <span><BadgeStatut statut={STATUTS_SVC[svc.status]} />  </span>
                             {isCoord && onglet === 'a-traiter' && (
                                 <span>
                                     <button
@@ -462,8 +439,7 @@ export default function Services() {
             {/* ─── Modals ────────────────────────────── */}
             {modalDemande && (
                 <FormulaireDemandeService
-                    eventId={eventChoisi || (evenements[0]?.id)}
-                    eventTitre={evenements.find(e => String(e.id) === String(eventChoisi))?.title || evenements[0]?.title}
+                    evenements={evenements}
                     onFermer={() => setModalDemande(false)}
                     onSauvegarde={(msg) => {
                         setModalDemande(false);
@@ -471,19 +447,7 @@ export default function Services() {
                         chargerTous();
                         if (isCoord) chargerDemandes();
                     }}
-                >
-                    {/* Sélecteur d'événement intégré dans l'overlay */}
-                    {evenements.length > 1 && (
-                        <div className="svc-form-champ" style={{ marginBottom: '1rem' }}>
-                            <label>Événement concerné *</label>
-                            <select value={eventChoisi} onChange={e => setEventChoisi(e.target.value)}>
-                                {evenements.map(ev => (
-                                    <option key={ev.id} value={ev.id}>{ev.title}</option>
-                                ))}
-                            </select>
-                        </div>
-                    )}
-                </FormulaireDemandeService>
+                />
             )}
 
             {modalTraitement && (

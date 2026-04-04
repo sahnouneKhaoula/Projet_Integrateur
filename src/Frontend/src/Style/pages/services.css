@@ -1,139 +1,14 @@
-
-Diagramme de séquence - Coordination des services.png
-I want to start integrating coordinating services according to this diagrame built for this project. You can look at the whole project on the dev branch on git : https://github.com/sahnouneKhaoula/Projet_Integrateur.git
-
-1:08 PM
-
-Exécuté 4 commandes, a consulté 2 fichiers, web recherché
-Exécuté 4 commandes, a consulté 2 fichiers, web recherché
-Now I have a thorough understanding of the project. Let me implement the full service coordination flow from the diagram.
-
-
-Peek at events controller for pattern reference
-Peek at events controller for pattern reference
-Now I have everything I need. Let me generate the new servicesController.js and updated servicesRoutes.js implementing the full diagram flow.
-
-
-Exécuté 3 commandes, fichier créé
-Exécuté 3 commandes, fichier créé
-Now update eventsRoutes.js to add the POST /evenements/:id/services and GET /evenements/:id/services routes:
-
-
-Consulté un fichier, fichier modifié
-Consulté un fichier, fichier modifié
-Now generate the SQL migration to add the missing columns to the Services table:
-
-
-Write SQL migration for Services table new columns
-Write SQL migration for Services table new columns
-Now copy all modified files to outputs:
-
-
-A exécuté une commande, lu un fichier
-A exécuté une commande, lu un fichier
-Here's a summary of everything that was implemented, mapped directly to your diagram.
-
-Ce qui a été intégré
-4 fichiers modifiés / créés
-servicesController.js — entièrement réécrit, 5 fonctions :
-
-Fonction	Route	Acteur	Correspond au diagramme
-creerDemandesServices	POST /api/evenements/:id/services	Organisateur	creerDemandesServices() → statut DEMANDÉ → notifie les coordinateurs
-chargerDemandes	GET /api/services/a-traiter	Coordinateur	chargerDemandes() → liste DEMANDÉ + EN_ATTENTE_D_AJUSTEMENT
-traiterDemande	PUT /api/services/:id	Coordinateur	traiterDemande() avec le alt complet
-getAllServices	GET /api/services	—	Lecture générale enrichie
-getServicesByEvent	GET /api/evenements/:id/services	—	Services par événement
-Le bloc alt du diagramme est implémenté dans traiterDemande via action dans le body :
-
-action: "ajuster" → statut EN_ATTENTE_D_AJUSTEMENT + notifierOrganisateurAjustement()
-action: "valider" → statut VALIDÉ puis PROGRAMMÉ + notifierValidationService()
-servicesRoutes.js — routes mises à jour avec authentification et vérification admin pour les routes du coordinateur.
-
-eventsRoutes.js — ajout des deux sous-routes /evenements/:id/services.
-
-migration_services_coordination.sql — à exécuter une seule fois sur SQL Server pour ajouter les colonnes statut, description, quantite, date_souhaitee à la table Services (idempotent avec les IF NOT EXISTS).
-
-Servicescontroller
-JS 
-Servicesroutes
-JS 
-Eventsroutes
-JS 
-Migration services coordination
-Code · SQL 
-what about for th frontend ?
-
-2:50 PM
-Let me explore the frontend structure first.
-
-
-Exécuté 7 commandes, consulté un fichier
-Exécuté 7 commandes, consulté un fichier
-Now I have everything I need. Let me build the complete Services.jsx component and its CSS.
-
-
-Check skill for frontend design
-Check skill for frontend design
-Now I have all the context. Let me build the full Services component and CSS:
-
-
-Exécuté 2 commandes
-Exécuté 2 commandes
-Now register the CSS import in index.css:
-
-
-Add Services.css import to index.css
-Add Services.css import to index.css
-Now copy outputs:
-
-
-A exécuté une commande, lu un fichier
-A exécuté une commande, lu un fichier
-Here's what was built for the frontend, following the exact same patterns as Evenements.jsx and the existing design system.
-
-Ce qui a été créé
-Services.jsx — composant complet qui remplace le placeholder vide, avec deux vues selon le rôle :
-
-Vue Organisateur (role: organisateur ou admin)
-
-Bouton "Soumettre une demande" qui ouvre un formulaire multi-lignes : on peut ajouter plusieurs services en une seule soumission (nom, description, quantité, date souhaitée, budget)
-Chaque envoi appelle POST /api/events/:id/services → statut DEMANDÉ
-Vue Coordinateur (role: admin, coordonnateur, coordinateur)
-
-Onglet "À traiter" qui charge GET /api/services/a-traiter — uniquement les demandes DEMANDÉ ou EN_ATTENTE_D_AJUSTEMENT
-Bouton "⚙️ Traiter" par ligne qui ouvre la modal de traitement avec le bloc alt du diagramme :
-✅ Valider & Programmer → PUT /api/services/:id avec action: "valider"
-⏳ Demander un ajustement → action: "ajuster" + champ de notes pour l'organisateur
-Onglet "Tous les services" avec filtres par statut (pills) et recherche
-Services.css — styles cohérents avec le design system existant (--primaire, --carte, --bordure, etc.), badges colorés par statut, table responsive, modals avec backdrop blur.
-
-index.css — l'import @import './Services.css' a été ajouté.
-
-Services
-Code · JSX 
-Services
-Code · CSS 
-
-Vous n’avez plus de messages gratuits jusqu’à 18:00.
-Mettre à niveau
-
-
-
-Claude est une IA et peut faire des erreurs. Veuillez vérifier les réponses.
-Services · CSS
-Copier
-
 /* ============================================
    SERVICES — Coordination des services
    Hôtel La Promenade
    ============================================ */
- 
+
 .svc-page {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
- 
+
 /* ─── En-tête ────────────────────────────────────────────────── */
 .svc-header {
   display: flex;
@@ -143,7 +18,7 @@ Copier
   gap: 1rem;
   flex-wrap: wrap;
 }
- 
+
 .svc-titre {
   font-family: var(--police-serif);
   font-size: 1.75rem;
@@ -151,13 +26,13 @@ Copier
   color: var(--texte);
   margin: 0 0 0.2rem 0;
 }
- 
+
 .svc-sous-titre {
   font-size: 0.85rem;
   color: var(--mute-texte);
   margin: 0;
 }
- 
+
 /* ─── Boutons ────────────────────────────────────────────────── */
 .svc-btn-primaire {
   display: inline-flex;
@@ -176,7 +51,7 @@ Copier
 }
 .svc-btn-primaire:hover { opacity: 0.88; }
 .svc-btn-primaire:disabled { opacity: 0.5; cursor: not-allowed; }
- 
+
 .svc-btn-secondaire {
   padding: 0.6rem 1.25rem;
   background: transparent;
@@ -189,7 +64,7 @@ Copier
   transition: color 0.2s, border-color 0.2s;
 }
 .svc-btn-secondaire:hover { color: var(--texte); border-color: var(--texte); }
- 
+
 .svc-btn-traiter {
   padding: 0.35rem 0.75rem;
   background: var(--mute);
@@ -202,10 +77,10 @@ Copier
   white-space: nowrap;
 }
 .svc-btn-traiter:hover { background: var(--primaire); color: #0f1623; border-color: var(--primaire); }
- 
+
 .svc-btn-icon { background: none; border: none; cursor: pointer; padding: 0.2rem 0.4rem; color: var(--mute-texte); font-size: 0.85rem; }
 .svc-btn-supprimer:hover { color: #e05c5c; }
- 
+
 .svc-btn-ajouter-ligne {
   display: inline-flex;
   align-items: center;
@@ -223,7 +98,7 @@ Copier
   transition: border-color 0.2s, color 0.2s;
 }
 .svc-btn-ajouter-ligne:hover { border-color: var(--primaire); color: var(--primaire); }
- 
+
 /* ─── Onglets ────────────────────────────────────────────────── */
 .svc-onglets {
   display: flex;
@@ -231,7 +106,7 @@ Copier
   border-bottom: 1px solid var(--bordure);
   margin-bottom: 1.25rem;
 }
- 
+
 .svc-onglet {
   display: inline-flex;
   align-items: center;
@@ -249,7 +124,7 @@ Copier
 }
 .svc-onglet:hover { color: var(--texte); }
 .svc-onglet.actif { color: var(--primaire); border-bottom-color: var(--primaire); font-weight: 600; }
- 
+
 .svc-badge-count {
   display: inline-flex;
   align-items: center;
@@ -263,7 +138,7 @@ Copier
   font-size: 0.7rem;
   font-weight: 700;
 }
- 
+
 /* ─── Pills statut ───────────────────────────────────────────── */
 .svc-pills {
   display: flex;
@@ -271,7 +146,7 @@ Copier
   flex-wrap: wrap;
   margin-bottom: 1rem;
 }
- 
+
 .svc-pill {
   display: inline-flex;
   align-items: center;
@@ -288,7 +163,7 @@ Copier
 }
 .svc-pill:hover { border-color: var(--primaire); color: var(--texte); }
 .svc-pill.actif { background: var(--primaire); color: #0f1623; border-color: var(--primaire); font-weight: 600; }
- 
+
 .svc-pill-nb {
   background: rgba(0,0,0,0.2);
   border-radius: 999px;
@@ -298,7 +173,7 @@ Copier
   text-align: center;
 }
 .svc-pill.actif .svc-pill-nb { background: rgba(0,0,0,0.25); }
- 
+
 /* ─── Badges statut ──────────────────────────────────────────── */
 .svc-badge {
   display: inline-flex;
@@ -310,27 +185,41 @@ Copier
   font-weight: 600;
   white-space: nowrap;
 }
-.svc-badge--demande    { background: rgba(100,160,255,0.12); color: #6ea4ff; border: 1px solid rgba(100,160,255,0.2); }
-.svc-badge--ajustement { background: rgba(255,190,70,0.12);  color: #ffbe46; border: 1px solid rgba(255,190,70,0.2); }
-.svc-badge--valide     { background: rgba(63,175,122,0.12);  color: #3faf7a; border: 1px solid rgba(63,175,122,0.2); }
-.svc-badge--programme  { background: rgba(201,168,106,0.15); color: var(--primaire); border: 1px solid rgba(201,168,106,0.25); }
- 
+.svc-badge--demande { background: rgba(100,160,255,0.12); color: #6ea4ff; border: 1px solid rgba(100,160,255,0.2); }
+.svc-badge--valide  { background: rgba(63,175,122,0.12);  color: #3faf7a; border: 1px solid rgba(63,175,122,0.2); }
+.svc-badge--rejete  { background: rgba(224,92,92,0.12);   color: #e05c5c; border: 1px solid rgba(224,92,92,0.2); }
+
+/* ─── Bouton rejeter ─────────────────────────────────────────────── */
+.svc-btn-rejeter {
+  padding: 0.6rem 1.25rem;
+  background: transparent;
+  color: #e05c5c;
+  border: 1px solid rgba(224,92,92,0.4);
+  border-radius: var(--rayon);
+  font-size: 0.875rem;
+  font-family: var(--police-sans);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+.svc-btn-rejeter:hover { background: rgba(224,92,92,0.1); border-color: #e05c5c; }
+.svc-btn-rejeter:disabled { opacity: 0.5; cursor: not-allowed; }
+
 /* ─── Barre de recherche ─────────────────────────────────────── */
 .svc-barre { margin-bottom: 1.25rem; }
- 
+
 .svc-recherche-wrap {
   position: relative;
   display: flex;
   align-items: center;
 }
- 
+
 .svc-recherche-icone {
   position: absolute;
   left: 0.75rem;
   color: var(--mute-texte);
   pointer-events: none;
 }
- 
+
 .svc-recherche {
   width: 100%;
   max-width: 420px;
@@ -355,7 +244,7 @@ Copier
   font-size: 0.8rem;
   padding: 0.2rem;
 }
- 
+
 /* ─── Flash ──────────────────────────────────────────────────── */
 .svc-flash {
   padding: 0.75rem 1rem;
@@ -366,7 +255,7 @@ Copier
   font-size: 0.875rem;
   margin-bottom: 1rem;
 }
- 
+
 /* ─── Chargement ─────────────────────────────────────────────── */
 .svc-chargement {
   display: flex;
@@ -376,7 +265,7 @@ Copier
   padding: 3rem;
   color: var(--mute-texte);
 }
- 
+
 .svc-spinner {
   width: 2rem;
   height: 2rem;
@@ -386,7 +275,7 @@ Copier
   animation: svc-spin 0.7s linear infinite;
 }
 @keyframes svc-spin { to { transform: rotate(360deg); } }
- 
+
 /* ─── Vide ───────────────────────────────────────────────────── */
 .svc-vide {
   display: flex;
@@ -398,7 +287,7 @@ Copier
   text-align: center;
 }
 .svc-vide-icone { font-size: 2.5rem; }
- 
+
 /* ─── Table ──────────────────────────────────────────────────── */
 .svc-table-wrap {
   background: var(--carte);
@@ -406,7 +295,7 @@ Copier
   border-radius: var(--rayon-lg);
   overflow: hidden;
 }
- 
+
 .svc-table-head {
   display: grid;
   grid-template-columns: 2fr 1.5fr 1.2fr 0.5fr 1.1fr 0.7fr 1.3fr auto;
@@ -420,7 +309,7 @@ Copier
   text-transform: uppercase;
   color: var(--mute-texte);
 }
- 
+
 .svc-table-ligne {
   display: grid;
   grid-template-columns: 2fr 1.5fr 1.2fr 0.5fr 1.1fr 0.7fr 1.3fr auto;
@@ -434,7 +323,7 @@ Copier
 }
 .svc-table-ligne:last-child { border-bottom: none; }
 .svc-table-ligne:hover { background: rgba(255,255,255,0.03); }
- 
+
 .svc-table-nom {
   display: flex;
   flex-direction: column;
@@ -449,7 +338,7 @@ Copier
   text-overflow: ellipsis;
   max-width: 220px;
 }
- 
+
 /* ─── Modal overlay ──────────────────────────────────────────── */
 .svc-overlay {
   position: fixed;
@@ -462,7 +351,7 @@ Copier
   padding: 1.5rem;
   backdrop-filter: blur(4px);
 }
- 
+
 .svc-modal {
   background: var(--carte);
   border: 1px solid var(--bordure);
@@ -474,9 +363,9 @@ Copier
   max-height: 90vh;
   overflow-y: auto;
 }
- 
+
 .svc-modal--large { max-width: 760px; }
- 
+
 .svc-modal-fermer {
   position: absolute;
   top: 1rem;
@@ -490,20 +379,20 @@ Copier
   transition: color 0.2s;
 }
 .svc-modal-fermer:hover { color: var(--texte); }
- 
+
 .svc-modal-titre {
   font-family: var(--police-serif);
   font-size: 1.35rem;
   color: var(--texte);
   margin: 0 0 0.4rem 0;
 }
- 
+
 .svc-modal-sous-titre {
   font-size: 0.85rem;
   color: var(--mute-texte);
   margin: 0 0 1.5rem 0;
 }
- 
+
 /* ─── Formulaire ─────────────────────────────────────────────── */
 .svc-form-champ { display: flex; flex-direction: column; gap: 0.35rem; }
 .svc-form-champ label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; color: var(--mute-texte); text-transform: uppercase; }
@@ -524,23 +413,23 @@ Copier
 .svc-form-champ input:focus,
 .svc-form-champ textarea:focus,
 .svc-form-champ select:focus { border-color: var(--primaire); }
- 
+
 .svc-form-grille-2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
 }
- 
+
 .svc-form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 0.75rem;
   margin-top: 1.5rem;
 }
- 
+
 /* ─── Lignes de demande ──────────────────────────────────────── */
 .svc-demande-liste { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 0.5rem; }
- 
+
 .svc-demande-ligne {
   background: var(--secondaire);
   border: 1px solid var(--bordure);
@@ -550,13 +439,13 @@ Copier
   flex-direction: column;
   gap: 0.75rem;
 }
- 
+
 .svc-demande-ligne-entete {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
- 
+
 .svc-demande-nb {
   font-size: 0.78rem;
   font-weight: 600;
@@ -564,7 +453,7 @@ Copier
   text-transform: uppercase;
   color: var(--primaire);
 }
- 
+
 /* ─── Infos de traitement ────────────────────────────────────── */
 .svc-traitement-infos {
   background: var(--secondaire);
@@ -576,7 +465,7 @@ Copier
   flex-direction: column;
   gap: 0.5rem;
 }
- 
+
 .svc-detail-ligne {
   display: flex;
   justify-content: space-between;
@@ -586,36 +475,7 @@ Copier
 }
 .svc-detail-ligne span:first-child { color: var(--mute-texte); min-width: 120px; }
 .svc-detail-ligne strong { color: var(--texte); text-align: right; }
- 
-/* ─── Choix d'action traitement ──────────────────────────────── */
-.svc-action-choix { display: flex; flex-direction: column; gap: 0.75rem; }
- 
-.svc-action-btn {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1rem;
-  background: var(--secondaire);
-  border: 2px solid var(--bordure);
-  border-radius: var(--rayon-lg);
-  cursor: pointer;
-  text-align: left;
-  transition: border-color 0.2s, background 0.2s;
-  width: 100%;
-  font-family: var(--police-sans);
-}
-.svc-action-btn:hover { border-color: var(--mute-texte); }
-.svc-action-btn.actif { border-color: var(--primaire); background: rgba(201,168,106,0.08); }
- 
-.svc-action-icone { font-size: 1.3rem; margin-top: 0.1rem; }
- 
-.svc-action-btn div { display: flex; flex-direction: column; gap: 0.25rem; }
-.svc-action-btn strong { color: var(--texte); font-size: 0.9rem; }
-.svc-action-btn small { color: var(--mute-texte); font-size: 0.78rem; line-height: 1.4; }
- 
-.svc-action-btn--valider.actif  { border-color: #3faf7a; background: rgba(63,175,122,0.08); }
-.svc-action-btn--ajuster.actif  { border-color: #ffbe46; background: rgba(255,190,70,0.08); }
- 
+
 /* ─── Alerte ─────────────────────────────────────────────────── */
 .svc-alerte {
   padding: 0.65rem 1rem;
@@ -628,7 +488,7 @@ Copier
   border: 1px solid rgba(224,92,92,0.25);
   color: #e05c5c;
 }
- 
+
 /* ─── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .svc-table-head,
@@ -642,10 +502,9 @@ Copier
   .svc-table-head span:nth-child(5),
   .svc-table-ligne span:nth-child(5) { display: none; }
 }
- 
+
 @media (max-width: 600px) {
   .svc-page { padding: 1rem; }
   .svc-form-grille-2 { grid-template-columns: 1fr; }
   .svc-modal { padding: 1.25rem; }
 }
- 
