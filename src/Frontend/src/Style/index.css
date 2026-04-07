@@ -56,6 +56,7 @@
 @import './admin/dashboard.css';
 @import './admin/gestion-roles.css';
 @import './admin/gestion-utilisateurs.css';
+@import './Reservations.css';
 
 
 .champ-input-wrap input:focus {

@@ -10,6 +10,7 @@ import GestionUtilisateurs from './components/GestionUtilisateurs'
 import GestionRoles from './components/GestionRoles'
 import Rapports from './components/Rapports'
 import NotificationsBell from './components/NotificationsBell'
+import Reservation from './pages/Reservation'
 
 // --- Icônes SVG inline (style outline, similaire à la maquette) ---
 const icons = {
@@ -105,6 +106,12 @@ function App() {
     if (data) setUtilisateur(JSON.parse(data));
   }, []);
 
+  useEffect(() => {
+    const handleOpenEventsTab = () => setActiveTab('Events');
+    window.addEventListener('open-events-tab', handleOpenEventsTab);
+    return () => window.removeEventListener('open-events-tab', handleOpenEventsTab);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('utilisateur');
     localStorage.removeItem('token');
@@ -116,6 +123,7 @@ function App() {
     switch (tab) {
       case 'Tableau de bord': return <Dashboard />
       case 'Events': return <Evenements />
+      case 'Reservations': return <Reservation />
       case 'Espaces': return <Espaces />
       case 'Services': return <Services />
       case 'Comptabilité': return <Comptabilite />

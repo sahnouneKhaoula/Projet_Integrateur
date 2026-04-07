@@ -3,6 +3,8 @@ import '../Style/Evenements.css';
 
 const BASE = 'http://localhost:3002';
 const token = () => localStorage.getItem('token');
+const RESA_EVENT_EDIT_KEY = 'reservation_event_to_edit';
+const RESA_EVENT_VIEW_KEY = 'reservation_event_to_view';
 const utilisateurLocal = () => {
     try { return JSON.parse(localStorage.getItem('utilisateur') || '{}'); } catch { return {}; }
 };
@@ -34,6 +36,7 @@ function BadgeStatut({ status }) {
 
 // ─── Carte événement ───────────────────────────────────────────────
 function CarteEvenement({ ev, onVoir, onEditer, onSupprimer, onStatut, onConfirmer, isAdmin }) {
+    const invitesAffiches = ev.expected_guests ?? ev.nb_guests ?? 0;
     return (
         <div className="ev-carte" onClick={() => onVoir(ev.id)}>
             <div className="ev-carte-haut">
@@ -62,7 +65,7 @@ function CarteEvenement({ ev, onVoir, onEditer, onSupprimer, onStatut, onConfirm
                 </span>
                 <span className="ev-carte-info-item">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    {ev.nb_guests} invité{ev.nb_guests !== 1 ? 's' : ''}
+                    {invitesAffiches} invité{invitesAffiches !== 1 ? 's' : ''}
                 </span>
             </div>
 
@@ -257,7 +260,9 @@ function ModalFormulaire({ evenement, onFermer, onSauvegarde }) {
         const fin   = new Date(form.end_date);
         const maintenant = new Date();
 
-        if (debut < new Date(maintenant.toDateString())) {
+        // Cette règle ne s'applique qu'à la création:
+        // en modification, un événement peut naturellement avoir commencé.
+        if (!isEdit && debut < new Date(maintenant.toDateString())) {
             setErreur('La date de début ne peut pas être dans le passé.'); return;
         }
         if (fin <= debut) {
@@ -415,6 +420,25 @@ export default function Evenements() {
     }, []);
 
     useEffect(() => { charger(); }, [charger]);
+
+    useEffect(() => {
+        if (!evenements.length) return;
+        const eventIdToView = Number(localStorage.getItem(RESA_EVENT_VIEW_KEY));
+        const eventIdToEdit = Number(localStorage.getItem(RESA_EVENT_EDIT_KEY));
+        if (!eventIdToEdit && !eventIdToView) return;
+
+        const targetId = eventIdToEdit || eventIdToView;
+        const cible = evenements.find((e) => Number(e.id) === targetId);
+        if (cible) {
+            if (eventIdToEdit) {
+                setModalForm(cible);
+            } else {
+                setModalDetail(cible.id);
+            }
+            localStorage.removeItem(RESA_EVENT_EDIT_KEY);
+            localStorage.removeItem(RESA_EVENT_VIEW_KEY);
+        }
+    }, [evenements]);
 
     const supprimerEvenement = async (id, titre) => {
         if (!window.confirm(`Supprimer l'événement "${titre}" et toutes ses données ?`)) return;
@@ -576,7 +600,9 @@ export default function Evenements() {
                         <span>Début</span><span>Fin</span><span>Invités</span><span>Statut</span>
                         {isAdmin && <span>Actions</span>}
                     </div>
-                    {filtres.map(ev => (
+                    {filtres.map(ev => {
+                        const invitesAffiches = ev.expected_guests ?? ev.nb_guests ?? 0;
+                        return (
                         <div key={ev.id} className="ev-table-ligne" onClick={() => setModalDetail(ev.id)}>
                             <span className="ev-table-id">#{ev.id}</span>
                             <span className="ev-table-principal">{ev.title}</span>
@@ -584,7 +610,7 @@ export default function Evenements() {
                             <span>{ev.organizer_name || '—'}</span>
                             <span>{fmt(ev.start_date)}</span>
                             <span>{fmt(ev.end_date)}</span>
-                            <span>{ev.nb_guests}</span>
+                            <span>{invitesAffiches}</span>
                             <span><BadgeStatut status={ev.status} /></span>
                             {isAdmin && (
                                 <span onClick={e => e.stopPropagation()} className="ev-table-actions">
@@ -593,7 +619,8 @@ export default function Evenements() {
                                 </span>
                             )}
                         </div>
-                    ))}
+                        );
+                    })}
                 </div>
             )}
 

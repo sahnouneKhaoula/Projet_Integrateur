@@ -41,6 +41,7 @@ CREATE TABLE Events (
   start_date DATETIME2 NOT NULL,
   end_date DATETIME2 NOT NULL,
   room_id INT NULL,
+  expected_guests INT NULL,
   status NVARCHAR(50) NOT NULL DEFAULT 'planned',
   created_at DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
   updated_at DATETIME2 NULL,

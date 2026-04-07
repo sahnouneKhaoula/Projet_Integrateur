@@ -1,0 +1,231 @@
+.resa {
+  padding: 2rem;
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.resa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.resa-titre {
+  margin: 0;
+  font-family: var(--police-serif);
+  font-size: 1.75rem;
+  color: var(--texte);
+}
+
+.resa-sous-titre {
+  margin: 0.35rem 0 0;
+  color: var(--mute-texte);
+  font-size: 0.88rem;
+}
+
+.resa-btn-primaire {
+  background: var(--primaire);
+  color: var(--primaire-texte);
+  border: none;
+  border-radius: var(--rayon);
+  padding: 0.62rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--ombre-bouton-primaire);
+}
+
+.resa-kpis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(170px, 1fr));
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.resa-kpi {
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 1.2);
+  padding: 0.85rem 1rem;
+}
+
+.resa-kpi-label {
+  display: block;
+  color: var(--mute-texte);
+  font-size: 0.75rem;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.resa-kpi-valeur {
+  color: var(--texte);
+  font-size: 1.3rem;
+}
+
+.resa-barre {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.resa-recherche,
+.resa-select {
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+  color: var(--texte);
+  border-radius: var(--rayon);
+  padding: 0.62rem 0.85rem;
+  font-family: var(--police-sans);
+}
+
+.resa-recherche {
+  flex: 1;
+}
+
+.resa-recherche:focus,
+.resa-select:focus {
+  outline: none;
+  border-color: var(--primaire);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.14);
+}
+
+.resa-table-wrap {
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 1.5);
+  overflow: hidden;
+}
+
+.resa-table-head,
+.resa-table-ligne {
+  display: grid;
+  grid-template-columns: 70px 1.3fr 1fr 1fr 1.1fr 1.1fr 85px 130px 150px;
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.76rem 1rem;
+}
+
+.resa-table-head {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--bordure);
+  color: var(--mute-texte);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.resa-table-ligne {
+  font-size: 0.84rem;
+  border-bottom: 1px solid var(--bordure);
+  color: var(--texte);
+}
+
+.resa-table-ligne:last-child {
+  border-bottom: none;
+}
+
+.resa-id {
+  color: var(--mute-texte);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.resa-principal {
+  font-weight: 600;
+}
+
+.resa-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.52rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.resa-badge--confirmed {
+  background: rgba(63, 175, 122, 0.14);
+  color: #65d59d;
+}
+
+.resa-badge--pending {
+  background: rgba(201, 168, 106, 0.14);
+  color: var(--primaire);
+}
+
+.resa-badge--completed {
+  background: rgba(74, 144, 226, 0.14);
+  color: #82b4f2;
+}
+
+.resa-badge--cancelled {
+  background: rgba(239, 83, 80, 0.12);
+  color: #ff8b89;
+}
+
+.resa-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.resa-action {
+  border: 1px solid var(--bordure);
+  background: transparent;
+  color: var(--mute-texte);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+}
+
+.resa-action:hover {
+  color: var(--texte);
+  border-color: var(--primaire);
+}
+
+.resa-empty {
+  padding: 1.2rem;
+  text-align: center;
+  color: var(--mute-texte);
+}
+
+@media (max-width: 1024px) {
+  .resa-kpis {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+  }
+
+  .resa-table-head,
+  .resa-table-ligne {
+    grid-template-columns: 80px 1.3fr 1fr 1fr 100px 120px;
+  }
+
+  .resa-table-head span:nth-child(5),
+  .resa-table-head span:nth-child(6),
+  .resa-table-head span:nth-child(7),
+  .resa-table-ligne span:nth-child(5),
+  .resa-table-ligne span:nth-child(6),
+  .resa-table-ligne span:nth-child(7) {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .resa {
+    padding: 1rem;
+  }
+
+  .resa-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .resa-barre {
+    flex-direction: column;
+  }
+
+  .resa-kpis {
+    grid-template-columns: 1fr;
+  }
+}

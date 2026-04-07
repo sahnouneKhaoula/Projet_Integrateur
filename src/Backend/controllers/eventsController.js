@@ -8,7 +8,7 @@ export const getAllEvents = async (req, res) => {
         const result = await pool.request().query(`
             SELECT
                 e.id, e.title, e.description, e.status,
-                e.start_date, e.end_date, e.created_at,
+                e.start_date, e.end_date, e.created_at, e.expected_guests,
                 u.id          AS organizer_id,
                 u.first_name + ' ' + u.last_name AS organizer_name,
                 u.email       AS organizer_email,
@@ -38,7 +38,7 @@ export const getEventById = async (req, res) => {
         const evtRes = await pool.request().input('id', parseInt(id)).query(`
             SELECT
                 e.id, e.title, e.description, e.status,
-                e.start_date, e.end_date, e.created_at,
+                e.start_date, e.end_date, e.created_at, e.expected_guests,
                 u.id          AS organizer_id,
                 u.first_name + ' ' + u.last_name AS organizer_name,
                 u.email       AS organizer_email,
@@ -135,9 +135,10 @@ if (room_id) {
             .input('start_date',   new Date(start_date))
             .input('end_date',     new Date(end_date))
             .input('room_id',      room_id ? parseInt(room_id) : null)
-            .query(`INSERT INTO Events (title, description, organizer_id, start_date, end_date, room_id, status)
+            .input('expected_guests', expected_guests ? parseInt(expected_guests, 10) : null)
+            .query(`INSERT INTO Events (title, description, organizer_id, start_date, end_date, room_id, expected_guests, status)
                     OUTPUT INSERTED.id
-                    VALUES (@title, @description, @organizer_id, @start_date, @end_date, @room_id, 'brouillon')`);
+                    VALUES (@title, @description, @organizer_id, @start_date, @end_date, @room_id, @expected_guests, 'brouillon')`);
 
         const eventId = result.recordset[0].id;
 
@@ -166,14 +167,14 @@ if (room_id) {
 // ─── UPDATE ───────────────────────────────────────────────────────
 export const updateEvent = async (req, res) => {
     const { id } = req.params;
-    const { title, description, organizer_id, start_date, end_date, room_id } = req.body;
+    const { title, description, organizer_id, start_date, end_date, room_id, expected_guests } = req.body;
     try {
         const pool = await poolPromise;
 
         // Récupérer l'état actuel de l'événement
         const currentRes = await pool.request()
             .input('id', parseInt(id))
-            .query('SELECT title, description, organizer_id, start_date, end_date, room_id, status FROM Events WHERE id = @id');
+            .query('SELECT title, description, organizer_id, start_date, end_date, room_id, expected_guests, status FROM Events WHERE id = @id');
         if (currentRes.recordset.length === 0) {
             return res.status(404).json({ message: 'Événement introuvable.' });
         }
@@ -221,6 +222,7 @@ export const updateEvent = async (req, res) => {
             .input('start_date',   newStart)
             .input('end_date',     newEnd)
             .input('room_id',      newRoomId)
+            .input('expected_guests', expected_guests ? parseInt(expected_guests, 10) : null)
             .query(`UPDATE Events SET
                         title        = @title,
                         description  = @description,
@@ -228,8 +230,23 @@ export const updateEvent = async (req, res) => {
                         start_date   = @start_date,
                         end_date     = @end_date,
                         room_id      = @room_id,
+                        expected_guests = @expected_guests,
                         updated_at   = SYSUTCDATETIME()
                     WHERE id = @id`);
+
+        // Synchroniser la réservation liée si elle existe déjà
+        await pool.request()
+            .input('event_id', parseInt(id))
+            .input('room_id', newRoomId)
+            .input('reserved_from', newStart)
+            .input('reserved_to', newEnd)
+            .query(`
+                UPDATE Reservations
+                SET room_id = @room_id,
+                    reserved_from = @reserved_from,
+                    reserved_to = @reserved_to
+                WHERE event_id = @event_id
+            `);
         res.status(200).json({ message: 'Événement mis à jour.' });
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la mise à jour', error: error.message });
@@ -275,6 +292,23 @@ export const updateEventStatus = async (req, res) => {
             .input('id', parseInt(id))
             .input('status', status)
             .query('UPDATE Events SET status = @status, updated_at = SYSUTCDATETIME() WHERE id = @id');
+
+        // Synchroniser le statut de la réservation liée, si elle existe
+        let reservationStatus = null;
+        if (status === 'cancelled') reservationStatus = 'cancelled';
+        else if (status === 'completed') reservationStatus = 'completed';
+        else if (status === 'planned' || status === 'ongoing') reservationStatus = 'confirmed';
+
+        if (reservationStatus) {
+            await pool.request()
+                .input('event_id', parseInt(id))
+                .input('reservation_status', reservationStatus)
+                .query(`
+                    UPDATE Reservations
+                    SET status = @reservation_status
+                    WHERE event_id = @event_id
+                `);
+        }
         res.status(200).json({ message: 'Statut mis à jour.' });
     } catch (error) {
         res.status(500).json({ message: 'Erreur', error: error.message });
@@ -287,9 +321,9 @@ export const confirmerEvent = async (req, res) => {
     try {
         const pool = await poolPromise;
 
-        // Vérifier que l'événement est bien en brouillon
+        // Vérifier que l'événement existe et récupérer les infos nécessaires
         const evtRes = await pool.request().input('id', parseInt(id))
-            .query(`SELECT e.id, e.title, e.organizer_id,
+            .query(`SELECT e.id, e.title, e.organizer_id, e.status, e.room_id, e.start_date, e.end_date,
                            u.first_name + ' ' + u.last_name AS organizer_name
                     FROM Events e
                     JOIN Users u ON e.organizer_id = u.id
@@ -299,10 +333,53 @@ export const confirmerEvent = async (req, res) => {
 
         const evt = evtRes.recordset[0];
 
+        if (evt.status !== 'brouillon') {
+            return res.status(400).json({ message: 'Seuls les événements en brouillon peuvent être confirmés.' });
+        }
+
+        if (!evt.room_id || !evt.start_date || !evt.end_date) {
+            return res.status(400).json({
+                message: 'Impossible de confirmer: la salle et les dates de l’événement sont obligatoires.'
+            });
+        }
+
         // Passer en planned
         await pool.request()
             .input('id', parseInt(id))
             .query("UPDATE Events SET status = 'planned', updated_at = SYSUTCDATETIME() WHERE id = @id");
+
+        // Créer ou mettre à jour automatiquement la réservation liée à l'événement
+        const resaRes = await pool.request()
+            .input('event_id', parseInt(id))
+            .query('SELECT id FROM Reservations WHERE event_id = @event_id');
+
+        if (resaRes.recordset.length > 0) {
+            await pool.request()
+                .input('event_id', parseInt(id))
+                .input('room_id', parseInt(evt.room_id))
+                .input('reserved_from', new Date(evt.start_date))
+                .input('reserved_to', new Date(evt.end_date))
+                .input('status', 'confirmed')
+                .query(`
+                    UPDATE Reservations
+                    SET room_id = @room_id,
+                        reserved_from = @reserved_from,
+                        reserved_to = @reserved_to,
+                        status = @status
+                    WHERE event_id = @event_id
+                `);
+        } else {
+            await pool.request()
+                .input('event_id', parseInt(id))
+                .input('room_id', parseInt(evt.room_id))
+                .input('reserved_from', new Date(evt.start_date))
+                .input('reserved_to', new Date(evt.end_date))
+                .input('status', 'confirmed')
+                .query(`
+                    INSERT INTO Reservations (event_id, room_id, reserved_from, reserved_to, status)
+                    VALUES (@event_id, @room_id, @reserved_from, @reserved_to, @status)
+                `);
+        }
 
         // Notifier l'organisateur
         await creerNotification(
