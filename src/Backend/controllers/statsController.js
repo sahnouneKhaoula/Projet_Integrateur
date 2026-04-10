@@ -46,7 +46,7 @@ export const getStats = async (req, res) => {
                 e.status,
                 s.name as salle_nom,
                 u.first_name + ' ' + u.last_name as organisateur,
-                (SELECT COUNT(*) FROM Guests g WHERE g.event_id = e.id) as nb_invites
+                (SELECT COUNT(*) FROM EventGuests eg WHERE eg.event_id = e.id) as nb_invites
             FROM Events e
             LEFT JOIN Salles s ON e.room_id = s.id
             LEFT JOIN Users u ON e.organizer_id = u.id
@@ -64,7 +64,7 @@ export const getStats = async (req, res) => {
                 e.status,
                 s.name as salle_nom,
                 u.first_name + ' ' + u.last_name as organisateur,
-                (SELECT COUNT(*) FROM Guests g WHERE g.event_id = e.id) as nb_invites
+                (SELECT COUNT(*) FROM EventGuests eg WHERE eg.event_id = e.id) as nb_invites
             FROM Events e
             LEFT JOIN Salles s ON e.room_id = s.id
             LEFT JOIN Users u ON e.organizer_id = u.id

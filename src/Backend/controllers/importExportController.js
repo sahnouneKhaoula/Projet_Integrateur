@@ -175,12 +175,53 @@ export const importGuests = async (req, res) => {
             continue;
         }
         try {
+            let guestId = null;
+
+            if (email) {
+                const existingByEmail = await pool.request()
+                    .input('email', email)
+                    .query('SELECT TOP 1 id FROM Guests WHERE email = @email ORDER BY id DESC');
+                if (existingByEmail.recordset.length > 0) guestId = existingByEmail.recordset[0].id;
+            }
+
+            if (!guestId) {
+                const existingByNamePhone = await pool.request()
+                    .input('full_name', nomComplet)
+                    .input('phone', telephone || null)
+                    .query(`
+                        SELECT TOP 1 id
+                        FROM Guests
+                        WHERE full_name = @full_name
+                          AND ((phone IS NULL AND @phone IS NULL) OR phone = @phone)
+                        ORDER BY id DESC
+                    `);
+                if (existingByNamePhone.recordset.length > 0) guestId = existingByNamePhone.recordset[0].id;
+            }
+
+            if (!guestId) {
+                const insertGuest = await pool.request()
+                    .input('full_name', nomComplet)
+                    .input('email', email || null)
+                    .input('phone', telephone || null)
+                    .query(`
+                        INSERT INTO Guests (full_name, email, phone)
+                        OUTPUT INSERTED.id
+                        VALUES (@full_name, @email, @phone)
+                    `);
+                guestId = insertGuest.recordset[0].id;
+            }
+
             await pool.request()
                 .input('event_id', parseInt(idEvenement))
-                .input('full_name', nomComplet)
-                .input('email', email || null)
-                .input('phone', telephone || null)
-                .query('INSERT INTO Guests (event_id, full_name, email, phone) VALUES (@event_id, @full_name, @email, @phone)');
+                .input('guest_id', parseInt(guestId))
+                .query(`
+                    IF NOT EXISTS (
+                        SELECT 1 FROM EventGuests WHERE event_id = @event_id AND guest_id = @guest_id
+                    )
+                    BEGIN
+                        INSERT INTO EventGuests (event_id, guest_id) VALUES (@event_id, @guest_id)
+                    END
+                `);
             inseres++;
         } catch (err) {
             erreurs.push(`Ligne ${lineNum} : ${err.message}`);
@@ -246,10 +287,11 @@ export const exportGuests = async (req, res) => {
     const pool = await poolPromise;
     const result = await pool.request().query(`
         SELECT g.id, g.full_name, g.email, g.phone,
-               e.title as event_title, g.event_id, g.created_at
-        FROM Guests g
-        JOIN Events e ON g.event_id = e.id
-        ORDER BY g.created_at DESC
+               e.title as event_title, eg.event_id, eg.created_at
+        FROM EventGuests eg
+        JOIN Guests g ON eg.guest_id = g.id
+        JOIN Events e ON eg.event_id = e.id
+        ORDER BY eg.created_at DESC
     `);
     const headers = ['id', 'full_name', 'email', 'phone', 'event_title', 'event_id', 'created_at'];
     const csv = buildCSV(headers, result.recordset);

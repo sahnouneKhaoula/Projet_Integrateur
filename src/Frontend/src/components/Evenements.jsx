@@ -107,16 +107,59 @@ function CarteEvenement({ ev, onVoir, onEditer, onSupprimer, onStatut, onConfirm
 }
 
 // ─── Modal détail ──────────────────────────────────────────────────
-function ModalDetail({ eventId, onFermer, onEditer, isAdmin }) {
+function ModalDetail({ eventId, onFermer, onEditer, isAdmin, canManageGuests }) {
     const [detail, setDetail] = useState(null);
     const [chargement, setChargement] = useState(true);
+    const [guestForm, setGuestForm] = useState({ full_name: '', email: '', phone: '' });
+    const [guestSaving, setGuestSaving] = useState(false);
+    const [guestErreur, setGuestErreur] = useState('');
 
-    useEffect(() => {
+    const chargerDetail = useCallback(() => {
+        setChargement(true);
         fetch(`${BASE}/api/events/${eventId}`, { headers: { Authorization: `Bearer ${token()}` } })
             .then(r => r.json())
             .then(d => { setDetail(d); setChargement(false); })
             .catch(() => setChargement(false));
     }, [eventId]);
+
+    useEffect(() => {
+        chargerDetail();
+    }, [chargerDetail]);
+
+    const ajouterInvite = async (e) => {
+        e.preventDefault();
+        setGuestErreur('');
+        if (!guestForm.full_name.trim()) {
+            setGuestErreur('Le nom complet est obligatoire.');
+            return;
+        }
+
+        setGuestSaving(true);
+        try {
+            const res = await fetch(`${BASE}/api/guests`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token()}`,
+                },
+                body: JSON.stringify({
+                    event_id: eventId,
+                    full_name: guestForm.full_name.trim(),
+                    email: guestForm.email.trim() || null,
+                    phone: guestForm.phone.trim() || null,
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.message || "Erreur lors de l'ajout de l'invité.");
+
+            setGuestForm({ full_name: '', email: '', phone: '' });
+            await chargerDetail();
+        } catch (err) {
+            setGuestErreur(err.message || 'Erreur inconnue.');
+        } finally {
+            setGuestSaving(false);
+        }
+    };
 
     return (
         <div className="ev-overlay" onClick={onFermer}>
@@ -167,6 +210,35 @@ function ModalDetail({ eventId, onFermer, onEditer, isAdmin }) {
                         {/* Invités */}
                         <div className="ev-detail-section">
                             <h4 className="ev-detail-bloc-titre">👥 Invités ({detail.guests.length})</h4>
+                            {canManageGuests && (
+                                <form className="ev-guest-form" onSubmit={ajouterInvite}>
+                                    {guestErreur && <div className="ev-form-erreur">{guestErreur}</div>}
+                                    <div className="ev-guest-form-grid">
+                                        <input
+                                            type="text"
+                                            placeholder="Nom complet *"
+                                            value={guestForm.full_name}
+                                            onChange={(e) => setGuestForm(f => ({ ...f, full_name: e.target.value }))}
+                                            required
+                                        />
+                                        <input
+                                            type="email"
+                                            placeholder="Email"
+                                            value={guestForm.email}
+                                            onChange={(e) => setGuestForm(f => ({ ...f, email: e.target.value }))}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder="Téléphone"
+                                            value={guestForm.phone}
+                                            onChange={(e) => setGuestForm(f => ({ ...f, phone: e.target.value }))}
+                                        />
+                                        <button type="submit" className="ev-btn-primaire" disabled={guestSaving}>
+                                            {guestSaving ? 'Ajout...' : '+ Ajouter invité'}
+                                        </button>
+                                    </div>
+                                </form>
+                            )}
                             {detail.guests.length === 0 ? (
                                 <p className="ev-detail-vide">Aucun invité enregistré.</p>
                             ) : (
@@ -403,6 +475,7 @@ export default function Evenements() {
     const role = user?.role;
     const isAdmin = role === 'admin';
     const canCreateEvent = ['admin', 'organisateur', 'coordonnateur'].includes(role);
+    const canManageGuests = ['admin', 'organisateur', 'coordonnateur'].includes(role);
 
     const charger = useCallback(async () => {
         setChargement(true);
@@ -631,6 +704,7 @@ export default function Evenements() {
                     onFermer={() => setModalDetail(null)}
                     onEditer={e => { setModalDetail(null); setModalForm(e); }}
                     isAdmin={isAdmin}
+                    canManageGuests={canManageGuests}
                 />
             )}
 

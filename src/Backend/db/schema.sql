@@ -65,12 +65,21 @@ CREATE TABLE Reservations (
 -- 6. Création de la table Guests
 CREATE TABLE Guests (
   id INT IDENTITY(1,1) PRIMARY KEY,
-  event_id INT NOT NULL,
   full_name NVARCHAR(255) NOT NULL,
   email NVARCHAR(255) NULL,
   phone NVARCHAR(50) NULL,
+  created_at DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
+);
+
+-- 6-bis. Table de liaison Invités <-> Événements (N:N)
+CREATE TABLE EventGuests (
+  id INT IDENTITY(1,1) PRIMARY KEY,
+  event_id INT NOT NULL,
+  guest_id INT NOT NULL,
   created_at DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME(),
-  CONSTRAINT FK_Guest_Event FOREIGN KEY (event_id) REFERENCES Events(id)
+  CONSTRAINT FK_EventGuest_Event FOREIGN KEY (event_id) REFERENCES Events(id),
+  CONSTRAINT FK_EventGuest_Guest FOREIGN KEY (guest_id) REFERENCES Guests(id),
+  CONSTRAINT UQ_EventGuest UNIQUE (event_id, guest_id)
 );
 
 -- 7. Création de la table Services

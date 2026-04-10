@@ -414,6 +414,32 @@
 .ev-detail-section { margin-bottom: 1.25rem; }
 .ev-detail-vide { font-size: 0.85rem; color: var(--mute-texte); padding: 0.5rem 0; }
 
+.ev-guest-form {
+  margin-bottom: 0.85rem;
+}
+
+.ev-guest-form-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr auto;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.ev-guest-form-grid input {
+  padding: 0.55rem 0.75rem;
+  background: var(--fond);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  color: var(--texte);
+  font-size: 0.84rem;
+}
+
+.ev-guest-form-grid input:focus {
+  outline: none;
+  border-color: var(--primaire);
+  box-shadow: 0 0 0 3px rgba(201,168,106,0.15);
+}
+
 .ev-detail-table { border: 1px solid var(--bordure); border-radius: var(--rayon); overflow: hidden; }
 .ev-detail-table-head, .ev-detail-table-ligne { display: grid; grid-template-columns: 2fr 1fr 1fr; padding: 0.5rem 0.9rem; font-size: 0.82rem; gap: 0.5rem; }
 .ev-detail-table-head { background: rgba(255,255,255,0.03); font-weight: 700; color: var(--mute-texte); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -448,6 +474,7 @@
   .evenements { padding: 1rem; }
   .ev-grille { grid-template-columns: 1fr; }
   .ev-detail-grille { grid-template-columns: 1fr; }
+  .ev-guest-form-grid { grid-template-columns: 1fr; }
   .ev-form-grille-2 { grid-template-columns: 1fr; }
   .ev-table-head, .ev-table-ligne { grid-template-columns: 50px 1fr 80px 90px; }
   .ev-table-head span:nth-child(3),

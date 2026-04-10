@@ -15,7 +15,7 @@ export const getAllEvents = async (req, res) => {
                 s.id          AS room_id,
                 s.name        AS room_name,
                 s.capacity    AS room_capacity,
-                (SELECT COUNT(*) FROM Guests   g WHERE g.event_id = e.id) AS nb_guests,
+                (SELECT COUNT(*) FROM EventGuests eg WHERE eg.event_id = e.id) AS nb_guests,
                 (SELECT COUNT(*) FROM Services sv WHERE sv.event_id = e.id) AS nb_services
             FROM Events e
             LEFT JOIN Users  u ON e.organizer_id = u.id
@@ -56,7 +56,13 @@ export const getEventById = async (req, res) => {
 
         // Invités
         const guestsRes = await pool.request().input('id', parseInt(id))
-            .query('SELECT id, full_name, email, phone FROM Guests WHERE event_id = @id ORDER BY full_name');
+            .query(`
+                SELECT g.id, g.full_name, g.email, g.phone
+                FROM EventGuests eg
+                INNER JOIN Guests g ON g.id = eg.guest_id
+                WHERE eg.event_id = @id
+                ORDER BY g.full_name
+            `);
 
         // Services
         const servicesRes = await pool.request().input('id', parseInt(id))
@@ -271,7 +277,7 @@ export const deleteEvent = async (req, res) => {
         }
 
         await pool.request().input('id', parseInt(id)).query('DELETE FROM Services WHERE event_id = @id');
-        await pool.request().input('id', parseInt(id)).query('DELETE FROM Guests   WHERE event_id = @id');
+        await pool.request().input('id', parseInt(id)).query('DELETE FROM EventGuests WHERE event_id = @id');
         await pool.request().input('id', parseInt(id)).query('DELETE FROM Events   WHERE id       = @id');
         res.status(200).json({ message: 'Événement supprimé.' });
     } catch (error) {

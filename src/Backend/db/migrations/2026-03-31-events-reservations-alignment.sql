@@ -75,3 +75,4 @@ BEGIN
 END
 GO
 
+ALTER TABLE Events ADD expected_guests INT NULL;

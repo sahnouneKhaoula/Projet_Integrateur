@@ -57,6 +57,7 @@
 @import './admin/gestion-roles.css';
 @import './admin/gestion-utilisateurs.css';
 @import './Reservations.css';
+@import './Invites.css';
 
 
 .champ-input-wrap input:focus {

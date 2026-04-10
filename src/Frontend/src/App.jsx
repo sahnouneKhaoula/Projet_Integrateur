@@ -11,6 +11,7 @@ import GestionRoles from './components/GestionRoles'
 import Rapports from './components/Rapports'
 import NotificationsBell from './components/NotificationsBell'
 import Reservation from './pages/Reservation'
+import Invites from './components/Invites'
 
 // --- Icônes SVG inline (style outline, similaire à la maquette) ---
 const icons = {
@@ -126,6 +127,7 @@ function App() {
       case 'Reservations': return <Reservation />
       case 'Espaces': return <Espaces />
       case 'Services': return <Services />
+      case 'Guests': return <Invites />
       case 'Comptabilité': return <Comptabilite />
       case 'Parametres': return <Parametres />
       case 'Utilisateurs': return <GestionUtilisateurs />
