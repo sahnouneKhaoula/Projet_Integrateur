@@ -225,7 +225,7 @@ DB_PORT=1433
 DB_NAME=HotelEventDB
 DB_USER=sa
 DB_PASSWORD=VotreMotDePasse
-
+```
 1. Cloner le dépôt :
    ```bash
    git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
