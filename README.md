@@ -181,7 +181,7 @@ Projet_Integrateur/
 
 ## ▶️ Installation et exécution
 
-Pour cette application, il est nécessaire d’avoir une base de données SQL Server nommée ```bash HotelEventDB ```.
+Pour cette application, il est nécessaire d’avoir une base de données SQL Server nommée ``` HotelEventDB ```.
 
 ## Configuration de la base de données SQL Server
 
