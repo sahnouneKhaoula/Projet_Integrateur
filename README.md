@@ -180,14 +180,75 @@ Projet_Integrateur/
    ---
 
 ## ▶️ Installation et exécution
+
+Pour cette application, il est nécessaire d’avoir une base de données SQL Server nommée ```bash HotelEventDB ```.
+
+## Configuration de la base de données SQL Server
+
+Pour permettre au projet de se connecter correctement à SQL Server, certaines configurations réseau peuvent être nécessaires sur la machine qui héberge la base de données.
+
+### 1. Activer le protocole TCP/IP
+1. Ouvrir **SQL Server Configuration Manager**
+2. Aller dans :
+   - **SQL Server Network Configuration**
+   - **Protocols for [SQLEXPRESS]**
+3. Activer **TCP/IP**
+4. Appliquer les changements
+
+### 2. Configurer un port fixe
+1. Dans les propriétés de **TCP/IP**, ouvrir l’onglet **IP Addresses**
+2. Descendre jusqu’à **IPAll**
+3. Vider le champ **TCP Dynamic Ports** si nécessaire
+4. Définir **TCP Port = 1433** 
+5. Enregistrer
+
+### 3. Redémarrer SQL Server
+Après toute modification réseau :
+1. Aller dans **SQL Server Services**
+2. Redémarrer le service **SQL Server ([SQLEXPRESS])**
+
+### 4. Configurer le pare-feu Windows
+Ajouter une règle entrante autorisant :
+- **TCP 1433** 
+
+### 5. SQL Server Browser (si instance nommée)
+1. Démarrer le service **SQL Server Browser**
+2. Autoriser **UDP 1434** dans le pare-feu si nécessaire
+
+### 6. Vérifier la chaîne de connexion
+Exemples :
+
+#### Instance par défaut
+```env
+DB_SERVER=localhost/SQLEXPRESS
+DB_PORT=1433
+DB_NAME=HotelEventDB
+DB_USER=sa
+DB_PASSWORD=VotreMotDePasse
+
 1. Cloner le dépôt :
    ```bash
    git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
    ```
+   ```bash
+   cd src/frontend/src
+   ```
+     ```bash
+   npm install
+   ```
+   ```bash
+   npm run dev
+   ```
+   
+   Ouvrez un nouveau terminal :
+   
+    ```bash
+   cd src/backend/db
+   ```
     ```bash
    npm install
    ```
-     ```bash
+   ```bash
    npm run dev
    ```
   
