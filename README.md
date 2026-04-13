@@ -204,14 +204,14 @@ Pour permettre au projet de se connecter correctement à SQL Server, certaines c
 
 ### 3. Redémarrer SQL Server
 Après toute modification réseau :
-1. Aller dans **SQL Server Services**
+1. Aller dans **SQL Server Services** || Windows + r : ``` SQLServerManager15.msc ```
 2. Redémarrer le service **SQL Server ([SQLEXPRESS])**
 
 ### 4. Configurer le pare-feu Windows
 Ajouter une règle entrante autorisant :
 - **TCP 1433** 
 
-### 5. SQL Server Browser (si instance nommée)
+### 5. SQL Server Browser 
 1. Démarrer le service **SQL Server Browser**
 2. Autoriser **UDP 1434** dans le pare-feu si nécessaire
 
