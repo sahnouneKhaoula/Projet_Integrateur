@@ -125,3 +125,8 @@ CREATE TABLE Notifications (
   CONSTRAINT FK_Notif_User  FOREIGN KEY (user_id)  REFERENCES Users(id),
   CONSTRAINT FK_Notif_Event FOREIGN KEY (event_id) REFERENCES Events(id)
 );
+
+
+
+ALTER TABLE Services
+ADD status VARCHAR(20) NOT NULL DEFAULT 'pending';

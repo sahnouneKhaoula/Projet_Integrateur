@@ -109,6 +109,7 @@ export const traiterDemande = async (req, res) => {
 
     try {
         const pool = await poolPromise;
+        const nouveauStatut = action === 'valider' ? 'approved' : 'rejected';
 
         const svcRes = await pool.request()
             .input('id', service_id)
@@ -125,6 +126,16 @@ export const traiterDemande = async (req, res) => {
         }
 
         const svc = svcRes.recordset[0];
+
+        await pool.request()
+            .input('id', service_id)
+            .input('status', nouveauStatut)
+            .query(`
+                UPDATE Services
+                SET status = @status
+                WHERE id = @id
+            `);
+
         await creerNotification(
             svc.organizer_id,
             action === 'valider' ? 'service_valide' : 'service_rejete',
@@ -135,7 +146,10 @@ export const traiterDemande = async (req, res) => {
             svc.event_id
         );
 
-        res.status(200).json({ message: `Service ${action === 'valider' ? 'validé' : 'rejeté'}.` });
+        res.status(200).json({
+            message: `Service ${action === 'valider' ? 'validé' : 'rejeté'}.`,
+            status: nouveauStatut
+        });
 
     } catch (error) {
         res.status(500).json({ message: 'Erreur serveur', error: error.message });

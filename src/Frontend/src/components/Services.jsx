@@ -34,12 +34,7 @@ const SERVICES_DISPONIBLES = [
 ];
 
 function BadgeStatut({ statut }) {
-  const s = STATUTS_SVC[statut];
-
-  if (!s) {
-    console.error("Statut inconnu :", statut);
-    return <span className="svc-badge svc-badge--unknown">? {statut}</span>;
-  }
+  const s = STATUTS_SVC[statut] || STATUTS_SVC.pending;
 
   return (
     <span className={`svc-badge ${s.cls}`}>
@@ -173,30 +168,34 @@ function ModalTraitement({ demande, onFermer, onTraitement }) {
     
 
     const traiter = async (action) => {
-    setErreur('');
-    setChargement(true);
+  setErreur('');
+  setChargement(true);
 
-    try {
-        const res = await fetch(`${BASE}/api/services/${demande.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token()}`
-            },
-            body: JSON.stringify({ action }),
-        });
+  try {
+    const status = action === 'valider' ? 'approved' : 'rejected';
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.message);
+    const res = await fetch(`${BASE}/api/services/${demande.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token()}`
+      },
+      body: JSON.stringify({ action }),
+    });
 
-        const emoji = action === 'rejeter' ? '❌' : '✅';
-        onTraitement(`${emoji} ${data.message}`);
-    } catch (err) {
-        setErreur(err.message || 'Erreur lors du traitement.');
-    } finally {
-        setChargement(false);
-    }
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message);
+
+    const emoji = status === 'rejeter' ? '❌' : '✅';
+    onTraitement(`${emoji} ${data.message}`);
+    onFermer();
+  } catch (err) {
+    setErreur(err.message || 'Erreur lors du traitement.');
+  } finally {
+    setChargement(false);
+  }
 };
+
 
     return (
         <div className="svc-overlay" onClick={onFermer}>
@@ -306,7 +305,7 @@ export default function Services() {
     // Compteurs par statut (pour les pills)
     const source = onglet === 'a-traiter' ? demandes : tousServices;
     const comptes = Object.keys(STATUTS_SVC).reduce((acc, k) => {
-        acc[k] = source.filter(s => s.statut === k).length;
+        acc[k] = source.filter(s => s.status === k).length;
         return acc;
     }, {});
 
@@ -418,9 +417,8 @@ export default function Services() {
                                 {svc.description && <small className="svc-table-desc">{svc.description}</small>}
                             </span>
                             <span>{svc.event_title || '—'}</span>
-                            <span>{svc.organizer_name || '—'}</span>
                             <span>{parseFloat(svc.price || 0).toFixed(2)} $</span>
-                            <span><BadgeStatut statut={STATUTS_SVC[svc.status]} />  </span>
+                            <span><BadgeStatut statut={svc.status} />  </span>
                             {isCoord && onglet === 'a-traiter' && (
                                 <span>
                                     <button
