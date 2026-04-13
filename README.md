@@ -196,6 +196,7 @@ Pour permettre au projet de se connecter correctement à SQL Server, certaines c
 4. Appliquer les changements
 
 ### 2. Configurer un port fixe
+- Windows + r : ``` services.msc ```
 1. Dans les propriétés de **TCP/IP**, ouvrir l’onglet **IP Addresses**
 2. Descendre jusqu’à **IPAll**
 3. Vider le champ **TCP Dynamic Ports** si nécessaire
