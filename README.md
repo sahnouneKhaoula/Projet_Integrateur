@@ -188,7 +188,7 @@ Pour cette application, il est nécessaire d’avoir une base de données SQL Se
 Pour permettre au projet de se connecter correctement à SQL Server, certaines configurations réseau peuvent être nécessaires sur la machine qui héberge la base de données.
 
 ### 1. Activer le protocole TCP/IP
-1. Ouvrir **SQL Server Configuration Manager**
+1. Ouvrir **SQL Server Configuration Manager** || Windows + r : SQLServerManager15.msc
 2. Aller dans :
    - **SQL Server Network Configuration**
    - **Protocols for [SQLEXPRESS]**
