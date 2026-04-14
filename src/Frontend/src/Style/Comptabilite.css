@@ -1,0 +1,358 @@
+.compta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.compta-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.compta-title {
+  margin: 0;
+  color: var(--texte);
+  font-size: 1.5rem;
+}
+
+.compta-subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--mute-texte);
+  font-size: 0.92rem;
+}
+
+.compta-alert {
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.compta-alert--error {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+}
+
+.compta-alert--ok {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.35);
+  color: #86efac;
+}
+
+.compta-kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+
+.compta-kpi,
+.compta-card {
+  background: rgba(17, 24, 39, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 0.9rem;
+}
+
+.compta-kpi span {
+  color: var(--mute-texte);
+  font-size: 0.85rem;
+}
+
+.compta-kpi strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--primaire);
+  font-size: 1.1rem;
+}
+
+.compta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 0.8rem;
+}
+
+.compta-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.compta-form-actions {
+  display: flex;
+  gap: 0.55rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.compta-form h2,
+.compta-card h2 {
+  margin: 0 0 0.3rem 0;
+  color: var(--texte);
+  font-size: 1rem;
+}
+
+.compta-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  color: var(--mute-texte);
+  font-size: 0.84rem;
+}
+
+.compta-form input,
+.compta-form select,
+.compta-filters select {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 14, 27, 0.75);
+  color: var(--texte);
+  padding: 0.55rem 0.6rem;
+}
+
+.compta-form input:focus,
+.compta-form select:focus,
+.compta-filters select:focus {
+  outline: none;
+  border-color: var(--primaire);
+}
+
+.compta-btn {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--primaire);
+  color: #1d1606;
+  padding: 0.55rem 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.compta-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.compta-btn--secondary {
+  background: transparent;
+  color: var(--texte);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.compta-btn--print {
+  background: transparent;
+  color: var(--primaire);
+  border-color: rgba(201, 168, 106, 0.35);
+  padding: 0.35rem 0.55rem;
+  font-size: 0.78rem;
+}
+
+.compta-action-buttons {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.compta-btn--line-remove {
+  background: transparent;
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.35);
+  padding: 0.28rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.compta-filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.compta-filters-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.compta-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.compta-row {
+  display: grid;
+  grid-template-columns: 0.7fr 1.5fr 1fr 1fr 1fr 1fr 0.9fr 1.2fr 0.9fr;
+  gap: 0.5rem;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0.6rem;
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.82rem;
+  color: var(--texte);
+}
+
+.compta-row--head {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--mute-texte);
+  font-weight: 600;
+}
+
+.compta-badge {
+  border-radius: 999px;
+  padding: 0.18rem 0.5rem;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+}
+
+.compta-badge--paid {
+  background: rgba(34, 197, 94, 0.16);
+  color: #86efac;
+}
+
+.compta-badge--partial {
+  background: rgba(245, 158, 11, 0.16);
+  color: #fcd34d;
+}
+
+.compta-badge--unpaid {
+  background: rgba(239, 68, 68, 0.16);
+  color: #fca5a5;
+}
+
+.compta-badge--draft {
+  background: rgba(148, 163, 184, 0.16);
+  color: #cbd5e1;
+}
+
+.compta-empty {
+  color: var(--mute-texte);
+  padding: 0.7rem;
+  font-size: 0.9rem;
+}
+
+.compta-lines-box {
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  padding: 0.65rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.compta-lines-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--texte);
+  margin-bottom: 0.45rem;
+  font-size: 0.82rem;
+}
+
+.compta-lines-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.compta-extra-add {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr auto;
+  gap: 0.45rem;
+  margin-bottom: 0.55rem;
+}
+
+.compta-extra-add input {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 14, 27, 0.75);
+  color: var(--texte);
+  padding: 0.45rem 0.55rem;
+}
+
+.compta-extra-add input:focus {
+  outline: none;
+  border-color: var(--primaire);
+}
+
+.compta-line-item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 0.5rem;
+  align-items: center;
+  border-radius: 8px;
+  padding: 0.4rem 0.45rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.compta-line-name {
+  color: var(--texte);
+  font-size: 0.82rem;
+}
+
+.compta-line-price {
+  color: var(--primaire);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.compta-line-price-input {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(10, 14, 27, 0.75);
+  color: var(--texte);
+  padding: 0.35rem 0.45rem;
+}
+
+.compta-line-price-input:focus {
+  outline: none;
+  border-color: var(--primaire);
+}
+
+.compta-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 9, 18, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.compta-modal {
+  width: min(760px, 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0d1324;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.compta-modal h3 {
+  margin: 0;
+  color: var(--texte);
+}
+
+.compta-modal-subtitle {
+  margin: 0;
+  color: var(--mute-texte);
+  font-size: 0.88rem;
+}
+
+.compta-modal-total {
+  margin-top: 0.2rem;
+  color: var(--texte);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 1200px) {
+  .compta-row {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .compta-row span {
+    overflow-wrap: anywhere;
+  }
+}

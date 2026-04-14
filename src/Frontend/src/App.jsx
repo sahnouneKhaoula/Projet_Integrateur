@@ -103,8 +103,13 @@ function App() {
   const [utilisateur, setUtilisateur] = useState(null)
 
   useEffect(() => {
-    const data = localStorage.getItem('utilisateur');
-    if (data) setUtilisateur(JSON.parse(data));
+    try {
+      const data = localStorage.getItem('utilisateur');
+      if (data) setUtilisateur(JSON.parse(data));
+    } catch {
+      localStorage.removeItem('utilisateur');
+      setUtilisateur(null);
+    }
   }, []);
 
   useEffect(() => {
@@ -137,8 +142,10 @@ function App() {
     }
   }
 
-  const nomAffiche = utilisateur ? (utilisateur.first_name || utilisateur.email.split('@')[0]) : 'Invité'
-  const initiale = nomAffiche[0].toUpperCase()
+  const nomAffiche = utilisateur
+    ? (utilisateur.first_name || utilisateur.email?.split('@')?.[0] || utilisateur.username || 'Invité')
+    : 'Invité'
+  const initiale = (nomAffiche?.[0] || 'I').toUpperCase()
 
   return (
     <div className="App">
