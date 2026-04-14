@@ -417,6 +417,7 @@ export default function Services() {
                                 {svc.description && <small className="svc-table-desc">{svc.description}</small>}
                             </span>
                             <span>{svc.event_title || '—'}</span>
+                            <span>{svc.organizer_name || '—'}</span>
                             <span>{parseFloat(svc.price || 0).toFixed(2)} $</span>
                             <span><BadgeStatut statut={svc.status} />  </span>
                             {isCoord && onglet === 'a-traiter' && (
