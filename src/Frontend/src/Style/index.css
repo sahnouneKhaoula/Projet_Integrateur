@@ -58,6 +58,7 @@
 @import './admin/gestion-utilisateurs.css';
 @import './Reservations.css';
 @import './Invites.css';
+@import './Comptabilite.css';
 
 
 .champ-input-wrap input:focus {
