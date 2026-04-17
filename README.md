@@ -227,27 +227,32 @@ DB_NAME=HotelEventDB
 DB_USER=sa
 DB_PASSWORD=VotreMotDePasse
 ```
-1. Cloner le dépôt :
-   ```bash
+
+### Avant de démarrer 
+assurez-vous d’exécuter les scripts SQL dans l’ordre : commencez par ```2026-04-15-full-database-create.sql``` afin de créer la structure de la base de données, puis exécutez ```2026-04-15-full-database-seed.sql``` pour y insérer les données de test requises.
+
+
+ Cloner le dépôt :
+  ```bash
    git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
    ```
-   ```bash
+   ```bash 
    cd src/frontend/src
    ```
-     ```bash
+  ```bash
    npm install
    ```
    ```bash
    npm run dev
-   ```
+  ```
+
    
    Ouvrez un nouveau terminal :
-   
-    ```bash
-   cd src/backend/db
-   ```
-    ```bash
-   npm install
+   ```bash
+    cd src/backend/db
+```
+```bash
+ npm install
    ```
    ```bash
    npm run dev
