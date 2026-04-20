@@ -1,0 +1,61 @@
+/* ============================================
+   PAGES / ROOMS (Chambres)
+   Page liste des chambres et filtres
+   ============================================ */
+
+.page-chambres { padding-bottom: 2rem; }
+
+.page-en-tete {
+  padding: 3rem 1rem 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.page-en-tete h1 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-1);
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.page-en-tete p {
+  font-size: var(--texte-taille-grand);
+  line-height: 1.65;
+  color: var(--mute-texte);
+  max-width: 48rem;
+}
+
+/* --- Filtres sticky --- */
+.filtres {
+  padding: 1.5rem 1rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  background: var(--fond);
+  border-bottom: 1px solid var(--bordure);
+  position: sticky;
+  top: 5rem;
+  z-index: 10;
+}
+
+.filtres-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.resultats {
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+  margin: 0;
+}
+
+/* --- Liste --- */
+.liste-chambres {
+  padding: 2rem 1rem;
+  max-width: 1280px;
+  margin: 0 auto;
+}

@@ -9,9 +9,17 @@ export default defineConfig({
     // Pour appeler le backend en dev
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5000', // URL du backend
         changeOrigin: true
       }
     }
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./src/tests/SetupTests.js'],
+    include: ['src/tests/*.test.jsx']
   }
+
+
 })

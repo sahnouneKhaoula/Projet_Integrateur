@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Bouton } from '../composants/Bouton'
-import { Carte, CarteTitre, CarteDescription, CarteContenu } from '../composants/Carte'
+import { Bouton } from '../components/Bouton'
+import { Carte, CarteTitre, CarteDescription, CarteContenu } from '../components/Carte'
 
 // Page Chambres & Suites avec filtres (catégorie, vue, budget)
 export function PageChambres() {

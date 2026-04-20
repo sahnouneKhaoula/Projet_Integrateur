@@ -1,0 +1,421 @@
+/* ============================================
+   ADMIN / DASHBOARD
+   Tableau de bord — Hôtel La Promenade
+   ============================================ */
+
+.dashboard {
+  padding: 2rem 2.5rem;
+  min-height: 100vh;
+  background: var(--fond);
+  color: var(--texte);
+  font-family: var(--police-sans);
+}
+
+/* Branding au-dessus du tableau de bord */
+.dashboard-branding-inline {
+  padding: 0;
+  border-bottom: none;
+  margin: 0 0 0.75rem 0;
+}
+
+/* ============================================
+   En-tête
+   ============================================ */
+.dashboard-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.dashboard-salutation {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primaire);
+  margin-bottom: 0.35rem;
+}
+
+.dashboard-titre {
+  font-family: var(--police-serif);
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.2rem 0;
+  color: var(--texte);
+  letter-spacing: 0.01em;
+}
+
+.dashboard-date {
+  font-size: 0.85rem;
+  color: var(--mute-texte);
+  margin: 0;
+}
+
+.dashboard-header-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* ============================================
+   Cartes statistiques
+   ============================================ */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+.stat-carte {
+  background: var(--carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-lg);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: border-color var(--transition-normale), box-shadow var(--transition-normale);
+  box-shadow: var(--ombre-carte);
+}
+
+.stat-carte:hover {
+  border-color: rgba(201, 168, 106, 0.4);
+  box-shadow: var(--ombre-carte-hover);
+}
+
+.stat-icone {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  background: rgba(201, 168, 106, 0.1);
+  border-radius: var(--rayon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-corps { flex: 1; min-width: 0; }
+
+.stat-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute-texte);
+  margin-bottom: 0.3rem;
+}
+
+.stat-valeur {
+  display: block;
+  font-family: var(--police-serif);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--texte);
+  line-height: 1.1;
+}
+
+.stat-delta {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 9999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.stat-delta--positif {
+  background: rgba(63, 175, 122, 0.15);
+  color: #3FAF7A;
+}
+
+.stat-delta--negatif {
+  background: rgba(217, 107, 107, 0.15);
+  color: #D96B6B;
+}
+
+/* ============================================
+   Corps principal (2 colonnes)
+   ============================================ */
+.dashboard-corps {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .dashboard-corps { grid-template-columns: 1fr; }
+}
+
+/* --- Section header --- */
+.dashboard-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.dashboard-section-titre {
+  font-family: var(--police-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+/* --- Filtres --- */
+.dashboard-filtres {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.filtre-btn {
+  background: transparent;
+  border: 1px solid var(--bordure);
+  border-radius: 9999px;
+  padding: 0.3rem 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--mute-texte);
+  cursor: pointer;
+  transition: all var(--transition-rapide);
+  font-family: var(--police-sans);
+}
+
+.filtre-btn:hover {
+  border-color: var(--primaire);
+  color: var(--primaire);
+}
+
+.filtre-btn--actif {
+  background: var(--primaire);
+  border-color: var(--primaire);
+  color: var(--primaire-texte);
+  font-weight: 600;
+}
+
+.filtre-btn--actif:hover { color: var(--primaire-texte); }
+
+/* ============================================
+   Tableau des réservations
+   ============================================ */
+.reservations-table {
+  background: var(--carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-lg);
+  overflow: hidden;
+  box-shadow: var(--ombre-carte);
+}
+
+.table-header,
+.table-ligne {
+  display: grid;
+  grid-template-columns: 90px 1fr 1fr 130px 90px 110px;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  gap: 0.75rem;
+}
+
+.table-header {
+  background: var(--secondaire);
+  border-bottom: 1px solid var(--bordure);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute-texte);
+}
+
+.table-ligne {
+  border-bottom: 1px solid rgba(44, 52, 68, 0.6);
+  font-size: 0.88rem;
+  transition: background var(--transition-rapide);
+}
+
+.table-ligne:last-child { border-bottom: none; }
+
+.table-ligne:hover { background: rgba(201, 168, 106, 0.04); }
+
+.table-id {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--mute-texte);
+}
+
+.table-client { font-weight: 600; color: var(--texte); }
+
+.table-chambre { color: var(--mute-texte); }
+
+.table-periode {
+  font-size: 0.8rem;
+  color: var(--mute-texte);
+  white-space: nowrap;
+}
+
+.table-montant {
+  font-family: var(--police-serif);
+  font-weight: 600;
+  color: var(--primaire);
+  white-space: nowrap;
+}
+
+/* --- Badges de statut --- */
+.statut-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.statut--confirmee  { background: rgba(63, 175, 122, 0.15);  color: #3FAF7A; }
+.statut--en-cours   { background: rgba(201, 168, 106, 0.15); color: var(--primaire); }
+.statut--en-attente {
+  background: rgba(201, 168, 106, 0.08);
+  color: var(--mute-texte);
+  border: 1px solid var(--bordure);
+}
+
+/* ============================================
+   Widgets (colonne droite)
+   ============================================ */
+.dashboard-widget {
+  background: var(--carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--ombre-carte);
+}
+
+.dashboard-widget:last-child { margin-bottom: 0; }
+
+.widget-titre {
+  font-family: var(--police-serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 1.25rem 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--bordure);
+  letter-spacing: 0.01em;
+}
+
+/* --- Bar Chart --- */
+.barchart {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  height: 110px;
+  gap: 0.4rem;
+}
+
+.bar-groupe {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.bar-wrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 0.4rem;
+}
+
+.bar {
+  width: 100%;
+  background: linear-gradient(to top, var(--primaire), rgba(201, 168, 106, 0.5));
+  border-radius: 3px 3px 0 0;
+  min-height: 4px;
+  transition: opacity var(--transition-rapide);
+}
+
+.bar:hover { opacity: 0.8; }
+
+.bar-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--mute-texte);
+  text-transform: uppercase;
+}
+
+/* --- Événements --- */
+.evenements-liste {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.evenement-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.75rem;
+  background: var(--secondaire);
+  border-radius: var(--rayon);
+  border: 1px solid var(--bordure);
+  transition: border-color var(--transition-rapide);
+}
+
+.evenement-item:hover { border-color: rgba(201, 168, 106, 0.35); }
+
+.evenement-date-badge {
+  flex-shrink: 0;
+  padding: 0.3rem 0.6rem;
+  background: rgba(201, 168, 106, 0.12);
+  border: 1px solid rgba(201, 168, 106, 0.25);
+  border-radius: var(--rayon-sm);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--primaire);
+  white-space: nowrap;
+}
+
+.evenement-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.evenement-nom {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texte);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.evenement-meta {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+}

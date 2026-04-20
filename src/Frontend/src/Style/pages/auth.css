@@ -1,0 +1,229 @@
+/* ============================================
+   PAGES / AUTH (Connexion / Inscription)
+   Page de connexion plein écran, split-layout
+   ============================================ */
+
+.page-connexion {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--fond);
+}
+
+@media (min-width: 1024px) {
+  .page-connexion { flex-direction: row; }
+}
+
+/* --- Visuel gauche --- */
+.page-connexion-visuel {
+  display: none;
+  position: relative;
+  width: 50%;
+  min-height: 40vh;
+}
+
+@media (min-width: 1024px) {
+  .page-connexion-visuel {
+    display: block;
+    min-height: 100vh;
+  }
+}
+
+.page-connexion-img {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.page-connexion-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom right,
+    rgba(15, 17, 21, 0.9) 0%,
+    rgba(15, 17, 21, 0.6) 50%,
+    transparent 100%
+  );
+}
+
+.page-connexion-visuel-texte {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 3rem 2rem;
+}
+
+.page-connexion-visuel-texte h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-2);
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: var(--texte);
+}
+
+.page-connexion-visuel-texte p {
+  font-size: var(--texte-taille-grand);
+  color: var(--mute-texte);
+  margin-bottom: 1.5rem;
+}
+
+.page-connexion-securite {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: var(--texte-taille-petit);
+  color: var(--primaire);
+}
+
+/* --- Formulaire droite --- */
+.page-connexion-formulaire-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .page-connexion-formulaire-wrap { width: 50%; }
+}
+
+.page-connexion-formulaire {
+  width: 100%;
+  max-width: 28rem;
+}
+
+.page-connexion-retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--mute-texte);
+  text-decoration: none;
+  font-size: var(--texte-taille-base);
+  margin-bottom: 2rem;
+  transition: color 0.2s;
+}
+
+.page-connexion-retour:hover { color: var(--primaire); }
+
+/* --- Carte formulaire --- */
+.page-connexion-carte {
+  background: var(--carte);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-xl);
+  padding: 2rem;
+  box-shadow: var(--ombre-carte);
+  transition: box-shadow var(--transition-normale);
+}
+
+.page-connexion-carte:hover { box-shadow: var(--ombre-carte-hover); }
+
+.page-connexion-entete {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.page-connexion-logo {
+  display: block;
+  font-family: var(--police-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.page-connexion-sous-titre {
+  display: block;
+  font-size: var(--texte-taille-petit);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primaire);
+  margin-top: 0.25rem;
+}
+
+.page-connexion-titre {
+  font-family: var(--police-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: var(--texte);
+}
+
+.page-connexion-description {
+  font-size: var(--texte-taille-base);
+  color: var(--mute-texte);
+  margin-bottom: 1.5rem;
+}
+
+/* --- Erreur --- */
+.page-connexion-erreur {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background: rgba(217, 107, 107, 0.1);
+  border: 1px solid rgba(217, 107, 107, 0.2);
+  border-radius: var(--rayon);
+}
+
+.page-connexion-erreur p {
+  margin: 0;
+  font-size: var(--texte-taille-petit);
+  color: #D96B6B;
+}
+
+/* --- Champs connexion --- */
+.page-connexion-champs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.page-connexion-champs .champ { margin-bottom: 0; }
+
+.page-connexion-champs .champ label {
+  display: block;
+  font-size: var(--texte-taille-petit);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+  color: var(--texte);
+}
+
+/* --- Options (remember me, mot de passe oublié) --- */
+.page-connexion-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* --- Footer de la carte --- */
+.page-connexion-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bordure);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+}
+
+/* --- Footer des pages connexion/inscription (lien) --- */
+.page-connexion-footer-texte { color: var(--mute-texte); }
+
+.page-connexion-footer-lien {
+  color: var(--primaire);
+  margin-left: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.page-connexion-footer-lien:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}

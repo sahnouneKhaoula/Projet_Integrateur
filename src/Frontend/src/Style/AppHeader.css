@@ -1,0 +1,40 @@
+.AppHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, hsl(210, 30%, 20%), hsl(210, 30%, 30%));
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.AppHeader .Branding h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+}
+
+.AppHeader .Branding p {
+  margin: 0;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+.AppHeader .HeaderBell {
+  position: relative;
+}
+
+.AppHeader .HeaderBell .notification-bell {
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.AppHeader .HeaderBell .notification-bell:hover {
+  transform: scale(1.1);
+}

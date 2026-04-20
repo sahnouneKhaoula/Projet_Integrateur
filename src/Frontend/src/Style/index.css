@@ -1,0 +1,258 @@
+/* ============================================
+   INDEX.CSS — Point d'entrée principal
+   Hôtel La Promenade
+   ============================================
+   Architecture CSS :
+   
+   Style/
+   ├── base/
+   │   ├── variables.css       — Design tokens (couleurs, rayons, typo, ombres)
+   │   └── reset.css           — Reset global + typographie de base
+   ├── layout/
+   │   ├── app.css             — Shell app, sidebar, contenu principal
+   │   ├── navbar.css          — Barre de navigation publique
+   │   └── footer.css          — Pied de page
+   ├── components/
+   │   ├── buttons.css         — Tous les boutons réutilisables
+   │   ├── cards.css           — Cartes (base, suite, chambre, expérience, témoignage)
+   │   ├── forms.css           — Champs, inputs, selects, messages de feedback
+   │   └── sections.css        — Patterns de sections (grilles, CTA, événements)
+   ├── pages/
+   │   ├── home.css            — Page d'accueil (hero)
+   │   ├── rooms.css           — Page chambres + filtres
+   │   ├── services.css        — Page services
+   │   ├── booking.css         — Page réservation multi-étapes
+   │   └── auth.css            — Pages connexion / inscription
+   └── admin/
+       ├── dashboard.css       — Tableau de bord
+       ├── gestion-roles.css   — Gestion des rôles
+       └── gestion-utilisateurs.css — Gestion des utilisateurs
+   ============================================ */
+
+/* 1. Base */
+@import './base/variables.css';
+@import './base/reset.css';
+ 
+/* 2. Layout */
+@import './layout/app.css';
+@import './layout/navbar.css';
+@import './layout/footer.css';
+ 
+/* 3. Components */
+@import './components/buttons.css';
+@import './components/cards.css';
+@import './components/forms.css';
+@import './components/sections.css';
+@import './components/notifications.css';
+ 
+/* 4. Pages */
+@import './pages/home.css';
+@import './pages/rooms.css';
+@import './pages/services.css';
+@import './pages/booking.css';
+@import './pages/auth.css';
+ 
+/* 5. Admin */
+@import './admin/dashboard.css';
+@import './admin/gestion-roles.css';
+@import './admin/gestion-utilisateurs.css';
+@import './Reservations.css';
+@import './Invites.css';
+@import './Comptabilite.css';
+
+
+.champ-input-wrap input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.2);
+  transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
+}
+
+.champ-input-wrap input::placeholder {
+  color: var(--mute-texte);
+  opacity: 0.8;
+}
+
+.champ-toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.25rem;
+  color: var(--mute-texte);
+}
+
+.champ-toggle-password:hover {
+  color: var(--texte);
+}
+
+.champ-aide {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+  margin: 0.35rem 0 0 0;
+}
+
+.page-connexion-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: var(--texte-taille-petit);
+  color: var(--mute-texte);
+}
+
+.checkbox-label input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--primaire);
+}
+
+.lien-mot-de-passe-oublie {
+  background: none;
+  border: none;
+  font-size: var(--texte-taille-petit);
+  color: var(--primaire);
+  cursor: pointer;
+  padding: 0;
+}
+
+.lien-mot-de-passe-oublie:hover {
+  text-decoration: underline;
+}
+
+.bouton-connexion-plein {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.page-connexion-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bordure);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+}
+
+.navbar-bouton-connexion {
+  text-decoration: none;
+  transition: opacity var(--transition-rapide), transform var(--transition-rapide);
+}
+
+.navbar-bouton-connexion:hover {
+  opacity: 0.95;
+}
+
+.navbar-bouton-connexion:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--rayon);
+}
+
+.champ-input-wrap input:focus {
+  outline: none;
+  border-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.2);
+  transition: border-color var(--transition-rapide), box-shadow var(--transition-rapide);
+}
+
+.champ-input-wrap input::placeholder {
+  color: var(--mute-texte);
+  opacity: 0.8;
+}
+
+.champ-toggle-password {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.25rem;
+  color: var(--mute-texte);
+}
+
+.champ-toggle-password:hover {
+  color: var(--texte);
+}
+
+.champ-aide {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+  margin: 0.35rem 0 0 0;
+}
+
+.page-connexion-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-size: var(--texte-taille-petit);
+  color: var(--mute-texte);
+}
+
+.checkbox-label input {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--primaire);
+}
+
+.lien-mot-de-passe-oublie {
+  background: none;
+  border: none;
+  font-size: var(--texte-taille-petit);
+  color: var(--primaire);
+  cursor: pointer;
+  padding: 0;
+}
+
+.lien-mot-de-passe-oublie:hover {
+  text-decoration: underline;
+}
+
+.bouton-connexion-plein {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.page-connexion-footer {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bordure);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+}
+
+.navbar-bouton-connexion {
+  text-decoration: none;
+  transition: opacity var(--transition-rapide), transform var(--transition-rapide);
+}
+
+.navbar-bouton-connexion:hover {
+  opacity: 0.95;
+}
+
+.navbar-bouton-connexion:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--rayon);
+}

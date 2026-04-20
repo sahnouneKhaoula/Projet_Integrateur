@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { Bouton } from '../composants/Bouton'
-import { Carte, CarteTitre, CarteDescription, CarteContenu } from '../composants/Carte'
-import { ImageAvecRepli } from '../composants/ImageAvecRepli'
+import { Bouton } from '../components/Bouton'
+import { Carte, CarteTitre, CarteDescription, CarteContenu } from '../components/Carte'
+import { ImageAvecRepli } from '../components/ImageAvecRepli'
 
 // URLs photos fiables (Unsplash)
 const PHOTOS = {

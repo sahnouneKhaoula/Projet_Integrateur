@@ -1,0 +1,267 @@
+/* ============================================
+   COMPONENTS / CARDS
+   Cartes réutilisables (carte de base, suites, chambres, expériences, témoignages)
+   ============================================ */
+
+/* --- Carte de base --- */
+.carte {
+  background: var(--carte);
+  border-radius: var(--rayon-lg);
+  border: 1px solid var(--bordure);
+  overflow: hidden;
+  transition: border-color var(--transition-normale), box-shadow var(--transition-normale);
+  box-shadow: var(--ombre-carte);
+}
+
+.carte--hover:hover {
+  border-color: rgba(201, 168, 106, 0.5);
+  box-shadow: var(--ombre-carte-hover);
+}
+
+.carte-titre {
+  margin: 0 0 0.35rem 0;
+  font-family: var(--police-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.carte-description {
+  margin: 0;
+  font-size: var(--texte-taille-base);
+  line-height: 1.6;
+  color: var(--mute-texte);
+}
+
+.carte-contenu { padding: 1.5rem; }
+
+/* --- Carte Suite --- */
+.carte-suite { display: flex; flex-direction: column; }
+
+.carte-suite-image {
+  position: relative;
+  height: 16rem;
+  overflow: hidden;
+}
+
+.carte-suite-img,
+.carte-suite-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.carte-suite:hover .carte-suite-image img,
+.carte-suite:hover .carte-suite-img { transform: scale(1.05); }
+
+.carte-suite-badges {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.carte-suite-badges .badge {
+  padding: 0.3rem 0.6rem;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  border-radius: 4px;
+  font-size: var(--texte-taille-petit);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--texte);
+}
+
+.carte-suite-body { padding: 1.25rem; }
+
+.carte-suite-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bordure);
+}
+
+.carte-suite-footer .prix { font-weight: 600; color: var(--primaire); }
+.carte-suite-footer a { text-decoration: none; }
+
+/* --- Carte Expérience --- */
+.carte-experience { overflow: hidden; padding: 0; }
+
+.carte-experience-image {
+  height: 12rem;
+  overflow: hidden;
+}
+
+.carte-experience-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.carte-experience:hover .carte-experience-img { transform: scale(1.05); }
+
+.carte-experience .carte-contenu { padding: 1.25rem; }
+
+.grille-experiences .carte-contenu h4 {
+  margin: 0 0 0.5rem 0;
+  font-family: var(--police-serif);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--texte);
+}
+
+.grille-experiences .carte-contenu p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+}
+
+/* --- Carte Chambre --- */
+.carte-chambre {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 0;
+  margin-bottom: 2rem;
+  cursor: default;
+}
+
+@media (max-width: 768px) {
+  .carte-chambre { grid-template-columns: 1fr; }
+}
+
+.carte-chambre-image {
+  position: relative;
+  min-height: 14rem;
+}
+
+.carte-chambre-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 14rem;
+  object-fit: cover;
+}
+
+.badge-type {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--primaire);
+  color: var(--primaire-texte);
+  border-radius: 9999px;
+  font-size: var(--texte-taille-petit);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.carte-chambre-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.infos-chambre {
+  display: flex;
+  gap: 1rem;
+  margin: 0.75rem 0;
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+}
+
+.equipements {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  color: var(--mute-texte);
+}
+
+.equip {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.carte-chambre-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bordure);
+}
+
+.prix-nuit {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--primaire);
+  display: block;
+}
+
+.par-nuit {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+}
+
+.carte-chambre-footer a { text-decoration: none; }
+
+/* --- Carte Témoignage --- */
+.temoignage-avatar {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--primaire);
+  color: var(--primaire-texte);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--police-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.carte-temoignage .carte-contenu { text-align: left; }
+
+.etoiles {
+  color: var(--primaire);
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.citation {
+  font-style: italic;
+  color: var(--texte);
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.auteur {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  border-top: 1px solid var(--bordure);
+}
+
+.auteur strong {
+  font-family: var(--police-serif);
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.auteur span {
+  font-size: var(--texte-taille-petit);
+  color: var(--mute-texte);
+  letter-spacing: 0.01em;
+}
