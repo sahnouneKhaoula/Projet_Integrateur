@@ -458,11 +458,10 @@ export default function Services() {
                         const id = modalTraitement.id;
                         setModalTraitement(null);
                         flash(msg);
-                        // Mise à jour optimiste : le badge change instantanément
-                        const mettreAJour = (liste) =>
-                            liste.map(s => s.id === id ? { ...s, status: nouveauStatut } : s);
-                        setDemandes(mettreAJour);
-                        setTousServices(mettreAJour);
+                        // Retirer de la liste "à traiter" (seulement pending)
+                        setDemandes(liste => liste.filter(s => s.id !== id));
+                        // Mettre à jour le badge dans "tous les services"
+                        setTousServices(liste => liste.map(s => s.id === id ? { ...s, status: nouveauStatut } : s));
                     }}
                 />
             )}
