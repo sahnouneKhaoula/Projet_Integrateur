@@ -88,6 +88,7 @@ export const chargerDemandes = async (req, res) => {
             FROM Services s
             INNER JOIN Events e ON s.event_id = e.id
             INNER JOIN Users  u ON e.organizer_id = u.id
+            WHERE s.status = 'pending'
             ORDER BY s.created_at ASC
         `);
 

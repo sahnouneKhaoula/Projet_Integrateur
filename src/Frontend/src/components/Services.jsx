@@ -172,7 +172,7 @@ function ModalTraitement({ demande, onFermer, onTraitement }) {
   setChargement(true);
 
   try {
-    const status = action === 'valider' ? 'approved' : 'rejected';
+    const nouveauStatut = action === 'valider' ? 'approved' : 'rejected';
 
     const res = await fetch(`${BASE}/api/services/${demande.id}`, {
       method: 'PUT',
@@ -186,8 +186,8 @@ function ModalTraitement({ demande, onFermer, onTraitement }) {
     const data = await res.json();
     if (!res.ok) throw new Error(data.message);
 
-    const emoji = status === 'rejeter' ? '❌' : '✅';
-    onTraitement(`${emoji} ${data.message}`);
+    const emoji = action === 'valider' ? '✅' : '❌';
+    onTraitement(`${emoji} ${data.message}`, nouveauStatut);
     onFermer();
   } catch (err) {
     setErreur(err.message || 'Erreur lors du traitement.');
@@ -209,6 +209,7 @@ function ModalTraitement({ demande, onFermer, onTraitement }) {
                     <div className="svc-detail-ligne"><span>Organisateur</span><strong>{demande.organizer_name}</strong></div>
                     {demande.description && <div className="svc-detail-ligne"><span>Précisions</span><strong>{demande.description}</strong></div>}
                     <div className="svc-detail-ligne"><span>Budget</span><strong>{parseFloat(demande.price || 0).toFixed(2)} $</strong></div>
+                    <div className="svc-detail-ligne"><span>Statut actuel</span><BadgeStatut statut={demande.status} /></div>
                 </div>
 
                 {erreur && <div className="svc-alerte svc-alerte--erreur">⚠️ {erreur}</div>}
@@ -291,7 +292,7 @@ export default function Services() {
 
     // Filtrage
     const filtrerServices = (liste) => liste
-        .filter(s => filtreStatut === 'tous' || s.statut === filtreStatut)
+        .filter(s => filtreStatut === 'tous' || s.status === filtreStatut)
         .filter(s =>
             s.name?.toLowerCase().includes(recherche.toLowerCase()) ||
             s.event_title?.toLowerCase().includes(recherche.toLowerCase()) ||
@@ -453,11 +454,14 @@ export default function Services() {
                 <ModalTraitement
                     demande={modalTraitement}
                     onFermer={() => setModalTraitement(null)}
-                    onTraitement={(msg) => {
+                    onTraitement={(msg, nouveauStatut) => {
+                        const id = modalTraitement.id;
                         setModalTraitement(null);
                         flash(msg);
-                        chargerDemandes();
-                        chargerTous();
+                        // Retirer de la liste "à traiter" (seulement pending)
+                        setDemandes(liste => liste.filter(s => s.id !== id));
+                        // Mettre à jour le badge dans "tous les services"
+                        setTousServices(liste => liste.map(s => s.id === id ? { ...s, status: nouveauStatut } : s));
                     }}
                 />
             )}
