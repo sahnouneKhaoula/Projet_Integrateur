@@ -185,6 +185,9 @@ Pour cette application, il est nécessaire d’avoir une base de données SQL Se
 
 ## Configuration de la base de données SQL Server
 
+- https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+- SQL Server 2025 Express
+
 Pour permettre au projet de se connecter correctement à SQL Server, certaines configurations réseau peuvent être nécessaires sur la machine qui héberge la base de données.
 
 ### 1. Activer le protocole TCP/IP
