@@ -37,10 +37,10 @@ Le système prend en charge la réservation de salles, la gestion des invités, 
 ---
 
 ## 🛠️ Technologies utilisées
-> À adapter selon ton projet
 
-- Frontend : (ex. React / Angular / HTML-CSS-JS)
-- Backend : (ex. Javascript / C# / Node.js )
+
+- Frontend : (React / JSX-Vite / CSS-JS)
+- Backend : (Javascript / SQL / Node.js )
 - Base de données :  MySQLServer
 - Architecture : Application web client–serveur
 
@@ -221,14 +221,21 @@ Exemples :
 
 #### Instance par défaut
 ```env
-DB_SERVER=localhost/SQLEXPRESS
-DB_PORT=1433
-DB_NAME=HotelEventDB
+PORT= 3002
+DB_SERVER=[Nom_de_Votre_Serveur]\SQLEXPRESS
+DB_DATABASE=HotelEventsDB
 DB_USER=sa
-DB_PASSWORD=VotreMotDePasse
+DB_PASSWORD=[Votre_mot_de_passe]
+DB_ENCRYPT=false
+JWT_SECRET=ma_clef_secrete_ultra_solide_pour_l_hotel_2026
+
 ```
 
+
+
 ### Avant de démarrer 
+Assurez-vous d’activer l’utilisateur nommé « sa » et de définir le mot de passe qui sera utilisé dans le fichier d’environnement ```bash .env ```
+
 assurez-vous d’exécuter les scripts SQL dans l’ordre : commencez par ```2026-04-15-full-database-create.sql``` afin de créer la structure de la base de données, puis exécutez ```2026-04-15-full-database-seed.sql``` pour y insérer les données de test requises.
 
 
@@ -237,7 +244,7 @@ assurez-vous d’exécuter les scripts SQL dans l’ordre : commencez par ```202
    git clone https://github.com/sahnouneKhaoula/Projet_Integrateur.git
    ```
    ```bash 
-   cd src/frontend/src
+   cd src/frontend
    ```
   ```bash
    npm install
@@ -249,7 +256,7 @@ assurez-vous d’exécuter les scripts SQL dans l’ordre : commencez par ```202
    
    Ouvrez un nouveau terminal :
    ```bash
-    cd src/backend/db
+    cd src/backend
 ```
 ```bash
  npm install
