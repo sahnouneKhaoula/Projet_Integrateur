@@ -81,6 +81,7 @@ export const chargerDemandes = async (req, res) => {
                 s.id,
                 s.name,
                 s.price,
+                s.status,
                 s.created_at,
                 e.title AS event_title,
                 u.first_name + ' ' + u.last_name AS organizer_name
