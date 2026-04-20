@@ -367,7 +367,7 @@ export default function Services() {
                 ))}
             </div>
 
-            
+            {/* ─── Barre de recherche ────────────────── */}
             <div className="svc-barre">
                 <div className="svc-recherche-wrap">
                     <svg className="svc-recherche-icone" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -381,10 +381,10 @@ export default function Services() {
                 </div>
             </div>
 
-            
+            {/* ─── Flash message ─────────────────────── */}
             {message && <div className="svc-flash">{message}</div>}
 
-            {/* ─ Contenu ─ */}
+            {/* ─── Contenu ───────────────────────────── */}
             {chargement ? (
                 <div className="svc-chargement">
                     <div className="svc-spinner" />
@@ -436,7 +436,7 @@ export default function Services() {
                 </div>
             )}
 
-            {/* ─ Modals ─ */}
+            {/* ─── Modals ────────────────────────────── */}
             {modalDemande && (
                 <FormulaireDemandeService
                     evenements={evenements}
