@@ -5,7 +5,6 @@ import Dashboard from './components/Dashboard'
 import Evenements from './components/Evenements'
 import Espaces from './components/Espaces'
 import Services from './components/Services'
-import Parametres from './components/Parametres'
 import GestionUtilisateurs from './components/GestionUtilisateurs'
 import GestionRoles from './components/GestionRoles'
 import Rapports from './components/Rapports'
@@ -134,7 +133,6 @@ function App() {
       case 'Services': return <Services />
       case 'Guests': return <Invites />
       case 'Comptabilité': return <Comptabilite />
-      case 'Parametres': return <Parametres />
       case 'Utilisateurs': return <GestionUtilisateurs />
       case 'Roles': return <GestionRoles />
       case 'Reports': return <Rapports />
@@ -192,17 +190,10 @@ function App() {
           )}
         </nav>
 
-        {/* Paramètres + Profil en bas */}
+        {/* Profil en bas */}
         <div className="SidebarBottom">
          
-          <button
-            className={`tab-settings ${activeTab === 'Parametres' ? 'active' : ''}`}
-            onClick={() => setActiveTab('Parametres')}
-          >
-            <span className="tab-icon">{icons.settings}</span>
-            <span className="tab-label">Paramètres</span>
-          </button>
-
+        
           <div className="Profile">
             <div className="ProfilePicture">{initiale}</div>
             <div className="ProfileInfo">
