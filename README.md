@@ -150,6 +150,7 @@ Projet_Integrateur/
 │       └── package.json
 └── README.md        
   ```
+---
 
 2. Strucutre du CSS : 
    ```bash
@@ -178,6 +179,7 @@ Projet_Integrateur/
        └── gestion-utilisateurs.css — Gestion des utilisateurs
 
    ---
+ 
 
 ## ▶️ Installation et exécution
 
@@ -234,7 +236,7 @@ JWT_SECRET=ma_clef_secrete_ultra_solide_pour_l_hotel_2026
 
 ```
 
-
+---
 
 ### Avant de démarrer 
 Assurez-vous d’activer l’utilisateur nommé « sa » et de définir le mot de passe qui sera utilisé dans le fichier d’environnement ```bash .env ```
@@ -267,4 +269,61 @@ assurez-vous d’exécuter les scripts SQL dans l’ordre : commencez par ```202
    ```bash
    npm run dev
    ```
-  
+
+---
+
+## Alignement entre le cahier des charges et le livrable
+
+### Introduction
+
+Ce projet a été réalisé en visant une cohérence directe entre le cahier des charges et les fonctionnalités livrées. Chaque exigence fonctionnelle prévue a été prise en charge dans le périmètre du projet, tout en respectant les délais fixés.
+
+L’ensemble des fonctionnalités décrites dans le cahier des charges a été développé et intégré, à l’exception du module de **notifications automatiques**. Ce volet a été amorcé et partiellement implémenté, mais il n’a pas été complété au niveau prévu dans la spécification initiale, notamment en ce qui concerne les déclencheurs métier, les préférences utilisateur et le cycle de vie complet des notifications.
+
+Le détail de cet écart est présenté ci-dessous afin de préciser clairement ce qui fait partie du livrable final et ce qui demeure ouvert pour une évolution ultérieure.
+
+---
+
+### Module « Notifications automatiques » — périmètre partiel
+
+Le cahier des charges prévoyait un module de notifications automatiques permettant d’alerter les utilisateurs sur les actions importantes, les échéances et les événements critiques liés à l’organisation d’événements. L’objectif était de réduire les oublis, d’améliorer la réactivité des équipes et de centraliser les alertes importantes dans l’application.
+
+Dans la version présentée, ce module n’est pas complet au regard de la spécification initiale. Certains éléments peuvent être présents dans le code ou dans l’interface, mais le dispositif global n’est pas entièrement fonctionnel.
+
+Les éléments non entièrement couverts sont notamment :
+
+- **Vue centralisée et navigation**
+  - Tableau d’alertes unifié regroupant les paiements, rappels, services et validations.
+  - Recherche et filtrage par type, événement ou date.
+
+- **Contexte métier**
+  - Consultation systématique des notifications avec des détails contextualisés.
+  - Exemple : lien vers une facture, un événement, un service ou une réservation associée.
+
+- **Préférences utilisateur**
+  - Paramétrage des canaux de notification, comme les notifications in-app ou par e-mail.
+  - Gestion des règles prévues pour les alertes critiques, notamment celles qui ne devraient pas être désactivables par simple préférence utilisateur.
+
+- **Cycle de vie des notifications**
+  - Gestion complète des statuts : `Non lue`, `Lue` et `Archivée`.
+  - Conservation de la traçabilité par archivage, sans suppression physique des notifications.
+
+- **Déclenchement automatique selon les scénarios prévus**
+  - Facturation : création de facture, retard de paiement.
+  - Services : validation ou refus d’un service.
+  - Événements : rappels J-7 / J-1, changement de planification, annulation.
+  - Invités : RSVP, si ce périmètre est retenu.
+  - Paiements : reçu, paiement partiel, échéance dépassée.
+
+- **Règles métier avancées**
+  - Lien obligatoire entre une notification et un objet métier.
+  - Prévention des redéclenchements tant que l’état sous-jacent demeure inchangé.
+  - Paramétrage des types d’alertes par l’administrateur.
+
+---
+
+### Conclusion
+
+Les acteurs visés par la spécification, soit l’organisateur, le coordonnateur, la comptabilité, la direction optionnelle et l’administrateur, ne disposent donc pas encore du dispositif complet de notifications automatiques tel que décrit dans le cahier des charges.
+
+Le module constitue toutefois une base exploitable pour une amélioration future. Les fonctionnalités restantes pourront être complétées dans une version ultérieure afin d’atteindre pleinement le périmètre prévu initialement.
