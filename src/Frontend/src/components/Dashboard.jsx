@@ -72,8 +72,7 @@ export default function Dashboard() {
           <p className="dashboard-date">{aujourdhui}</p>
         </div>
         <div className="dashboard-header-actions">
-          <button className="bouton bouton--secondaire bouton--petit">📄 Rapport</button>
-          <button className="bouton bouton--primaire bouton--petit">+ Événement</button>
+  
         </div>
       </div>
 
