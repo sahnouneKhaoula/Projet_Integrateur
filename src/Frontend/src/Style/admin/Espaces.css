@@ -73,6 +73,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 1rem;
   margin-bottom: 1.5rem;
+  
 }
 
 .espaces-stat-carte {
@@ -81,6 +82,7 @@
   border: 1px solid var(--bordure);
   padding: 1rem 1.2rem;
   box-shadow: var(--ombre-carte);
+  color: var(--texte);
 }
 
 .espaces-stat-carte--button {

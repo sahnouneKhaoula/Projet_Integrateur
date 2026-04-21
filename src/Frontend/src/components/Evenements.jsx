@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import '../Style/Evenements.css';
+
 
 const BASE = 'http://localhost:3002';
 const token = () => localStorage.getItem('token');
