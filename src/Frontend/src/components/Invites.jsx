@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import '../Style/Invites.css';
+
 
 const BASE = 'http://localhost:3002';
 const token = () => localStorage.getItem('token');

@@ -56,9 +56,13 @@
 @import './admin/dashboard.css';
 @import './admin/gestion-roles.css';
 @import './admin/gestion-utilisateurs.css';
-@import './Reservations.css';
-@import './Invites.css';
-@import './Comptabilite.css';
+@import './admin/Reservations.css';
+@import './admin/Invites.css';
+@import './admin/Comptabilite.css';
+@import './admin/Espaces.css';
+@import './admin/Evenements.css';
+@import './admin/Rapports.css';
+@import './admin/ServiceCoord.css';
 
 
 .champ-input-wrap input:focus {

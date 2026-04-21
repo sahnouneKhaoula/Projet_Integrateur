@@ -1,4 +1,4 @@
-// node seed.js 
+// node seed.js
 import 'dotenv/config';
 import { poolPromise } from './db/db.js';
 import bcrypt from 'bcrypt';
@@ -29,7 +29,7 @@ async function seedDatabase() {
             }
         }
 
-        // Récupérer l'ID du rôle admin (qu'il vienne d'être créé ou qu'il existe déjà)
+        // Récupérer l'ID du rôle admin
         const adminRoleResult = await pool.request()
             .input('name', 'admin')
             .query('SELECT id FROM Roles WHERE name = @name');
@@ -40,21 +40,18 @@ async function seedDatabase() {
             throw new Error("Impossible de trouver ou créer le rôle admin.");
         }
 
-        // 2. Création de l'utilisateur admin de test
+        // 2. Création de l'utilisateur Admin de test
         const adminEmail = 'admin@lapromenade.ca';
-        const rawPassword = 'admin'; // Mot de passe facile pour les tests
+        const rawPassword = 'admin';
 
-        // Vérifier si l'utilisateur admin existe déjà
         const checkAdmin = await pool.request()
             .input('email', adminEmail)
             .query('SELECT id FROM Users WHERE email = @email');
 
         if (checkAdmin.recordset.length === 0) {
-            // Hasher le mot de passe
             const saltRounds = 10;
             const passwordHash = await bcrypt.hash(rawPassword, saltRounds);
 
-            // Insérer l'admin
             await pool.request()
                 .input('username', 'admin_test')
                 .input('email', adminEmail)
@@ -67,6 +64,7 @@ async function seedDatabase() {
                     INSERT INTO Users (username, email, password_hash, first_name, last_name, phone, role_id) 
                     VALUES (@username, @email, @password_hash, @first_name, @last_name, @phone, @role_id)
                 `);
+
             console.log(`Utilisateur Admin créé avec succès !`);
             console.log(`-> Email : ${adminEmail}`);
             console.log(`-> Mot de passe : ${rawPassword}`);
@@ -74,7 +72,7 @@ async function seedDatabase() {
             console.log(`L'utilisateur Admin (${adminEmail}) existe déjà dans la base.`);
         }
 
-        // 3. Création du rôle et d'un utilisateur Client de test
+        // 3. Création de l'utilisateur Client de test
         const clientRoleResult = await pool.request()
             .input('name', 'client')
             .query('SELECT id FROM Roles WHERE name = @name');
@@ -103,12 +101,93 @@ async function seedDatabase() {
                         INSERT INTO Users (username, email, password_hash, first_name, last_name, phone, role_id) 
                         VALUES (@username, @email, @password_hash, @first_name, @last_name, @phone, @role_id)
                     `);
+
                 console.log(`Utilisateur Client créé avec succès !`);
                 console.log(`-> Email : ${clientEmail}`);
                 console.log(`-> Mot de passe : client`);
             } else {
                 console.log(`L'utilisateur Client (${clientEmail}) existe déjà dans la base.`);
             }
+        }
+
+        // 4. Création de l'utilisateur Organisateur de test
+        const organisateurRoleResult = await pool.request()
+            .input('name', 'organisateur')
+            .query('SELECT id FROM Roles WHERE name = @name');
+
+        if (organisateurRoleResult.recordset.length > 0) {
+            const organisateurRoleId = organisateurRoleResult.recordset[0].id;
+            const organisateurEmail = 'organisateur@lapromenade.ca';
+
+            const checkOrganisateur = await pool.request()
+                .input('email', organisateurEmail)
+                .query('SELECT id FROM Users WHERE email = @email');
+
+            if (checkOrganisateur.recordset.length === 0) {
+                const saltRounds = 10;
+                const organisateurPasswordHash = await bcrypt.hash('organisateur', saltRounds);
+
+                await pool.request()
+                    .input('username', 'organisateur_test')
+                    .input('email', organisateurEmail)
+                    .input('password_hash', organisateurPasswordHash)
+                    .input('first_name', 'Organisateur')
+                    .input('last_name', 'Test')
+                    .input('phone', '555-0303')
+                    .input('role_id', organisateurRoleId)
+                    .query(`
+                        INSERT INTO Users (username, email, password_hash, first_name, last_name, phone, role_id) 
+                        VALUES (@username, @email, @password_hash, @first_name, @last_name, @phone, @role_id)
+                    `);
+
+                console.log(`Utilisateur Organisateur créé avec succès !`);
+                console.log(`-> Email : ${organisateurEmail}`);
+                console.log(`-> Mot de passe : organisateur`);
+            } else {
+                console.log(`L'utilisateur Organisateur (${organisateurEmail}) existe déjà dans la base.`);
+            }
+        } else {
+            console.log("Le rôle 'organisateur' est introuvable.");
+        }
+
+        // 5. Création de l'utilisateur Coordonnateur de test
+        const coordonnateurRoleResult = await pool.request()
+            .input('name', 'coordonnateur')
+            .query('SELECT id FROM Roles WHERE name = @name');
+
+        if (coordonnateurRoleResult.recordset.length > 0) {
+            const coordonnateurRoleId = coordonnateurRoleResult.recordset[0].id;
+            const coordonnateurEmail = 'coordonnateur@lapromenade.ca';
+
+            const checkCoordonnateur = await pool.request()
+                .input('email', coordonnateurEmail)
+                .query('SELECT id FROM Users WHERE email = @email');
+
+            if (checkCoordonnateur.recordset.length === 0) {
+                const saltRounds = 10;
+                const coordonnateurPasswordHash = await bcrypt.hash('coordonnateur', saltRounds);
+
+                await pool.request()
+                    .input('username', 'coordonnateur_test')
+                    .input('email', coordonnateurEmail)
+                    .input('password_hash', coordonnateurPasswordHash)
+                    .input('first_name', 'Coordonnateur')
+                    .input('last_name', 'Test')
+                    .input('phone', '555-0404')
+                    .input('role_id', coordonnateurRoleId)
+                    .query(`
+                        INSERT INTO Users (username, email, password_hash, first_name, last_name, phone, role_id) 
+                        VALUES (@username, @email, @password_hash, @first_name, @last_name, @phone, @role_id)
+                    `);
+
+                console.log(`Utilisateur Coordonnateur créé avec succès !`);
+                console.log(`-> Email : ${coordonnateurEmail}`);
+                console.log(`-> Mot de passe : coordonnateur`);
+            } else {
+                console.log(`L'utilisateur Coordonnateur (${coordonnateurEmail}) existe déjà dans la base.`);
+            }
+        } else {
+            console.log("Le rôle 'coordonnateur' est introuvable.");
         }
 
         console.log("Initialisation terminée avec succès.");

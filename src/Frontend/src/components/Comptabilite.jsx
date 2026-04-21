@@ -480,9 +480,7 @@ export default function Comptabilite() {
           <h1 className="compta-title">Comptabilité</h1>
           <p className="compta-subtitle">Facturation des événements et suivi des paiements liés aux services.</p>
         </div>
-        <button className="compta-btn compta-btn--secondary" type="button" onClick={loadData}>
-          Actualiser
-        </button>
+        
       </header>
 
       {error && <div className="compta-alert compta-alert--error">⚠️ {error}</div>}
@@ -722,7 +720,11 @@ export default function Comptabilite() {
               <div className="compta-row" key={inv.id}>
                 <span>#{inv.id}</span>
                 <span>{inv.event_title || `Événement #${inv.event_id}`}</span>
-                <span>{money(servicesByEvent.get(Number(inv.event_id)) || inv.services_total || 0)}</span>
+                <span>
+                  {Array.isArray(inv.lines) && inv.lines.length > 0
+                    ? money(inv.lines.reduce((acc, l) => acc + Number(l.line_total ?? l.unit_price ?? 0), 0))
+                    : money(servicesByEvent.get(Number(inv.event_id)) || inv.services_total || 0)}
+                </span>
                 <span>{money(inv.total)}</span>
                 <span>{money(inv.paid_total)}</span>
                 <span>{money(inv.due)}</span>
@@ -860,4 +862,3 @@ export default function Comptabilite() {
     </section>
   );
 }
-
