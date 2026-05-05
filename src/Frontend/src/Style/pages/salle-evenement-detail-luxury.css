@@ -1,0 +1,488 @@
+/* Page détail salle — même structure Luxury, thème sombre La Promenade */
+
+.salle-detail-luxury {
+  min-height: 100%;
+  background: var(--fond);
+  color: var(--texte);
+  margin: 0 -1rem;
+  padding: 0 0 3rem;
+  width: calc(100% + 2rem);
+  max-width: none;
+  position: relative;
+}
+
+.salle-detail-luxury::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 168, 106, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 30%, rgba(30, 36, 48, 0.5), transparent 50%);
+  z-index: 0;
+}
+
+.salle-detail-luxury > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .salle-detail-luxury {
+    margin: 0 calc(50% - 50vw);
+    width: 100vw;
+    padding-bottom: 4rem;
+  }
+}
+
+.salle-detail-luxury-inner {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .salle-detail-luxury-inner {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.salle-detail-luxury-retour-bar {
+  background: rgba(22, 26, 34, 0.92);
+  border-bottom: 1px solid var(--bordure);
+  backdrop-filter: blur(8px);
+}
+
+.salle-detail-luxury-retour-bar .salle-detail-luxury-inner {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.salle-detail-luxury-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--mute-texte);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s;
+}
+
+.salle-detail-luxury-back:hover {
+  color: var(--primaire);
+}
+
+.salle-detail-luxury-back svg {
+  flex-shrink: 0;
+}
+
+.salle-detail-luxury-pad {
+  padding-top: 2rem;
+}
+
+/* Galerie */
+.salle-detail-luxury-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .salle-detail-luxury-gallery {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: stretch;
+  }
+}
+
+.salle-detail-luxury-hero {
+  position: relative;
+  height: 24rem;
+  border-radius: var(--rayon-xl);
+  overflow: hidden;
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+}
+
+@media (min-width: 768px) {
+  .salle-detail-luxury-hero {
+    height: 600px;
+  }
+}
+
+.salle-detail-luxury-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.salle-detail-luxury-thumbs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  align-content: start;
+}
+
+.salle-detail-luxury-thumb {
+  position: relative;
+  height: 11rem;
+  border-radius: var(--rayon-xl);
+  overflow: hidden;
+  cursor: pointer;
+  border: 3px solid transparent;
+  padding: 0;
+  background: var(--secondaire);
+  transition:
+    border-color 0.2s,
+    transform 0.3s;
+}
+
+@media (min-width: 768px) {
+  .salle-detail-luxury-thumb {
+    height: 18rem;
+  }
+}
+
+.salle-detail-luxury-thumb:hover img {
+  transform: scale(1.05);
+}
+
+.salle-detail-luxury-thumb--actif {
+  border-color: var(--primaire);
+  box-shadow: 0 0 0 1px rgba(201, 168, 106, 0.45);
+}
+
+.salle-detail-luxury-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+/* Grille principale */
+.salle-detail-luxury-main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .salle-detail-luxury-main {
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+}
+
+.salle-detail-luxury-card {
+  background: linear-gradient(145deg, rgba(30, 36, 48, 0.35) 0%, var(--secondaire) 55%);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 2);
+  box-shadow: var(--ombre-carte);
+  padding: 2rem;
+}
+
+.salle-detail-luxury-badge {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: linear-gradient(145deg, rgba(245, 242, 234, 0.98) 0%, rgba(201, 168, 106, 0.95) 100%);
+  color: #1a1510;
+}
+
+.salle-detail-luxury-titre {
+  font-family: var(--police-serif);
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--texte);
+  margin: 0 0 1.5rem 0;
+  line-height: 1.15;
+}
+
+.salle-detail-luxury-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--bordure);
+}
+
+@media (min-width: 768px) {
+  .salle-detail-luxury-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.salle-detail-luxury-stat {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(15, 17, 21, 0.45);
+  border-radius: var(--rayon);
+  border: 1px solid rgba(44, 52, 68, 0.85);
+  border-left: 1px solid rgba(201, 168, 106, 0.35);
+}
+
+.salle-detail-luxury-stat svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--primaire);
+  margin: 0 auto 0.5rem;
+  display: block;
+}
+
+.salle-detail-luxury-stat .sdl-label {
+  font-size: 0.8rem;
+  color: var(--mute-texte);
+  margin: 0 0 0.25rem 0;
+}
+
+.salle-detail-luxury-stat .sdl-val {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--texte);
+  margin: 0;
+}
+
+.salle-detail-luxury-section-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 1rem 0;
+  font-family: var(--police-sans);
+}
+
+.salle-detail-luxury-desc {
+  color: var(--mute-texte);
+  line-height: 1.65;
+  margin: 0 0 2rem 0;
+  font-size: 0.98rem;
+}
+
+.salle-detail-luxury-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.salle-detail-luxury-tag {
+  padding: 0.5rem 1rem;
+  background: rgba(201, 168, 106, 0.12);
+  color: var(--primaire);
+  border: 1px solid rgba(201, 168, 106, 0.2);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.salle-detail-luxury-amenities {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .salle-detail-luxury-amenities {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.salle-detail-luxury-amenity {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--mute-texte);
+  font-size: 0.95rem;
+}
+
+.salle-detail-luxury-amenity-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: rgba(201, 168, 106, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.salle-detail-luxury-amenity-icon svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--primaire);
+}
+
+.salle-detail-luxury-options {
+  background: rgba(15, 17, 21, 0.35);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-lg);
+  padding: 1.5rem;
+}
+
+.salle-detail-luxury-options-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+@media (min-width: 768px) {
+  .salle-detail-luxury-options-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.salle-detail-luxury-opt-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.salle-detail-luxury-opt-item svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--primaire);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.salle-detail-luxury-opt-item strong {
+  display: block;
+  color: var(--texte);
+  font-weight: 600;
+}
+
+.salle-detail-luxury-opt-item span {
+  color: var(--mute-texte);
+  font-size: 0.8rem;
+}
+
+/* Encart devis */
+.salle-detail-luxury-sidebar {
+  position: sticky;
+  top: 6rem;
+}
+
+.salle-detail-luxury-book {
+  background: linear-gradient(145deg, rgba(30, 36, 48, 0.5) 0%, var(--secondaire) 100%);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 2);
+  box-shadow: var(--ombre-carte-hover);
+  padding: 1.5rem;
+}
+
+.salle-detail-luxury-book h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 1rem 0;
+  font-family: var(--police-sans);
+}
+
+.salle-detail-luxury-book-pricebox {
+  background: rgba(201, 168, 106, 0.1);
+  border: 1px solid rgba(201, 168, 106, 0.2);
+  border-radius: var(--rayon);
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.salle-detail-luxury-book-pricebox .sdl-small {
+  font-size: 0.8rem;
+  color: var(--mute-texte);
+  margin: 0 0 0.35rem 0;
+}
+
+.salle-detail-luxury-book-pricebox .sdl-small strong {
+  color: var(--primaire);
+}
+
+.salle-detail-luxury-book-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primaire);
+  margin: 0 0 0.25rem 0;
+}
+
+.salle-detail-luxury-book-note {
+  font-size: 0.7rem;
+  color: var(--mute-texte);
+  margin: 0;
+}
+
+.salle-detail-luxury-book-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.salle-detail-luxury-book-list p {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--mute-texte);
+}
+
+.salle-detail-luxury-book-list svg {
+  width: 1.15rem;
+  height: 1.15rem;
+  color: var(--primaire);
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.salle-detail-luxury-book .bouton-plein {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.salle-detail-luxury-book-foot {
+  font-size: 0.7rem;
+  color: var(--mute-texte);
+  opacity: 0.85;
+  text-align: center;
+  margin: 0.75rem 0 0 0;
+}
+
+.salle-detail-luxury-chargement {
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--fond);
+  margin: 0 -1rem;
+  width: calc(100% + 2rem);
+}
+
+.salle-detail-luxury-vide {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: var(--fond);
+  margin: 0 -1rem;
+  width: calc(100% + 2rem);
+}
+
+.salle-detail-luxury-vide h2 {
+  font-family: var(--police-serif);
+  color: var(--texte);
+  margin-bottom: 1rem;
+}

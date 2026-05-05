@@ -174,6 +174,12 @@
   margin: 0;
   font-size: var(--texte-taille-petit);
   color: #D96B6B;
+  line-height: 1.55;
+}
+
+/* Message lisible (pas seulement « Failed to fetch » technique) */
+.page-connexion-erreur--utilisateur p {
+  font-size: 0.8125rem;
 }
 
 /* --- Champs connexion --- */

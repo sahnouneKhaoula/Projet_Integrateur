@@ -1,0 +1,59 @@
+/* =============================================================================
+   Pictogrammes emoji — alignement + teinte dorée (tokens La Promenade)
+   Les filtres rapprochent les couleurs du #C9A86A sans SVG.
+   ============================================================================= */
+.lp-emoji {
+  font-style: normal;
+  font-family:
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', emoji,
+    sans-serif;
+  display: inline-block;
+  vertical-align: -0.1em;
+  line-height: 1;
+  margin-inline-end: 0.35em;
+  /* Teinte champagne / or (sepia + hue) + halo doré discret */
+  filter: sepia(0.42) saturate(1.28) hue-rotate(342deg) brightness(1.07) contrast(0.97)
+    drop-shadow(0 0 1px rgba(201, 168, 106, 0.35))
+    drop-shadow(0 1px 3px rgba(201, 168, 106, 0.18));
+}
+
+.lp-emoji:last-child {
+  margin-inline-end: 0;
+}
+
+.lp-emoji--seul {
+  margin-inline-end: 0;
+}
+
+.lp-emoji--tab {
+  font-size: 1.08em;
+  margin-inline-end: 0.4em;
+  vertical-align: -0.08em;
+}
+
+.lp-emoji--carte {
+  font-size: 1.12em;
+}
+
+.lp-emoji--stat {
+  font-size: 1.2em;
+  margin-inline-end: 0;
+}
+
+.lp-emoji--badge {
+  font-size: 0.95em;
+  margin-inline-end: 0.35em;
+  vertical-align: -0.06em;
+}
+
+.lp-emoji--lg {
+  font-size: 1.5em;
+  margin-inline-end: 0.3em;
+  vertical-align: middle;
+}
+
+.lp-emoji--btn {
+  font-size: 1em;
+  margin-inline-end: 0;
+  vertical-align: middle;
+}

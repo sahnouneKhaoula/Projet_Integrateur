@@ -1,0 +1,593 @@
+/* Parcours « Demande d'événement » — aligné sur Luxury RequestEvent.tsx, thème sombre La Promenade */
+
+.demande-luxury {
+  margin: 0 -1rem;
+  width: calc(100% + 2rem);
+  max-width: none;
+  background: var(--fond);
+  color: var(--texte);
+  position: relative;
+  padding-bottom: 2rem;
+}
+
+.demande-luxury::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 168, 106, 0.07), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 20%, rgba(30, 36, 48, 0.45), transparent 50%);
+  z-index: 0;
+}
+
+.demande-luxury > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .demande-luxury {
+    margin: 0 calc(50% - 50vw);
+    width: 100vw;
+  }
+}
+
+.demande-luxury-retour-bar {
+  background: rgba(22, 26, 34, 0.92);
+  border-bottom: 1px solid var(--bordure);
+  padding: 1rem 1.5rem;
+}
+
+.demande-luxury-retour-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--mute-texte);
+  font-family: var(--police-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.demande-luxury-retour-btn:hover {
+  color: var(--primaire);
+}
+
+.demande-luxury-head {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: 2rem 1rem 0;
+}
+
+.demande-luxury-head h1 {
+  font-family: var(--police-serif);
+  font-size: clamp(1.65rem, 3.5vw, 2rem);
+  font-weight: 700;
+  color: var(--texte);
+  margin: 0 0 0.5rem 0;
+}
+
+.demande-luxury-head p {
+  color: var(--mute-texte);
+  margin: 0;
+  font-size: 0.98rem;
+}
+
+/* Stepper */
+.demande-luxury-stepper {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 0.5rem;
+}
+
+.demande-luxury-stepper-track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0;
+}
+
+.demande-luxury-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 0 auto;
+  min-width: 0;
+  max-width: 5.5rem;
+}
+
+.demande-luxury-step-circle {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
+}
+
+.demande-luxury-step--completed .demande-luxury-step-circle {
+  background: var(--primaire);
+  color: var(--primaire-texte);
+}
+
+.demande-luxury-step--current .demande-luxury-step-circle {
+  background: var(--texte);
+  color: var(--fond);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.35);
+}
+
+.demande-luxury-step--upcoming .demande-luxury-step-circle {
+  background: var(--mute);
+  color: var(--mute-texte);
+}
+
+.demande-luxury-step-label {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+}
+
+@media (min-width: 480px) {
+  .demande-luxury-step-label {
+    font-size: 0.8rem;
+  }
+}
+
+.demande-luxury-step--current .demande-luxury-step-label {
+  color: var(--primaire);
+}
+
+.demande-luxury-step--completed .demande-luxury-step-label {
+  color: var(--primaire);
+}
+
+.demande-luxury-step--upcoming .demande-luxury-step-label {
+  color: var(--mute-texte);
+}
+
+.demande-luxury-step-connector {
+  flex: 1 1 0;
+  height: 3px;
+  align-self: center;
+  margin-bottom: 1.75rem;
+  min-width: 0.35rem;
+  border-radius: 2px;
+  background: var(--bordure);
+}
+
+.demande-luxury-step-connector--done {
+  background: linear-gradient(90deg, var(--primaire), rgba(201, 168, 106, 0.6));
+}
+
+/* Grille formulaire + estimation */
+.demande-luxury-grid {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .demande-luxury-grid {
+    grid-template-columns: 2fr 1fr;
+    align-items: start;
+  }
+}
+
+.demande-luxury-form-card {
+  background: linear-gradient(145deg, rgba(30, 36, 48, 0.35) 0%, var(--secondaire) 55%);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 2);
+  box-shadow: var(--ombre-carte);
+  padding: 1.75rem 1.5rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .demande-luxury-form-card {
+    padding: 2rem;
+  }
+}
+
+.demande-luxury-form-card h2 {
+  font-family: var(--police-serif);
+  font-size: 1.35rem;
+  color: var(--texte);
+  margin: 0 0 1.5rem 0;
+}
+
+.demande-luxury-types-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+}
+
+@media (min-width: 768px) {
+  .demande-luxury-types-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.demande-luxury-type-btn {
+  padding: 1rem 0.75rem;
+  border-radius: var(--rayon);
+  border: 2px solid var(--bordure);
+  background: rgba(15, 17, 21, 0.35);
+  color: var(--texte);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  font-family: inherit;
+  text-align: center;
+}
+
+.demande-luxury-type-btn:hover {
+  border-color: rgba(201, 168, 106, 0.4);
+}
+
+.demande-luxury-type-btn--sel {
+  border-color: var(--primaire);
+  background: rgba(201, 168, 106, 0.1);
+}
+
+.demande-luxury-type-btn .emoji {
+  font-size: 1.75rem;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.demande-luxury-type-btn .lib {
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.demande-luxury-field {
+  margin-bottom: 1.25rem;
+}
+
+.demande-luxury-field label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--mute-texte);
+  margin-bottom: 0.45rem;
+}
+
+.demande-luxury-field input,
+.demande-luxury-field select,
+.demande-luxury-field textarea {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--rayon);
+  border: 1px solid var(--bordure);
+  background: var(--entree-fond);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.demande-luxury-field input:focus,
+.demande-luxury-field select:focus,
+.demande-luxury-field textarea:focus {
+  outline: none;
+  border-color: var(--primaire);
+  box-shadow: 0 0 0 2px rgba(201, 168, 106, 0.2);
+}
+
+.demande-luxury-two {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .demande-luxury-two {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Salles radio */
+.demande-luxury-venue {
+  display: block;
+  padding: 1.25rem;
+  border-radius: var(--rayon-lg);
+  border: 2px solid var(--bordure);
+  background: rgba(15, 17, 21, 0.25);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  margin-bottom: 1rem;
+}
+
+.demande-luxury-venue:hover {
+  border-color: rgba(201, 168, 106, 0.35);
+}
+
+.demande-luxury-venue--sel {
+  border-color: var(--primaire);
+  background: rgba(201, 168, 106, 0.08);
+}
+
+.demande-luxury-venue input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.demande-luxury-venue-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.85rem 1rem;
+  align-items: flex-start;
+}
+
+.demande-luxury-venue-photo {
+  flex-shrink: 0;
+  width: 5.25rem;
+  height: 4rem;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  border: 1px solid var(--bordure);
+  background: var(--secondaire);
+}
+
+@media (min-width: 480px) {
+  .demande-luxury-venue-photo {
+    width: 7rem;
+    height: 5rem;
+  }
+}
+
+.demande-luxury-venue-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.demande-luxury-venue-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.demande-luxury-venue h3 {
+  margin: 0 0 0.35rem 0;
+  font-size: 1.05rem;
+  color: var(--texte);
+}
+
+.demande-luxury-venue-desc {
+  font-size: 0.85rem;
+  color: var(--mute-texte);
+  margin: 0 0 0.65rem 0;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.demande-luxury-venue-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: var(--mute-texte);
+}
+
+.demande-luxury-venue-price {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.demande-luxury-venue-price strong {
+  display: block;
+  font-size: 1.35rem;
+  color: var(--primaire);
+}
+
+.demande-luxury-venue-price span {
+  font-size: 0.7rem;
+  color: var(--mute-texte);
+}
+
+/* Services optionnels (checkbox + photo + texte) */
+.demande-luxury-svc {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--rayon);
+  border: 1px solid var(--bordure);
+  background: rgba(15, 17, 21, 0.35);
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  align-items: center;
+}
+
+.demande-luxury-svc:hover {
+  background: rgba(15, 17, 21, 0.5);
+}
+
+.demande-luxury-svc input {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  accent-color: var(--primaire);
+}
+
+.demande-luxury-svc-photo {
+  flex-shrink: 0;
+  width: 4.5rem;
+  height: 3.35rem;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  border: 1px solid var(--bordure);
+  background: var(--secondaire);
+}
+
+@media (min-width: 480px) {
+  .demande-luxury-svc-photo {
+    width: 5.5rem;
+    height: 4rem;
+  }
+}
+
+.demande-luxury-svc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.demande-luxury-svc-texte {
+  flex: 1;
+  min-width: 0;
+}
+
+.demande-luxury-svc-titre {
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 0.2rem 0;
+  font-size: 0.95rem;
+}
+
+.demande-luxury-svc-desc {
+  font-size: 0.82rem;
+  color: var(--mute-texte);
+  margin: 0 0 0.35rem 0;
+}
+
+.demande-luxury-svc-prix {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--primaire);
+  margin: 0;
+}
+
+.demande-luxury-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--bordure);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.demande-luxury-nav .bouton--secondaire {
+  margin-right: auto;
+}
+
+.demande-luxury-err {
+  background: rgba(239, 83, 80, 0.12);
+  border: 1px solid rgba(239, 83, 80, 0.35);
+  color: #ef9a9a;
+  padding: 0.65rem 1rem;
+  border-radius: var(--rayon);
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+
+/* Résumé prix */
+.demande-luxury-summary {
+  background: linear-gradient(145deg, rgba(30, 36, 48, 0.5) 0%, var(--secondaire) 100%);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 2);
+  box-shadow: var(--ombre-carte-hover);
+  padding: 1.5rem;
+  position: sticky;
+  top: 5.5rem;
+}
+
+.demande-luxury-summary h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 1rem 0;
+}
+
+.demande-luxury-summary-block {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--bordure);
+}
+
+.demande-luxury-summary-block p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.demande-luxury-summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  margin-bottom: 0.35rem;
+}
+
+.demande-luxury-summary-row span:first-child {
+  color: var(--mute-texte);
+}
+
+.demande-luxury-summary-row span:last-child {
+  color: var(--texte);
+  font-weight: 600;
+}
+
+.demande-luxury-summary-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--bordure);
+}
+
+.demande-luxury-summary-total span:first-child {
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.demande-luxury-summary-total span:last-child {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primaire);
+}
+
+.demande-luxury-summary-foot {
+  margin-top: 1rem;
+  padding: 0.65rem;
+  border-radius: var(--rayon);
+  background: rgba(201, 168, 106, 0.1);
+  border: 1px solid rgba(201, 168, 106, 0.2);
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+/* Sections sous le wizard (agenda, mes demandes) */
+.demande-luxury-suite.page-demande-evenement {
+  max-width: 56rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem 1rem 4rem;
+}

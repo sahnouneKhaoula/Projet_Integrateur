@@ -1,15 +1,10 @@
-// Chargement du fichier de configuration
-import 'dotenv/config'
+// Charger .env depuis ce dossier (obligatoire en ESM avant db.js)
+import './loadEnv.js'
 
-// Importations générales du projet
 import express, { json } from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
-import compression from 'compression';
-import dotenv from "dotenv";
-
-
-dotenv.config();
+import compression from 'compression'
 
 import "./db/db.js";
 

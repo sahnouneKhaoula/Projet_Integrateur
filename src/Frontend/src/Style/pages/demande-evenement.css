@@ -1,0 +1,153 @@
+/* Page publique : demande d'événement (client) — alignée sur services / sections existantes */
+
+.page-demande-evenement {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.page-demande-evenement .page-en-tete {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.page-demande-evenement .page-en-tete h1 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-2);
+  color: var(--texte);
+  margin-bottom: 0.5rem;
+}
+
+.page-demande-evenement .intro-demande {
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  padding: 1rem 1.25rem;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+  color: var(--mute-texte);
+  line-height: 1.5;
+}
+
+.carte-formulaire-demande {
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 1.5);
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.carte-formulaire-demande h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-3);
+  margin: 0 0 1.25rem 0;
+  color: var(--texte);
+}
+
+.grille-deux-colonnes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .grille-deux-colonnes {
+    grid-template-columns: 1fr;
+  }
+}
+
+.message-retour-demande {
+  padding: 0.75rem 1rem;
+  border-radius: var(--rayon);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.message-retour-demande--ok {
+  background: rgba(76, 175, 80, 0.12);
+  border: 1px solid rgba(76, 175, 80, 0.35);
+  color: #81c784;
+}
+
+.message-retour-demande--err {
+  background: rgba(239, 83, 80, 0.1);
+  border: 1px solid rgba(239, 83, 80, 0.35);
+  color: #ef5350;
+}
+
+.liste-mes-demandes h2 {
+  font-family: var(--police-serif);
+  font-size: var(--titre-taille-3);
+  margin: 0 0 1rem 0;
+}
+
+.ligne-demande {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--bordure);
+  border-radius: var(--rayon);
+  margin-bottom: 0.75rem;
+  background: var(--fond);
+}
+
+.ligne-demande-titre {
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.ligne-demande-meta {
+  font-size: 0.85rem;
+  color: var(--mute-texte);
+}
+
+.badge-statut-demande {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.badge-statut-demande--attente {
+  background: rgba(156, 39, 176, 0.12);
+  color: #ce93d8;
+}
+
+.badge-statut-demande--ok {
+  background: rgba(201, 168, 106, 0.15);
+  color: var(--primaire);
+}
+
+.badge-statut-demande--autre {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--mute-texte);
+}
+
+.champ-erreur-texte {
+  font-size: 0.8rem;
+  color: #ef5350;
+  margin: 0.25rem 0 0 0;
+  font-weight: 600;
+}
+
+.page-demande-evenement .texte-mute {
+  color: var(--mute-texte);
+  font-size: 0.95rem;
+}
+
+.section-agenda-public {
+  margin-bottom: 2rem;
+}
+
+.ligne-demande--public {
+  border-color: rgba(201, 168, 106, 0.25);
+}

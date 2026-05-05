@@ -1,0 +1,883 @@
+/* =============================================================================
+   Page catalogue Événements & salles — inspirée d’un flux « luxury venues »,
+   mais avec les tokens du projet (variables CSS La Promenade).
+   ============================================================================= */
+
+.page-evenements-catalogue {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+  position: relative;
+}
+
+.page-evenements-catalogue::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(201, 168, 106, 0.08), transparent 55%),
+    radial-gradient(ellipse 60% 40% at 100% 30%, rgba(30, 36, 48, 0.5), transparent 50%);
+  z-index: 0;
+}
+
+.page-evenements-catalogue > * {
+  position: relative;
+  z-index: 1;
+}
+
+.evenements-catalogue-entete {
+  text-align: center;
+  padding: 2.75rem 0 2rem;
+  border-bottom: 1px solid var(--bordure);
+  margin-bottom: 0;
+}
+
+.evenements-catalogue-eyebrow {
+  display: inline-block;
+  font-family: var(--police-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--primaire);
+  margin-bottom: 0.85rem;
+  opacity: 0.95;
+}
+
+.evenements-catalogue-entete h1 {
+  font-family: var(--police-serif);
+  font-size: clamp(1.85rem, 4.2vw, 2.5rem);
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 1rem 0;
+  letter-spacing: 0.01em;
+  line-height: 1.15;
+}
+
+.evenements-catalogue-entete h1::after {
+  content: '';
+  display: block;
+  width: min(5rem, 40%);
+  height: 2px;
+  margin: 1rem auto 0;
+  background: linear-gradient(90deg, transparent, var(--primaire), transparent);
+  border-radius: 2px;
+}
+
+.evenements-catalogue-soustitre {
+  color: var(--mute-texte);
+  max-width: 40rem;
+  margin: 0 auto;
+  line-height: 1.65;
+  font-size: 1.02rem;
+}
+
+/* Bandeau onglets types */
+.evenements-onglets-wrap {
+  border-bottom: 1px solid var(--bordure);
+  background: linear-gradient(180deg, rgba(22, 26, 34, 0.85) 0%, var(--fond) 100%);
+  margin-bottom: 2rem;
+  border-top: 1px solid rgba(201, 168, 106, 0.12);
+}
+
+.evenements-onglets-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.evenements-onglets {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 1.1rem 0 1.25rem;
+  scrollbar-width: thin;
+  margin: 0;
+}
+
+.evenements-onglets::-webkit-scrollbar {
+  height: 6px;
+}
+
+.evenements-onglet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid var(--bordure);
+  background: rgba(15, 17, 21, 0.6);
+  color: var(--mute-texte);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+  font-family: var(--police-sans);
+}
+
+.evenements-onglet:hover {
+  border-color: rgba(201, 168, 106, 0.45);
+  color: var(--texte);
+  transform: translateY(-1px);
+}
+
+.evenements-onglet--actif {
+  background: linear-gradient(145deg, rgba(201, 168, 106, 0.22) 0%, rgba(201, 168, 106, 0.08) 100%);
+  color: var(--texte);
+  border-color: var(--primaire);
+  box-shadow:
+    0 0 0 1px rgba(201, 168, 106, 0.25),
+    0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.evenements-catalogue-corps {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .evenements-catalogue-corps {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* Filtres latéraux */
+.evenements-filtres {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .evenements-filtres {
+    width: 280px;
+    position: sticky;
+    top: 5.5rem;
+  }
+}
+
+.evenements-filtres-carte {
+  background: linear-gradient(165deg, rgba(30, 36, 48, 0.55) 0%, var(--secondaire) 40%);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 1.75);
+  padding: 1.5rem 1.5rem 1.65rem;
+  box-shadow: var(--ombre-carte);
+  position: relative;
+  overflow: hidden;
+}
+
+.evenements-filtres-carte::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--primaire), transparent);
+  opacity: 0.85;
+}
+
+.evenements-filtres-carte h3 {
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 1.35rem 0;
+  font-family: var(--police-serif);
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(44, 52, 68, 0.85);
+  letter-spacing: 0.02em;
+}
+
+.evenements-filtre-bloc {
+  margin-bottom: 1.25rem;
+}
+
+.evenements-filtre-bloc label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--mute-texte);
+  margin-bottom: 0.5rem;
+}
+
+.evenements-filtre-bloc select {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border-radius: var(--rayon);
+  border: 1px solid var(--bordure);
+  background: var(--entree-fond);
+  color: var(--texte);
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.evenements-filtre-bloc select:hover,
+.evenements-filtre-bloc select:focus {
+  outline: none;
+  border-color: rgba(201, 168, 106, 0.45);
+  box-shadow: 0 0 0 2px rgba(201, 168, 106, 0.12);
+}
+
+.evenements-filtre-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.evenements-filtre-cat {
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--rayon);
+  border: 1px solid var(--bordure);
+  background: var(--fond);
+  color: var(--texte);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.evenements-filtre-cat:hover {
+  border-color: rgba(201, 168, 106, 0.4);
+}
+
+.evenements-filtre-cat--actif {
+  background: rgba(201, 168, 106, 0.12);
+  border-color: var(--primaire);
+  color: var(--primaire);
+  font-weight: 700;
+}
+
+/* Chargement */
+.evenements-chargement {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 3.5rem 1.5rem;
+  border-radius: calc(var(--rayon) * 1.5);
+  border: 1px dashed rgba(201, 168, 106, 0.25);
+  background: rgba(22, 26, 34, 0.4);
+}
+
+.evenements-chargement-label {
+  font-family: var(--police-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--mute-texte);
+  letter-spacing: 0.02em;
+}
+
+.evenements-chargement-bar {
+  width: min(160px, 50%);
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(201, 168, 106, 0.35),
+    var(--primaire),
+    rgba(201, 168, 106, 0.35),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: evenements-chargement-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes evenements-chargement-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+    background-position: 0% 50%;
+  }
+  50% {
+    opacity: 1;
+    background-position: 100% 50%;
+  }
+}
+
+/* Liste résultats */
+.evenements-resultats {
+  flex: 1;
+  min-width: 0;
+}
+
+.evenements-resultats-compte {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+  color: var(--mute-texte);
+}
+
+.evenements-resultats-nombre {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-family: var(--police-sans);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primaire-texte);
+  background: linear-gradient(145deg, var(--primaire) 0%, var(--primaire-hover) 100%);
+  box-shadow: 0 2px 8px rgba(201, 168, 106, 0.25);
+}
+
+.evenements-resultats-libelle {
+  font-weight: 500;
+}
+
+.evenements-grille-cartes {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Carte grande (image + contenu) */
+.evenements-carte-luxe {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: linear-gradient(145deg, rgba(30, 36, 48, 0.35) 0%, var(--secondaire) 55%);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 2);
+  overflow: hidden;
+  box-shadow: var(--ombre-carte);
+  transition:
+    box-shadow 0.3s ease,
+    transform 0.3s ease,
+    border-color 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .evenements-carte-luxe {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.evenements-carte-luxe:hover {
+  box-shadow: var(--ombre-carte-hover);
+  transform: translateY(-3px);
+  border-color: rgba(201, 168, 106, 0.22);
+}
+
+.evenements-carte-media {
+  position: relative;
+  min-height: 240px;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .evenements-carte-media {
+    min-height: 100%;
+    min-height: 320px;
+  }
+}
+
+.evenements-carte-img,
+.evenements-carte-media img {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.evenements-carte-luxe:hover .evenements-carte-media img {
+  transform: scale(1.06);
+}
+
+.evenements-carte-media-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 17, 21, 0.1) 0%,
+    transparent 45%,
+    rgba(15, 17, 21, 0.35) 100%
+  );
+}
+
+.evenements-carte-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: linear-gradient(145deg, rgba(245, 242, 234, 0.98) 0%, rgba(201, 168, 106, 0.95) 100%);
+  color: #1a1510;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.evenements-carte-corps {
+  padding: 1.85rem 1.65rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.evenements-carte-titre {
+  font-family: var(--police-serif);
+  font-size: clamp(1.35rem, 2.5vw, 1.55rem);
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 0.4rem 0;
+  line-height: 1.2;
+}
+
+.evenements-carte-lieu {
+  font-family: var(--police-sans);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--primaire);
+  margin: 0 0 0.9rem 0;
+  letter-spacing: 0.03em;
+  opacity: 0.95;
+}
+
+.evenements-carte-desc {
+  color: var(--mute-texte);
+  font-size: 0.94rem;
+  line-height: 1.6;
+  margin: 0 0 1.35rem 0;
+}
+
+.evenements-carte-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.65rem;
+  margin-bottom: 1.35rem;
+}
+
+.evenements-carte-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.86rem;
+  color: var(--texte);
+  padding: 0.65rem 0.7rem;
+  border-radius: var(--rayon);
+  background: rgba(15, 17, 21, 0.45);
+  border: 1px solid rgba(44, 52, 68, 0.85);
+  border-left: 1px solid rgba(201, 168, 106, 0.35);
+  transition: border-color 0.2s;
+}
+
+.evenements-carte-luxe:hover .evenements-carte-stat {
+  border-left-color: rgba(201, 168, 106, 0.55);
+}
+
+/* Emoji seul, sans cadre */
+.evenements-carte-stat > .lp-emoji--stat {
+  flex-shrink: 0;
+}
+
+.evenements-carte-stat span {
+  display: block;
+}
+
+.evenements-carte-stat .petit {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+  font-weight: 500;
+}
+
+.evenements-carte-stat .gras {
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.evenements-carte-tags {
+  margin-bottom: 1.25rem;
+}
+
+.evenements-carte-tags > span {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--mute-texte);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.evenements-carte-tags-liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.evenements-carte-tag {
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  background: rgba(15, 17, 21, 0.65);
+  border: 1px solid rgba(201, 168, 106, 0.2);
+  color: var(--mute-texte);
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.evenements-carte-luxe:hover .evenements-carte-tag {
+  border-color: rgba(201, 168, 106, 0.35);
+  color: var(--texte);
+}
+
+.evenements-carte-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: auto;
+}
+
+.evenements-carte-actions a {
+  flex: 1;
+  min-width: 140px;
+  text-decoration: none;
+}
+
+.evenements-vide {
+  text-align: center;
+  padding: 3rem 1.75rem;
+  color: var(--mute-texte);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  max-width: 28rem;
+  margin: 0 auto;
+  border: 1px dashed rgba(201, 168, 106, 0.25);
+  border-radius: calc(var(--rayon) * 1.5);
+  background: rgba(22, 26, 34, 0.5);
+}
+
+/* Page détail salle */
+.page-salle-evenement-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+}
+
+/* Même carte que le catalogue : galerie dans la colonne image */
+.evenements-carte-media.salle-detail-carte-media {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+}
+
+.evenements-carte-media.salle-detail-carte-media .salle-detail-galerie {
+  margin-bottom: 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.salle-detail-actions-catalogue {
+  margin-top: 0.25rem;
+}
+
+.salle-detail-retour {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--bordure);
+  margin-bottom: 1.5rem;
+}
+
+.salle-detail-retour a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1rem;
+  border-radius: 999px;
+  border: 1px solid var(--bordure);
+  background: rgba(22, 26, 34, 0.65);
+  color: var(--mute-texte);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition:
+    color 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.salle-detail-retour a:hover {
+  color: var(--primaire);
+  border-color: rgba(201, 168, 106, 0.35);
+  background: rgba(201, 168, 106, 0.08);
+}
+
+.salle-detail-galerie {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+  .salle-detail-galerie {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.salle-detail-principale {
+  border-radius: calc(var(--rayon) * 1.5);
+  overflow: hidden;
+  min-height: 280px;
+  border: 1px solid var(--bordure);
+}
+
+.salle-detail-principale img,
+.salle-detail-img-principale {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  object-fit: cover;
+  display: block;
+}
+
+.salle-detail-miniatures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  align-content: start;
+}
+
+.salle-detail-mini {
+  padding: 0;
+  margin: 0;
+  border: 2px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  transition: border-color 0.2s;
+}
+
+.salle-detail-mini--actif {
+  border-color: var(--primaire);
+}
+
+.salle-detail-mini-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 0;
+  display: block;
+  transition: transform 0.3s;
+}
+
+.salle-detail-mini:hover .salle-detail-mini-img {
+  transform: scale(1.05);
+}
+
+.salle-detail-grille {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .salle-detail-grille {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.salle-detail-bloc {
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 1.5);
+  padding: 2rem;
+  box-shadow: var(--ombre-carte);
+}
+
+.salle-detail-bloc h1 {
+  font-family: var(--police-serif);
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+  color: var(--texte);
+}
+
+.salle-detail-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--bordure);
+}
+
+@media (min-width: 640px) {
+  .salle-detail-stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.salle-detail-stat-box {
+  text-align: center;
+  padding: 1rem;
+  background: var(--fond);
+  border-radius: var(--rayon);
+  border: 1px solid var(--bordure);
+}
+
+.salle-detail-stat-emoji {
+  margin: 0 auto 0.45rem;
+  line-height: 1;
+  display: block;
+  text-align: center;
+}
+
+.salle-detail-stat-emoji .lp-emoji--stat {
+  font-size: 1.5rem;
+}
+
+.salle-detail-stat-box .label {
+  font-size: 0.75rem;
+  color: var(--mute-texte);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.salle-detail-stat-box .valeur {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--texte);
+}
+
+.salle-detail-encart {
+  background: var(--secondaire);
+  border: 1px solid var(--bordure);
+  border-radius: calc(var(--rayon) * 1.5);
+  padding: 1.5rem;
+  position: sticky;
+  top: 5.5rem;
+}
+
+.salle-detail-encart-prix {
+  font-size: 0.85rem;
+  color: var(--mute-texte);
+  margin-bottom: 0.25rem;
+}
+
+.salle-detail-encart-montant {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--primaire);
+  margin-bottom: 1rem;
+}
+
+.salle-detail-encart .bouton {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+/* -----------------------------------------------------------------------------
+   Page Chambres — 2 cartes par ligne (aligné sur Luxury Rooms : grid-cols-2),
+   carte en colonne : photo au-dessus, détails en dessous.
+   ----------------------------------------------------------------------------- */
+.page-chambres-catalogue .evenements-grille-cartes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+@media (min-width: 768px) {
+  .page-chambres-catalogue .evenements-grille-cartes {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+  }
+}
+
+.page-chambres-catalogue .evenements-carte-luxe {
+  grid-template-columns: 1fr;
+}
+
+/* Même hauteur visuelle pour toutes les photos (ratio fixe + crop) */
+.page-chambres-catalogue .evenements-carte-media {
+  position: relative;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
+  width: 100%;
+}
+
+.page-chambres-catalogue .evenements-carte-img,
+.page-chambres-catalogue .evenements-carte-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  object-fit: cover;
+}
+
+.page-chambres-catalogue .chambres-section-titre {
+  font-family: var(--police-serif);
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  font-weight: 600;
+  color: var(--texte);
+  margin: 0 0 1.25rem 0;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid rgba(201, 168, 106, 0.28);
+  letter-spacing: 0.02em;
+}
+
+.page-chambres-catalogue .chambres-bloc-hotel--apres-catalogue {
+  margin-top: 2.5rem;
+  padding-top: 0.25rem;
+}
+
+/* Aide diagnostic : API chambres indisponible ou base vide */
+.chambres-alert-api {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  padding: 1rem 1.15rem;
+  border-radius: calc(var(--rayon) * 1.25);
+  margin-bottom: 1.25rem;
+  border: 1px solid var(--bordure);
+}
+
+.chambres-alert-api strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: var(--texte);
+}
+
+.chambres-alert-api--erreur {
+  background: rgba(180, 60, 60, 0.12);
+  border-color: rgba(220, 100, 100, 0.35);
+  color: var(--mute-texte);
+}
+
+.chambres-alert-api--info {
+  background: rgba(201, 168, 106, 0.1);
+  border-color: rgba(201, 168, 106, 0.35);
+  color: var(--mute-texte);
+}
+
+.chambres-alert-code {
+  font-family: ui-monospace, monospace;
+  font-size: 0.82em;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  background: rgba(15, 17, 21, 0.55);
+  color: var(--primaire);
+}

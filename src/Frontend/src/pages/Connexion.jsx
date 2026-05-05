@@ -1,6 +1,33 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Bouton } from '../components/Bouton'
+import { apiUrl } from '../config/apiBase'
+
+const IcoMail = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="4" width="20" height="16" rx="2" />
+    <path d="m2 7 10 7 10-7" />
+  </svg>
+)
+const IcoLock = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="11" width="18" height="11" rx="2" />
+    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+  </svg>
+)
+const IcoEye = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+)
+const IcoEyeOff = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+    <line x1="1" y1="1" x2="23" y2="23" />
+  </svg>
+)
 
 // Page de connexion interne (admin, compta, organisateur, coordonnateur)
 export function PageConnexion() {
@@ -19,24 +46,29 @@ export function PageConnexion() {
     setChargement(true)
 
     try {
-      const response = await fetch('http://localhost:3002/api/users/login', {
+      const response = await fetch(apiUrl('/api/users/login'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email, password: motDePasse })
-      });
+      })
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || 'Identifiants invalides');
+      const text = await response.text()
+      let data = {}
+      try {
+        data = text ? JSON.parse(text) : {}
+      } catch {
+        data = { message: text || 'Réponse serveur invalide.' }
       }
 
-      // Enregistrer la session (localStorage pour persister)
-      const utilisateur = data.user;
-      localStorage.setItem('utilisateur', JSON.stringify(utilisateur));
-      localStorage.setItem('token', data.token); // Si besoin d'autorisations futures
+      if (!response.ok) {
+        throw new Error(data.message || 'Identifiants invalides.')
+      }
+
+      const utilisateur = { ...data.user, token: data.token }
+      localStorage.setItem('utilisateur', JSON.stringify(utilisateur))
+      localStorage.setItem('token', data.token)
 
       if (seSouvenir) {
         localStorage.setItem('seSouvenir', 'true')
@@ -44,24 +76,26 @@ export function PageConnexion() {
 
       setChargement(false)
 
-      // Redirection dynamique selon le rôle
       if (['admin', 'comptabilite', 'organisateur', 'coordonnateur'].includes(utilisateur.role)) {
-        // C'est un employé -> Dashboard métier
         navigate('/dashboard')
       } else {
-        // C'est un client -> Accueil
         navigate('/')
       }
-
     } catch (err) {
-      setErreur(err.message);
+      const msg = String(err?.message || '')
+      if (err instanceof TypeError || msg === 'Failed to fetch' || msg.includes('NetworkError')) {
+        setErreur(
+          "Connexion impossible au serveur. Vérifiez que l'API est démarrée (npm run dev dans le dossier Backend, port 3002) et que vous accédez au site via le serveur Vite (port 3000)."
+        )
+      } else {
+        setErreur(msg || 'Une erreur est survenue.')
+      }
       setChargement(false)
     }
   }
 
   return (
     <div className="page-connexion">
-      {/* Partie gauche - Image (masquée sur mobile) */}
       <div className="page-connexion-visuel">
         <img
           src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1080&q=80"
@@ -72,13 +106,10 @@ export function PageConnexion() {
         <div className="page-connexion-visuel-texte">
           <h2>Espace de Gestion</h2>
           <p>Accédez à votre tableau de bord et gérez les opérations de l'hôtel en toute sécurité.</p>
-          <div className="page-connexion-securite">
-
-          </div>
+          <div className="page-connexion-securite" aria-hidden />
         </div>
       </div>
 
-      {/* Partie droite - Formulaire */}
       <div className="page-connexion-formulaire-wrap">
         <div className="page-connexion-formulaire">
           <Link to="/" className="page-connexion-retour">
@@ -93,7 +124,7 @@ export function PageConnexion() {
             <p className="page-connexion-description">Connectez-vous pour accéder à votre espace</p>
 
             {erreur && (
-              <div className="page-connexion-erreur">
+              <div className="page-connexion-erreur page-connexion-erreur--utilisateur" role="alert">
                 <p>{erreur}</p>
               </div>
             )}
@@ -102,30 +133,33 @@ export function PageConnexion() {
               <div className="champ">
                 <label>Email professionnel</label>
                 <div className="champ-input-wrap">
-                  <span className="champ-icone">✉</span>
+                  <span className="champ-icone">
+                    <IcoMail />
+                  </span>
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="votre.email@lapromenade.ca"
                     required
+                    autoComplete="email"
                   />
                 </div>
-                <p className="champ-aide">
-
-                </p>
               </div>
 
               <div className="champ">
                 <label>Mot de passe</label>
                 <div className="champ-input-wrap">
-                  <span className="champ-icone">🔒</span>
+                  <span className="champ-icone">
+                    <IcoLock />
+                  </span>
                   <input
                     type={afficherMotDePasse ? 'text' : 'password'}
                     value={motDePasse}
                     onChange={(e) => setMotDePasse(e.target.value)}
                     placeholder="••••••••"
                     required
+                    autoComplete="current-password"
                   />
                   <button
                     type="button"
@@ -133,7 +167,7 @@ export function PageConnexion() {
                     className="champ-toggle-password"
                     aria-label={afficherMotDePasse ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
                   >
-                    {afficherMotDePasse ? '🙈' : '👁'}
+                    {afficherMotDePasse ? <IcoEyeOff /> : <IcoEye />}
                   </button>
                 </div>
               </div>
@@ -159,9 +193,7 @@ export function PageConnexion() {
                 className="bouton-connexion-plein"
                 disabled={chargement}
               >
-
                 {chargement ? 'Connexion...' : 'Se connecter'}
-
               </Bouton>
             </form>
 

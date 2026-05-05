@@ -9,7 +9,7 @@ export default defineConfig({
     // Pour appeler le backend en dev
     proxy: {
       '/api': {
-        target: 'http://localhost:5000', // URL du backend
+        target: 'http://localhost:3002', // identique au PORT dans Backend/server.js
         changeOrigin: true
       }
     }

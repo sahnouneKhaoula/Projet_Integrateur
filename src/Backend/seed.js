@@ -1,6 +1,6 @@
 // node seed.js
-import 'dotenv/config';
-import { poolPromise } from './db/db.js';
+import './loadEnv.js'
+import { poolPromise } from './db/db.js'
 import bcrypt from 'bcrypt';
 
 async function seedDatabase() {
